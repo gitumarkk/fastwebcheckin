@@ -1,0 +1,79 @@
+body {
+}
+
+p {
+   font-size: small; 
+}
+
+#schedule{
+    width: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+}
+
+.footerLogo{
+    text-align: center;
+}
+
+img.logo{
+    width: 300px;
+    display: block;
+    flex-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mainForm ul{
+    padding: 0em 0em 0em 0em;
+    margin-left: 0em;
+    margin-right: 1.5em;
+    list-style: none;
+}
+
+.mainForm li {
+    font-family: 'Lucida Sans Typewriter';
+    font-size: x-small;
+    color: #f00; 
+}
+
+.mainForm input{
+    height: 30px;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ababab;
+    margin-top: 2px;   
+    padding: 10px;
+    font-size: 10pt;
+    outline: none;
+}
+
+.submitButton{
+    height: 30px;
+    width: 100%;
+    font-size: medium;
+    font-weight: bold;
+    border-width: thin;
+    border-style: solid;
+    border-color: #211e1e;
+    background-color: #d6c8c8;
+}
+
+.topTextBox{
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+}
+
+.bottomTextBox{
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+/*fixes for header truncation*/
+.ui-header .ui-title, ui-footer .ui-title{
+    margin-right: 0;
+    margin-left: 0;
+}
+

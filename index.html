@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta id="viewport" name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.css" /><!--debug, get minified for production-->     
+        <script src="http://code.jquery.com/jquery-2.0.3.js"></script><!--debug, get minified for production-->
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script><!--debug, get minified for production-->  
+        <script src="script/jquery.maskedinput.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.js"></script><!--debug, get minified for production-->
+        <link href="style.css" rel="stylesheet" type="text/css"> 
+
+        <title>Fast Web Checkin</title>
+        <script>
+            $(document).ready(function () {
+                $("#details").show();
+                $("#instructions").hide();
+                $("#terms").hide();
+                $("#final").hide();
+                $("#confirm").hide();
+
+                $("#postalCode").mask("a9a 9a9");
+
+                $("#lastName").rules("add", {
+                    required: true,
+                    minlength: 2,
+                    messages: {
+                        required: "&nbsp;&nbsp;Please enter your last name."
+                    }
+                });
+
+                $("#firstName").rules("add", {
+                    required: true,
+                    minlength: 2,
+                    messages: {
+                        required: "&nbsp;&nbsp;Please enter your first name."
+                    }
+                });
+
+                $("#postalCode").rules("add", {
+                    required: true,
+                    minlength: 6,
+                    messages: {
+                        required: "&nbsp;&nbsp;Please enter your postal code."
+                    }
+                });
+
+                $("#emailAddress").rules("add", {
+                    required: true,
+                    messages: {
+                        required: "&nbsp;&nbsp;Please enter your email."
+                    }
+                });
+
+                $("#showInstructions").click(function () {
+                    var form = $("#patientDetailsForm");
+                    form.validate();
+
+                    if (form.valid()) {
+                        alert("By tapping the button below, I give you permission to email me with a confirmation of my check-in and future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy.");
+                        $("#details").hide();
+                        $("#instructions").show();
+                    }
+                });
+
+                $("#showTerms").click(function () {
+                    $("#instructions").hide();
+                    $("#terms").show();
+                });
+
+                $("#showFinal").click(function () {
+                    $("#terms").hide();
+                    $("#final").show();
+                });
+
+                $("#submit").click(function () {
+                    $("#final").hide();
+                    $("#confirm").show();
+                });
+            });
+        </script>
+    </head>
+    <body>
+    <div id="splash" data-role="page" data-title="Home" data-theme="d">
+        <div id="content" data-role="content">
+            <img src="images/logo.png" class="logo" alt="fastwebcheckin logo">                                                                                                                                                                                                                                                           
+        </div>
+        <div id="footer" data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+            <ul>
+                <li><a href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li>
+            </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="offline" data-role="page" data-title="Status" data-theme="d">
+        <div id="header" data-role="header">
+            <h5>Clinic Status</h5>
+        </div>
+        <div id="messageHighVolume" data-role="content" hidden="hidden">
+            <h5>Check-in system is offline (high client numbers).</h5>
+        </div>
+        <div id="messageAfterHours" data-role="content" hidden="hidden">
+            <h5>Check-in system is offline (after hours).</h5>
+        </div>
+        <div id="content" data-role="content">
+            <img src="images/logo.png" class="logo" alt="fastwebcheckin logo">
+            <div id="schedule" class="ui-grid-a">
+                <div class="ui-block-a">day</div>
+                <div class="ui-block-b">time</div>
+                <div class="ui-block-c">day</div>
+                <div class="ui-block-d">time</div> 
+            </div> 
+        </div>
+        <div id="footer" data-role="footer" data-position="fixed">
+        </div>                                                                                                                                                                                                                                                           
+    </div>
+
+    <div id="clinicSelectDialog" data-role="dialog" data-title="Clinics" data-theme="c" data-overlay-theme="d">
+        <div id="header" data-role="header">
+            <h5>Choose a clinic</h5>
+        </div>
+        <div id="content" data-role="content">
+            <a href="#patientDetails?clinic=niagara" id="niagaraButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
+            data-corners="false" data-shadow="false">PCN Niagara Falls</a>
+            <a href="#patientDetails?clinic=welland" id="wellandButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
+            data-corners="false" data-shadow="false">PCN Welland</a>
+        </div>
+        <div id="footer" data-role="footer" data-position="fixed" data-theme="c">
+            <div class="footerLogo"><img src="images/logo.png" width="200px" alt="fastwebcheckin logo"></div>
+        </div>   
+    </div> 
+        
+    <div id="patientDetails" data-role="page" data-title="PatientDetails" data-theme="d"> 
+        <div id="pd" data-role="content" data-theme="c">
+        <form id="patientDetailsForm" name="patientDetailsForm1" action="" method="post" >
+            <div id="details" class="mainForm">
+            <ul>
+                <li>
+                    <label for="priorityCode" class="ui-hidden-accessible">Priority Code</label>
+                    <input id="priorityCode" name="priorityCode1" placeholder="Priority Code" type="text" data-role="none"
+                        class="topTextBox"/>
+                </li>
+                <li>
+                    <label for="lastName" class="ui-hidden-accessible">Last Name</label>
+                    <input id="lastName" name="lastName1" placeholder="Last Name *" type="text" data-role="none"/>  
+                </li>
+                <li>
+                    <label for="firstName" class="ui-hidden-accessible">First Name</label>
+                    <input id="firstName" name="firstName1" placeholder="First Name *" type="text" data-role="none"/>  
+                </li>
+                <li>
+                    <label for="postalCode" class="ui-hidden-accessible">Postal Code</label>
+                    <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" data-role="none"/>
+                </li>
+                <li>
+                    <label for="emailAddress" class="ui-hidden-accessible">Email</label>
+                    <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email" data-role="none" class="bottomTextBox"/>
+                </li>
+            </ul> 
+            <div>
+                <a href="#" id="showInstructions" data-role="button">Next</a>
+            </div>   
+            </div>
+
+            <div id="instructions" hidden="hidden">
+                <h4>Important Instructions</h4>
+                <p>              
+                Severe life or limb threatening illnesses or injuries should go directly to the nearest hospital emergency 
+                department. For example: conditions such as, but not limited to, chest pain, acute shortness of breath, 
+                profuse bleeding, etc.               
+                </p>
+                <p>
+                Patients cannot pre-register for annual physicals or cosmetic procedures on-line.
+                </p>
+                <p>
+                If you need medication renewal, you are required to bring your empty medication bottles or a print out from 
+                the pharmacy. Our clinic does not prescribe narcotics or habit-forming medications.
+                </p>
+                <p>
+                Canadian patients must present a valid Ontario/provincial health card at reception window or a service fee or
+                a deposit will be required. Not all services that people pre-register for are covered by the Ministry of 
+                Health. Out-of-country patients will be required to pay a service fee for care.
+                </p>
+                <p>
+                You are required to print your FAST WEB CHECK-IN pre-registration confirmation page and bring it with you to 
+                the clinic. If you cannot print it, please record your FAST WEB CHECK-IN NUMBER and provide it to our 
+                receptionist.
+                </p>
+                <p>
+                By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
+                </p>
+                <div>
+                <a href="#" id="showTerms" data-role="button">Yes</a>
+            </div>
+            </div>
+
+            <div id="terms" hidden="hidden">
+                <h4>Terms and Conditions</h4>
+                <p>
+                Your FAST WEB CHECK-IN pre-registration does not constitute the beginning of a clinic/physician and patient 
+                engagement and is not a guarantee of care. The patient engagement will be formalized at our reception window 
+                when registration is finalized.
+                </p>
+                <p>
+                A FAST WEB CHECK-IN pre-registration places a potential patient into the waiting line. Once a patient presents 
+                their FAST WEB CHECK-IN pre-registration confirmation, the registration process will be completed at the 
+                reception window. The system will provide you with a time to attend the clinic. This is an estimation based on
+                current projected wait times. We can not predict, in advance, the number of patients who will register for 
+                care or the nature of the illness or injury that will require treatment. Therefore, you may still have a short
+                wait in our waiting room once you arrive.
+                </p>
+                <p>
+                Your FAST WEB CHECK-IN pre-registration is valid only for the day you submit it. If you do not attend the 
+                clinic on that day, your registration will be cancelled.
+                </p>
+                <p>
+                Some medical services or medical care is not provided or cannot be provided at our clinics. Patients may be 
+                referred to the hospital or specialists to receive care.
+                </p>
+                <p>
+                Your FAST WEB CHECK-IN pre-registration is subject to the entire website Terms of Use listed under the link 
+                located at the bottom of this page.
+                </p>
+                <p>
+                By tapping the button below, I signify that I've read, understand and agree to the Terms and Conditions:
+                </p>
+                <input type="submit" id="showFinal" value="Yes"/>
+                
+            </div>
+
+            <div id="final" hidden="hidden">
+                <h4>You are ready to check in:</h4>
+                <a href="#" id="showTerms" data-role="button">Check in</a>
+            </div>
+            <div id="confirm" hidden="hidden">
+                <h4>Confirmation</h4>
+            </div>
+            </form>
+        <script>
+            $("#patientDetailsForm").validate();
+        </script>
+        </div>
+        <div id="footer" data-role="footer" data-position="fixed" data-theme="c" class="footerLogo">
+            <img src="images/logo.png" width="300" alt="fastwebcheckin logo">
+        </div>
+    </div>      
+    </body>
+</html>

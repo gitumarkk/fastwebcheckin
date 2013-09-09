@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns="http://www.w3.org/ns/widgets"
+        
+xmlns:rim="http://www.blackberry.com/ns/widgets"
+        
+version="1.0.0.0" id="FastWebCheckin">  
+    
+<name>Fast Web Checkin</name>
+    
+<author>6915922 Canada Ltd.</author>
+    
+<description>Checkin app for Primary Care Niagara</description>
+    
+<icon src="images/icon.png"/>
+    
+<content src="index.html"/>
+    
+<rim:permissions>  
+        
+  <rim:permit>access_location_services</rim:permit>
+ 
+  <rim:permit>read_geolocation</rim:permit>   
+</rim:permissions>
+<feature id="blackberry.app" required="true" version="1.0.0.0"/>    
+
+</widget>
