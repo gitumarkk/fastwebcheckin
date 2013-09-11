@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.fastwebcheckin.mobile"
+        versionCode="10" 
+        version   = "1.0.0.1">
+
+    <!-- versionCode is optional and Android only -->
+
+    <name></name>
+
+    <description>
+        Phonegap build for iOS, Android and Blackberry. 
+    </description>
+
+    <author href="http://capacitive.ca" email="mark.cafazzo@capacitive.ca">
+        Mark Cafazzo 
+    </author>
+
+    <!--iOS-->
+    <preference name="phonegap-version" value="2.9.0" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="detect-data-types" value="false" />
+    <preference name="exit-on-suspend" value="true" />
+
+    <!--blackberry-->
+    <preference name="disable-cursor" value="true" />
+
+    <!--android-->
+
+
+</widget>
