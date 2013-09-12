@@ -5,6 +5,14 @@ p {
    font-size: small; 
 }
 
+.important{
+    font-weight: bold;
+}
+
+div {
+display: block;
+}
+
 #schedule{
     width: 500px;
     display: block;

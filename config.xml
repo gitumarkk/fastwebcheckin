@@ -7,7 +7,7 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name></name>
+    <name>FastWebCheckin</name>
 
     <description>
         Phonegap build for iOS, Android and Blackberry. 
