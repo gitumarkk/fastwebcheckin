@@ -1,3 +1,5 @@
+///<reference path="script/jquery-2.0.3-vsdoc.js" />
+
 /*global vars*/
 var rootURL = 'http://fastwebcheckin.com/status/';
 
@@ -6,7 +8,7 @@ $.ajaxSetup({
 })
 
 function getStatus(url){
-    alert('GET ' + url + ' clinic status...');
+    //alert('GET ' + url + ' clinic status...');
     $.ajax({
         url: rootURL + url,
         dataType: "text/html",

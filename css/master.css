@@ -1,24 +1,86 @@
+/*base*/
 body {
+    margin: 0px;
+    font-family: 'Droid Sans', sans-serif;
 }
 
 p {
    font-size: small; 
 }
 
+a {
+    font-family: 'Droid Sans', sans-serif;
+}
+
 .important{
     font-weight: bold;
 }
 
-div {
-display: block;
-}
-
+/*pages*/
 #schedule{
     width: 500px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
+}
+
+/*dialogs and popups*/
+.popup {
+  position: relative;
+  background: #FFF;
+  padding: 25px;
+  width:auto;
+  max-width: 800px;
+  margin: 0 auto; 
+}
+
+.terms p{
+    padding: 2px;
+    font-size: x-small;
+}
+
+.terms h4{
+    font-size: small;
+}
+
+/*images and icons*/ 
+.scrollContent{
+    display: inline-block;
+    float: multicol;
+}
+
+.scrollContent a:hover{
+    text-decoration-line: overline;
+}
+
+.scrollContent a{
+    text-decoration: none;
+    color: #211e1e;
+    text-decoration-color: #211e1e;  
+}
+
+.scrollIcon {
+    background: url(images/icons-18-black.png) -214px 0px;
+    background-repeat: no-repeat;
+    width:20px;
+    height:20px;
+    min-width:20px;
+    min-height:20px;
+    padding-left: 5px;
+    margin-top: -34px;
+    float: right;
+}
+
+.scrollHeader{
+    border-width: thin;
+    border-style: dashed;
+    border-color: #808080;
+    padding-left: 10px;
+}
+
+.up{
+    background: url(images/icons-18-black.png) -180px 0px;
 }
 
 .footerLogo{
@@ -33,6 +95,7 @@ img.logo{
     margin-right: auto;
 }
 
+/*checkin form*/
 .mainForm ul{
     padding: 0em 0em 0em 0em;
     margin-left: 0em;
@@ -41,7 +104,7 @@ img.logo{
 }
 
 .mainForm li {
-    font-family: 'Lucida Sans Typewriter';
+    font-family: 'Droid Sans';
     font-size: x-small;
     color: #f00; 
 }
@@ -77,11 +140,5 @@ img.logo{
 .bottomTextBox{
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
-}
-
-/*fixes for header truncation*/
-.ui-header .ui-title, ui-footer .ui-title{
-    margin-right: 0;
-    margin-left: 0;
 }
 

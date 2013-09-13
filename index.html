@@ -4,22 +4,35 @@
     <head>
         <meta charset="utf-8" />
         <meta id="viewport" name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="script/jquery.mobile-1.3.2.css"/><!--debug, get minified for production--> 
+        <meta http-equiv='X-UA-Compatible' content='chrome=1'>
+
         <script src="http://code.jquery.com/jquery-2.0.3.js"></script><!--debug, get minified for production-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script><!--debug, get minified for production-->  
         <script src="script/jquery.maskedinput.min.js"></script>
+        <script src="script/jquery.scrollto.js"></script>
+        <script src="script/jquery.magnific-popup.js"></script>
         <script src="script/jquery.mobile-1.3.2.js"></script><!--debug, get minified for production-->
-        <link href="css/master.css" rel="stylesheet" type="text/css"> 
-        <script src="script/jquery.websitelogic.js"></script>
+        <link href="css/magnific-popup.css" rel="stylesheet" />
+        <link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" /><!--debug, get minified for production--> 
+
+        <!--custom-->
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine|Droid+Sans">
+        <link rel="stylesheet" type="text/css" href="css/master.css">
+        <link rel="stylesheet" type="text/css" href="css/override.css" rel="stylesheet" type="text/css"> 
+
+        <!--<script src="script/jquery.websitelogic.js"></script>-->
 
         <title>Fast Web Checkin</title>
         <script>
+            ///<reference path="script/jquery-2.0.3-vsdoc.js" />
             $(document).ready(function () {
                 $("#details").show();
                 $("#instructions").hide();
                 $("#terms").hide();
                 $("#final").hide();
                 $("#confirm").hide();
+
+                $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
 
                 $("#postalCode").mask("a9a 9a9");
 
@@ -82,12 +95,23 @@
 
                 $("#niagaraButton").click(function () {
                     getStatus('Niagara');
-                })
+                });
 
                 $("#wellandButton").click(function () {
                     getStatus('Welland');
-                })
+                });
+
+                // Dialog opened 
+                $('#termsOfUse').on("pageshow", function () {
+                    //alert('#termsOfUse dialog pageshow');
+                });
+
+                $('.scrollContent a').click(function (e) {
+                    $('html,body,div,p').scrollTo(this.hash, this.hash);
+                    e.preventDefault();
+                });
             });
+
         </script>
     </head>
     <body>
@@ -98,7 +122,7 @@
         <div id="footer" data-role="footer" data-position="fixed">
             <div data-role="navbar">
             <ul>
-                <li><a href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li>
+                <li><a href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li> 
             </ul>
             </div>
         </div>
@@ -254,7 +278,134 @@
         </div>
         <div id="footer" data-role="footer" data-position="fixed" data-theme="c" class="footerLogo">
             <img src="images/logo.png" width="300" alt="fastwebcheckin logo">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#termsOfUse" data-transition="slideup">Terms of Use</a></li> 
+                </ul>
+            </div>
         </div>
-    </div>      
+    </div>
+        
+    <div id="termsOfUse" data-role="dialog" class="terms" data-tap-toggle="true" data-theme="c" data-overlay-theme="d">
+        <div id="header" data-role="header">
+        <h5>Terms of Use</h5>
+        </div>
+        <div id="content" data-role="content" class="scrollContent terms"> 
+            <div id="item1" class="scrollHeader">
+            <a href="#item2"><div><h4>Acceptance</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>It is important that you read all the following terms and conditions carefully. This Terms of Use Agreement ("Agreement") is a legal agreement between you and Fervseco Inc., the owner and operator ("Owner") of this Website (the "Website"). "). It states the terms and conditions under which you may access and use the Website and all written and other information and materials displayed, linked to, or otherwise made available through the Website, including, without limitation, articles, text, photographs, images, illustrations, audio clips, video clips, computer software and code (the "Content"). By accessing and using the Website, you are indicating your acceptance to be bound by the terms and conditions of this Agreement. If you do not accept these terms and conditions, you must not access or use the Website. The Owner may revise this Agreement at any time by updating this posting. Use of the Website after such changes are posted will signify your acceptance of these revised terms. You should visit this page periodically to review this Agreement.</p>
+         
+            <div id="item2" class="scrollHeader">
+            <a href="#item3"><div><h4 id="item2">Not medical advice</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>The Content provided on the Website is for informational purposes only and is not professional medical advice, diagnosis, treatment or care, nor is it intended to be a substitute therefore. Always seek the advice of a physician or other qualified health provider properly licensed to practice medicine or general health care in your jurisdiction concerning any questions you may have regarding any Content obtained from this Website and any medical condition you believe may be relevant to you or to someone else. Never disregard professional medical advice or delay in seeking it because of something you have read on this Website. Always consult with your physician or other qualified health care provider before embarking on a new treatment, diet or fitness program. Content obtained from the Website is not exhaustive and does not cover all diseases, ailments, physical conditions or their treatment.</p>
+
+            <div id="item3" class="scrollHeader">
+            <a href="#item4"><div><h4>Medical emergency</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>Do not use the Website for medical emergencies. If you have a medical emergency, call a physician, qualified health care provider or 911 (or the applicable local emergency number) immediately. Under no circumstances should you attempt self-treatment or treatment of someone else based on anything you have seen or read on the Website.</p>
+
+            <div id="item4" class="scrollHeader">
+            <a href="#item5"><div><h4>No physician-patient relationship</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>The presentation of Content on the Website does not establish a physician-patient relationship between you (or someone else_ and the Owner (or any of its physicians) and is not intended as a solicitation of individuals to become patients or clients of the Owner (or any of its physicians).</p>
+            
+            <div id="item5" class="scrollHeader">
+                <a href="#item6">
+                    <div><h4>No endorsements</h4></div>
+                    <div class="scrollIcon"></div>
+                </a>
+            </div>
+            <p>Unless specifically stated, the Owner does not recommend or endorse any specific brand of products, services, procedures, business, or other information that appears or that may be advertised on the Website.</p>
+
+            <div id="item6" class="scrollHeader">
+            <a href="#item7"><div><h4>E-mail</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>Due to the inherently non-secure nature of e-mail communication, the Owner does not wish to use this Website as a means of communication with the public or patients (i) regarding questions or issues of a medical nature; (ii) to establish physician/patient relationships; (iii) to book or cancel appointments; or (iv) for inquiries regarding fees, services or similar matters. E-mail communications regarding such matters will not be responded to and will be discarded unread. If you wish to contact the Owner or its physicians regarding medical questions or issues or with regard to appointments, accounts or other questions please do so by telephone, fax or regular mail in the manner set out in the Website.</p>
+
+            <div id="item7" class="scrollHeader">
+            <a href="#item8"><div><h4>Disclaimer of warranties</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>The Website and the Content are provided "AS IS". While the Owner endeavours to provide Content that is correct, accurate, current and timely, the Owner makes no representations, warranties, conditions, or covenants, express or implied, regarding the Website and the Content including, without limitation, no representation, warranty, condition, or covenant that (i) the Content contained in or made available through the Website or any item(s) made available on or through the Website will be of merchantable quality and/or fit for a particular purpose, (ii) the Website or Content will be accurate, complete, current, reliable, timely or suitable for any particular purpose, (iii) that the operation of the Website will be uninterrupted or error-free, (iv) that defects or errors in the Website or the Content, be it human or computer errors, will be corrected, (v) that the Website will be free from viruses or harmful components, and (vi) that communications to or from the Website will be secure and/or not intercepted.  You acknowledge and agree that your access and use of the Website and the Content is entirely at your own risk and liability.</p>
+
+            <div id="item8" class="scrollHeader">
+            <a href="#item9"><div><h4>Limitation of liability</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>In no event shall the Owner, officers, directors, employees, agents, licensors, and their respective successors and assigns be liable for damages of any kind, including, without limitation, any direct, special, indirect, punitive, incidental or consequential damages including, without limitation, any loss or damages in the nature of, or relating to, lost business, medical injury, personal injury, wrongful death, improper diagnosis, inaccurate information, improper treatment or any other loss incurred in connection with your use, misuse or reliance upon the Website or the Content, or your inability to use the Website, regardless of the cause and whether arising in contract (including fundamental breach), tort (including negligence), or otherwise. The foregoing limitation shall apply even if the Owner knew of or ought to have known of the possibility of such damages.  The Owner also expressly disclaims any and all liability for the acts, omissions and conduct of any third-party user advertiser or sponsor of the Website ("Third-Party"). Under no circumstances shall the Owner, its physicians, officers, directors, employees, agents, licensors and their respective successors and assigns, be liable for any injury, loss, damage (including direct, special, indirect, punitive, incidental or consequential damages), or expense arising in any manner whatsoever from (i) the acts, omissions or conduct of any Third-Party, and (ii) any access, use, reliance upon or inability to use any materials, content, goods or services located at, or made available at, any Website linked to or from the Website, regardless of the cause and whether arising in contract (including fundamental breach), tort (including negligence), or otherwise. The foregoing limitation shall apply even if the Owner knew of or ought to have known of the possibility of such da</p>
+            
+            <div id="item9" class="scrollHeader">
+            <a href="#item10"><div><h4>Indemnity</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>You agree to indemnify, defend and hold harmless the Owner and its physicians, officers, directors, employees, agents, licensors, and their respective successors and assigns, from and against any and all claims, demands, liabilities, costs, or expenses whatsoever, including, without limitation, legal fees and disbursements, resulting directly or indirectly from (i) your breach of any of the terms and conditions of this Agreement, (ii) your access to, use, misuse, reliance upon or inability to access or use the Website, the Content or any Website to which the Website is or may be linked to from time to time or, (iii) your use of, reliance on, publication, communication, distribution, uploading or downloading of anything (including the Content) on or from the Website.</p>
+
+            <div id="item10" class="scrollHeader">
+            <a href="#item11"><div><h4>Copyright</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>The Content is protected by copyright law and is owned by the Owner and its licensors, or the party accredited as the provider of the Content. Except as granted in the limited license herein, any use of the Content, including modification, transmission, presentation, distribution, republication, or other exploitation of the Website or of its Content, whether in whole or in part, is prohibited without the express prior written consent of the Owner.</p>
+
+            <div id="item11" class="scrollHeader">
+            <a href="#item12"><div><h4>Limited license</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>Subject to the terms and conditions of this Agreement, you are hereby granted a limited, non-transferable and non-exclusive license to access, view and use the Website and the Content for your personal, noncommercial use in Canada. You are granted the right to download, store and/or print single copies of items comprising the Content for your personal, non-commercial use, provided that you maintain all copyright and other notices contained in such Content. You may not copy and/or repost items comprising the Content online. You must also abide by any additional requirements governing the use of any specific Content that may be set out in the Website. In the event of a conflict between the terms of a specific license governing specific Content and this Agreement, the terms of the specific license shall govern.</p>
+
+            <div id="item12" class="scrollHeader">
+            <a href="#item13"><div><h4>Trademarks</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>Fastwebcheckin.mobile and Fastwebcheckin.com is/are trademarks of the Owner. Other names, words, titles, phrases, logos, designs, graphics, icons and trademarks displayed on the Website may constitute registered or unregistered trademarks of the Owner or third parties. While certain trademarks of third parties may be used by the Owner under license, the display of third-party trademarks on the Website should not be taken to imply any relationship or license between the Owner and the owner of the trademark or to imply that the Owner endorses the products, services, procedures, business, or other information of the owner of the said trademark.</p>
+
+            <div id="item13" class="scrollHeader">
+            <a href="#item14"><div><h4>Software license and ownership</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>All software embedded in or located on the mobile application, including, without limitation, all computer code of all types, including all files and/or images contained in or generated by such software ("software") is protected by copyright and may be protected by other rights. All such software is owned by the Owner, its licensors or the party accredited with ownership of such software. You are hereby granted the right to access and use the software embedded and integrated into the Website, subject to (i) the terms and conditions of this Agreement, and (ii) any additional conditions which may be imposed on your access and use of such software.  If the Website provides software for download, unless otherwise provided, you are hereby granted, subject to the terms of this Agreement and to any other specific terms and conditions that may apply to your downloading and use of such software, a personal, non-transferable, non-exclusive license to (i) install and run one copy of the software in object code format on a non-networked computer for your personal, non-commercial use, and (ii) to reproduce the software only as reasonably required to install, run and make reasonable backup copies as allowed by law.  Except to the extent expressly permitted in this Agreement, you may not (i) use, reproduce, modify, adapt, translate, upload, download or transmit the software in whole or in part, (ii) sell, rent, lease, license, transfer or otherwise provide access to the software, (iii) alter, remove, or cover any trademarks or proprietary notices included in the software, and/or (iv) decompile, disassemble, decrypt, extract, or reverse engineer the software or assist others in doing so.  Other than the limited license granted herein, nothing contained in the Website shall be construed as granting you any right, title, interest or other license in or to any software embedded or integrated into the Website or made available for download from the Website, including, but not limited, to any intellectual property rights in the software.  All software embedded or integrated into the mobile application is provided "as is", without representation, warranties, conditions, or covenants of any kind, either expressed or implied, including, without limitation, any representation, warranty, condition, or covenant (i) that the software is of merchantable quality and/or is fit for any particular purpose, (ii) that the software will conform with any specification(s) relating to the software, (iii) that the software will be free from material defects, (iv) that the software contains no computer viruses or other contaminants, or (v) that the software shall process date and time-related data without causing any processing interruptions, abnormal termination or process or manipulate any time-related data.</p>
+
+            <div id="item14" class="scrollHeader">
+            <a href="#item15"><div><h4>Security</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>Any information sent or received over the Internet is generally not secure. The Owner cannot guarantee the security or confidentiality of any communication to or from the Website.</p>
+
+            <div id="item15" class="scrollHeader">
+            <a href="#item16"><div><h4>Modification to Mobile Application</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>The Owner reserves the right any time, and from time to time, to modify or discontinue, temporarily or permanently, the Website (or any part thereof) with or without notice to you. The Owner shall have no liability to you or any third party for any modifications, suspension or discontinuance of the Website or any part thereof.</p>
+
+            <div id="item16" class="scrollHeader">
+            <a href="#item17"><div><h4>Use prohibited where contrary to law</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>Use of this Website is unauthorized in any jurisdiction where the Website or any of the Content may violate any laws or regulations. You agree not to access or use the Website in such jurisdictions. You agree that you are responsible for compliance with all applicable laws or regulations. Any contravention of this provision (or any provision of this Agreement) is entirely at your own risk.</p>
+
+            <div id="item17" class="scrollHeader">
+            <a href="#item18"><div><h4>Governing law and jurisdiction</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>The Website is operated by the Owner from its offices within the Province or Territory Ontario, Canada. Primary Care Niagara and its Physicians is/are licensed by Ontario College of Physicians and Surgeons to practice medicine in Ontario, Canada. You agree that all matters relating to your access, or use of the Website and its Content shall be governed by the laws of the Province or Territory of Ontario and the laws of Canada applicable therein, without regard to conflict of laws principles. You agree and hereby submit to the exclusive and preferential jurisdiction of the courts of the Province of Ontario with respect to all matters relating to your access and use of the Website and the Content as well as any dispute that may arise there from and that the applicable law shall be the law of the Province or Territory of Ontario and of Canada.</p>
+
+            <div id="item18" class="scrollHeader">
+            <a href="#item19"><div><h4>Waiver</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>Any consent by the Owner to, or waiver of, a breach of this Agreement which you have committed, whether express or implied, shall not constitute a consent to, or waiver of any other, different or subsequent breach.</p>
+
+            <div id="item19" class="scrollHeader">
+            <a href="#item20"><div><h4>Severability</h4></div>
+                <div class="scrollIcon"></div></a></div>
+            <p>The invalidity or unenforceability of any provision of this Agreement or any covenant contained herein shall not affect the validity or enforceability of any other provision or covenant contained herein and any such invalid provision or covenant shall be deemed severable from the rest of this Agreement.</p>
+
+            <div id="item20" class="scrollHeader">
+            <a href="#item21"><div><h4>Termination</h4></div> 
+                <div class="scrollIcon"></div></a></div>            
+            <p>The Owner may, in its sole discretion, cancel or terminate your right to use the Website, or any part of the Website, at any time without notice. In the event of termination, you are no longer authorized to access the Website, or the part of the Website affected by such cancellation or termination. The restrictions imposed on you with respect to Content downloaded from the Website and the disclaimers and limitations of liabilities set forth in this Agreement, shall survive termination of this Agreement. The Owner shall not be liable to any party for such termination.</p>
+
+            <div id="item21" class="scrollHeader">
+            <a href="#item1"><div><h4>Entire Agreement</h4></div>
+                <div class="scrollIcon up"></div></a></div>
+            <p>This is the entire Agreement between you and the Owner relating to your access and use of the Website and Content.</p>
+        </div>
+        <div id="footer" data-role="footer" data-position="fixed">
+            <div data-role="navbar" data-mini="true">
+                <ul>
+                    <li><a href="#patientDetails" data-icon="arrow-d" data-iconpos="top" data-transition="slideup">I Agree</a></li> 
+                </ul>
+            </div>
+        </div>
+    </div>     
     </body>
 </html>
