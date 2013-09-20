@@ -1,15 +1,10 @@
 /*base*/
-body {
-    margin: 0px;
-    font-family: 'Droid Sans', sans-serif;
+body html{
+    font-family: 'Telex', sans-serif;
 }
 
-p {
+p{
    font-size: small; 
-}
-
-a {
-    font-family: 'Droid Sans', sans-serif;
 }
 
 .important{
@@ -44,7 +39,32 @@ a {
     font-size: small;
 }
 
-/*images and icons*/ 
+/*ad rotator*/
+img.ad{
+    width: auto;
+    height: auto;
+    display: block;
+    flex-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+#adFooter{
+    height: 196px;
+}
+
+/*images and icons*/
+img.logo{
+    width: 300px;
+    display: block;
+    flex-align: center;
+    padding-top: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both; 
+}
+
 .scrollContent{
     display: inline-block;
     float: multicol;
@@ -92,14 +112,6 @@ a {
     text-align: center;
 }
 
-img.logo{
-    width: 300px;
-    display: block;
-    flex-align: center;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 /*checkin form*/
 .mainForm ul{
     padding: 0em 0em 0em 0em;
@@ -109,7 +121,6 @@ img.logo{
 }
 
 .mainForm li {
-    font-family: 'Droid Sans';
     font-size: x-small;
     color: #f00; 
 }

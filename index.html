@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta id="viewport" name="viewport" content="width=device-width">
+        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv='X-UA-Compatible' content='chrome=1'>
 
         <script src="http://code.jquery.com/jquery-2.0.3.js"></script><!--debug, get minified for production-->
@@ -16,11 +16,13 @@
         <link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" /><!--debug, get minified for production--> 
 
         <!--custom-->
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine|Droid+Sans">
         <link rel="stylesheet" type="text/css" href="css/master.css">
-        <link rel="stylesheet" type="text/css" href="css/override.css" rel="stylesheet" type="text/css"> 
+        <link rel="stylesheet" type="text/css" href="css/override.css"> 
+        <link rel="stylesheet" type="text/css" href="css/responsive.css">
 
-        <!--<script src="script/jquery.websitelogic.js"></script>-->
+        <script src="script/enquire.js"></script>
+        <script src="script/responsive.js"></script>
+        <script src="script/ad-rotator.js"></script>
 
         <title>Fast Web Checkin</title>
         <script>
@@ -101,25 +103,26 @@
                     getStatus('Welland');
                 });
 
-                // Dialog opened 
-                $('#termsOfUse').on("pageshow", function () {
-                    //alert('#termsOfUse dialog pageshow');
-                });
-
                 $('.scrollContent a').click(function (e) {
                     $('html,body,div,p').scrollTo(this.hash, this.hash);
                     e.preventDefault();
                 });
             });
-
         </script>
     </head>
     <body>
-    <div id="splash" data-role="page" data-title="Home" data-theme="d">
-        <div id="content" data-role="content">
-            <img src="images/logo.png" class="logo" alt="fastwebcheckin logo">                                                                                                                                                                                                                                                         
+    <div id="splash" data-role="page" data-title="Home" data-theme="a">
+        <div data-role="content">
+            <div class="centerLogoColumn">
+               <img src="images/logo.png" class="logo" alt="fastwebcheckin logo"> 
+            </div>                                                                                                                                                                                                                                              
         </div>
-        <div id="footer" data-role="footer" data-position="fixed">
+        <div id="adFooter" data-role="footer" data-position="fixed" data-theme="f">
+            <div id="adContainer">
+                    <a href="#"><img id="adImage" src="images/test.jpg" class="ad" alt="Our sponsor"></a>
+            </div>
+        </div>
+        <div id="footerSplash" data-role="footer" data-position="fixed">
             <div data-role="navbar">
             <ul>
                 <li><a href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li> 
@@ -138,7 +141,7 @@
         <div id="messageAfterHours" data-role="content" hidden="hidden">
             <h5>Check-in system is offline (after hours).</h5>
         </div>
-        <div id="content" data-role="content">
+        <div id="contentOffline" data-role="content">
             <img src="images/logo.png" class="logo" alt="fastwebcheckin logo">
             <div id="schedule" class="ui-grid-a">
                 <div class="ui-block-a">day</div>
@@ -147,21 +150,21 @@
                 <div class="ui-block-d">time</div> 
             </div> 
         </div>
-        <div id="footer" data-role="footer" data-position="fixed">
+        <div id="footerOffline" data-role="footer" data-position="fixed">
         </div>                                                                                                                                                                                                                                                           
     </div>
 
     <div id="clinicSelectDialog" data-role="dialog" data-title="Clinics" data-theme="c" data-overlay-theme="d">
-        <div id="header" data-role="header">
+        <div id="headerClinicSelect" data-role="header">
             <h5>Choose a clinic</h5>
         </div>
-        <div id="content" data-role="content">
+        <div id="contentClinicSelect" data-role="content">
             <a href="#patientDetails?clinic=niagara" id="niagaraButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
             data-corners="false" data-shadow="false">PCN Niagara Falls</a>
             <a href="#patientDetails?clinic=welland" id="wellandButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
             data-corners="false" data-shadow="false">PCN Welland</a>
         </div>
-        <div id="footer" data-role="footer" data-position="fixed" data-theme="c">
+        <div id="footerClinicSelect" data-role="footer" data-position="fixed" data-theme="c">
             <div class="footerLogo"><img src="images/logo.png" width="200px" alt="fastwebcheckin logo"></div>
         </div>   
     </div> 
@@ -276,7 +279,7 @@
             $("#patientDetailsForm").validate();
         </script>
         </div>
-        <div id="footer" data-role="footer" data-position="fixed" data-theme="c" class="footerLogo">
+        <div id="footerDetails" data-role="footer" data-position="fixed" data-theme="c" class="footerLogo">
             <img src="images/logo.png" width="300" alt="fastwebcheckin logo">
             <div data-role="navbar">
                 <ul>
@@ -287,10 +290,10 @@
     </div>
         
     <div id="termsOfUse" data-role="dialog" class="terms" data-tap-toggle="true" data-theme="c" data-overlay-theme="d">
-        <div id="header" data-role="header">
+        <div id="headerTerms" data-role="header">
         <h5>Terms of Use</h5>
         </div>
-        <div id="content" data-role="content" class="scrollContent terms"> 
+        <div id="contentTerms" data-role="content" class="scrollContent terms"> 
             <div id="item1" class="scrollHeader">
                 <a href="#item2"><div><h4>Acceptance</h4></div>
                 <div class="scrollIcon"></div></a>
@@ -400,7 +403,7 @@
                 <div class="scrollIcon up"></div></a></div>
             <p>This is the entire Agreement between you and the Owner relating to your access and use of the Website and Content.</p>
         </div>
-        <div id="footer" data-role="footer" data-position="fixed">
+        <div id="footerTerms" data-role="footer" data-position="fixed">
             <div data-role="navbar" data-mini="true">
                 <ul>
                     <li><a href="#patientDetails" data-icon="arrow-d" data-iconpos="top" data-transition="slideup">I Agree</a></li> 

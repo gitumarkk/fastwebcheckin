@@ -1,0 +1,49 @@
+/*for browser & tablet*/
+.centerLogoColumn{
+    background-color: #FFF;
+    width: 900px;
+    height: 800px;
+    margin-top: -15px;
+    display: block;
+    flex-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+/*iPhone*/
+@media screen and (orientation:portrait) and (resolution:326dpi) {
+    .centerLogoColumn {
+    height: 768px;    
+}
+}
+
+/*ipad 1 and 2*/
+@media screen and (orientation:landscape) and (resolution:132dpi) {
+    .centerLogoColumn {
+    height: 768px;    
+}
+}
+
+@media screen and (orientation:portrait) and (resolution:132dpi) {
+    .centerLogoColumn {
+    height: 1024px;    
+}
+}
+
+/*for smartphone*/
+@media screen and (max-width:600px){
+    .ui-page{
+    background: white;   
+}
+    .centerLogoColumn{
+    width: auto;
+    height: auto      
+}
+}
+
+/*@media screen and (max-width:320px){
+    #adFooter{
+    display: none;
+}
+}*/
