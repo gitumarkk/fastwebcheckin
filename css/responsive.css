@@ -1,49 +1,58 @@
-/*for browser & tablet*/
-.centerLogoColumn{
-    background-color: #FFF;
-    width: 900px;
-    height: 800px;
+/*base*/
+.centerLogoColumn {
     margin-top: -15px;
-    display: block;
-    flex-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    clear: both;
 }
 
-/*iPhone*/
-@media screen and (orientation:portrait) and (resolution:326dpi) {
+/*tablet width, roughly*/
+@media all and (min-width: 41em) {
     .centerLogoColumn {
-    height: 768px;    
-}
+        background-color: #ffd800;
+        width: 900px;
+        height: 800px;
+        display: block;
+        flex-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        clear: both;
+    }
 }
 
-/*ipad 1 and 2*/
-@media screen and (orientation:landscape) and (resolution:132dpi) {
+/*600px breakpoint*/
+@media screen and (max-width:37.5em) {
+    .ui-page {
+        background: white;
+    }
+
     .centerLogoColumn {
-    height: 768px;    
-}
+        width: auto;
+        height: auto;
+    }
 }
 
-@media screen and (orientation:portrait) and (resolution:132dpi) {
+/*400px breakpoint*/
+@media screen and (min-width:25em) {
+    .ui-page {
+        background: white;
+    }
+
     .centerLogoColumn {
-    height: 1024px;    
-}
-}
-
-/*for smartphone*/
-@media screen and (max-width:600px){
-    .ui-page{
-    background: white;   
-}
-    .centerLogoColumn{
-    width: auto;
-    height: auto      
-}
+        width: auto;
+        height: auto;
+    }
 }
 
-/*@media screen and (max-width:320px){
-    #adFooter{
-    display: none;
+/*300px breakpoint*/
+@media screen and (min-width:18.75em) {
+    .ui-page {
+        background: white;
+    }
+
+    .centerLogoColumn {
+        width: auto;
+        height: auto;
+    }
+
+    #adFooter {
+        display: none;
+    }
 }
-}*/
