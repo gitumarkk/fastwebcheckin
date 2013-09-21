@@ -29,5 +29,6 @@
     <preference name="disable-cursor" value="true" />
 
     <!--android-->
+    <preference name="permissions" value="none"/>
 
 </widget>
