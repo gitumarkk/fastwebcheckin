@@ -2,3 +2,7 @@
 /TextFile.txt
 /fastwebcheckin.zip
 /bin/fastwebcheckin.bar
+/androidKeystoreGen.bat
+/phonegapBuildService.bat
+/phonegapDeploy.bat
+/package.bat
