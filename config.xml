@@ -17,6 +17,13 @@
         Mark Cafazzo 
     </author>
 
+    <gap:platformm name="ios"/>
+    <gap:platformm name="android"/>
+    <gap:platformm name="blackberry"/>
+
+    <!--all platforms-->
+    <preference name="orienation" value="portait" />
+
     <!--iOS-->
     <preference name="phonegap-version" value="2.9.0" />
     <preference name="webviewbounce" value="false" />

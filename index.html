@@ -18,7 +18,7 @@
         <!--custom-->
         <link rel="stylesheet" type="text/css" href="css/master.css">
         <link rel="stylesheet" type="text/css" href="css/override.css"> 
-        <link rel="stylesheet" type="text/css" href="css/responsive.css">
+        <!--<link rel="stylesheet" type="text/css" href="css/responsive.css">-->
 
         <script src="script/enquire.js"></script>
         <script src="script/responsive.js"></script>
@@ -28,6 +28,9 @@
         <script>
             ///<reference path="script/jquery-2.0.3-vsdoc.js" />
             $(document).ready(function () {
+                localStorage["emailPermission"] = 'NO';
+                localStorage["terms"] = 'NO';
+                localStorage["readInstructions"] = 'NO';
                 $("#details").show();
                 $("#instructions").hide();
                 $("#terms").hide();
@@ -77,6 +80,7 @@
                         alert("By tapping the button below, I give you permission to email me with a confirmation of my check-in and future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy.");
                         $("#details").hide();
                         $("#instructions").show();
+                        localStorage["emailPermission"] = 'YES';
                     }
                     else {
                         alert('Please fully complete your check in details.');
@@ -86,24 +90,64 @@
                 $("#showTerms").click(function () {
                     $("#instructions").hide();
                     $("#terms").show();
+                    localStorage["readInstructions"] = 'YES';
+                    
                 });
 
                 $("#showFinal").click(function () {
                     $("#terms").hide();
                     $("#final").show();
+                    localStorage["terms"] = 'YES';
                 });
 
                 $("#submit").click(function () {
                     $("#final").hide();
                     $("#confirm").show();
+
+                    //for local testing, start chrome with: chromium-browser --disable-web-security
+                    $.ajax({
+                        type: "POST",
+                        url: "http://dev.fastwebcheckin.com/check/submission",
+                        beforeSend: function () { $.mobile.loading('show'); },
+                        complete: function () { $.mobile.loading('hide'); },
+                        data: { 'submission[data][1][values][0]': $('#firstName').val(),
+                            'submission[data][2][values][0]': $('#lastName').val(),
+                            'submission[data][11][values][0]': $('#emailAddress').val(),
+                            'submission[data][14][values][0]': '0',
+                            'submission[data][16][values][0]': $('#postalCode').val(),
+                            'submission[data][23][values][0]': localStorage["location"],
+                            'submission[data][26][values][0]': $('#priorityCode').val(),
+                            'submission[data][12][values][0]': localStorage["terms"],
+                            'submission[data][19][values][0]': localStorage["readInstructions"],
+                            'submission[data][25][values][0]': localStorage["emailPermission"],
+                            'submission[data][15][values][0]': '',
+                            'submission[data][17][values][0]': '',
+                            'submission[data][18][values][0]': '',
+                            'submission[data][21][values][0]': '',
+                            'submission[data][22][values][0]': '',
+                            'submission[data][24][values][0]': '',
+                            'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            $("#result").html(JSON.stringify(response));
+                        },
+                        error: function () {
+                            //$( "#result" ).html(JSON.stringify(response));
+                            alert('POST failed, please try again.');
+                        }
+                    })
                 });
 
                 $("#niagaraButton").click(function () {
                     getStatus('Niagara');
+                    localStorage["location"] = "pcnniagara";
                 });
 
                 $("#wellandButton").click(function () {
                     getStatus('Welland');
+                    localStorage["location"] = "pcnwelland";
+                    
                 });
 
                 $('.scrollContent a').click(function (e) {
@@ -114,7 +158,7 @@
         </script>
     </head>
     <body>
-    <div id="splash" data-role="page" data-title="Home" data-theme="a">
+    <div id="splash" data-role="page" data-title="Home" data-theme="b">
         <div data-role="content">
             <div class="centerLogoColumn">
                <img src="images/logo.png" class="logo" alt="fastwebcheckin logo"> 
@@ -276,6 +320,7 @@
             </div>
             <div id="confirm" hidden="hidden">
                 <h4>Confirmation</h4>
+                <div id="result"></div>
             </div>
             </form>
         <script>

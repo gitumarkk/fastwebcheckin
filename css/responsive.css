@@ -6,9 +6,6 @@
 /*tablet width, roughly*/
 @media all and (min-width: 41em) {
     .centerLogoColumn {
-        background-color: #ffd800;
-        width: 900px;
-        height: 800px;
         display: block;
         flex-align: center;
         margin-left: auto;
