@@ -158,3 +158,9 @@ img.logo{
     border-bottom-right-radius: 1em;
 }
 
+.messageTextbox{
+    width: 10px;
+    padding: 10px;
+    font-size: 10pt;
+}
+

@@ -20,6 +20,7 @@
         <link rel="stylesheet" type="text/css" href="css/override.css"> 
         <!--<link rel="stylesheet" type="text/css" href="css/responsive.css">-->
 
+        <script src="script/jquery.websitelogic.js"></script>
         <script src="script/enquire.js"></script>
         <script src="script/responsive.js"></script>
         <script src="script/ad-rotator.js"></script>
@@ -28,14 +29,33 @@
         <script>
             ///<reference path="script/jquery-2.0.3-vsdoc.js" />
             $(document).ready(function () {
+                getPreviousCheckin();
+
                 localStorage["emailPermission"] = 'NO';
                 localStorage["terms"] = 'NO';
                 localStorage["readInstructions"] = 'NO';
+
                 $("#details").show();
                 $("#instructions").hide();
                 $("#terms").hide();
                 $("#final").hide();
                 $("#confirm").hide();
+
+                $("#niagaraButton").click(function () {
+                    localStorage["location"] = "pcnniagara";
+                    localStorage["locationName"] = "PCN Niagara";
+                });
+
+                $("#wellandButton").click(function () {
+                    localStorage["location"] = "pcnwelland";
+                    localStorage["locationName"] = "PCN Welland";
+                });
+
+                $("#newCheckinButton").click(function () {
+                    localStorage["location"] = "";
+                    localStorage["checkinNumber"] = "";
+                    localStorage["attendTime"] = "";
+                });
 
                 $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
 
@@ -91,7 +111,7 @@
                     $("#instructions").hide();
                     $("#terms").show();
                     localStorage["readInstructions"] = 'YES';
-                    
+
                 });
 
                 $("#showFinal").click(function () {
@@ -107,9 +127,9 @@
                     //for local testing, start chrome with: chromium-browser --disable-web-security
                     $.ajax({
                         type: "POST",
-                        url: "http://dev.fastwebcheckin.com/check/submission",
-                        beforeSend: function () { $.mobile.loading('show'); },
-                        complete: function () { $.mobile.loading('hide'); },
+                        url: rootURL,
+                        //beforeSend: function () { $.mobile.loading('show'); },
+                        //complete: function () { $.mobile.loading('hide'); },
                         data: { 'submission[data][1][values][0]': $('#firstName').val(),
                             'submission[data][2][values][0]': $('#lastName').val(),
                             'submission[data][11][values][0]': $('#emailAddress').val(),
@@ -130,24 +150,19 @@
                         },
                         dataType: 'json',
                         success: function (response) {
-                            $("#result").html(JSON.stringify(response));
+                            localStorage["submittedDate"] = response["submitted"];
+                            var fragment = response["data"];
+                            localStorage["checkinNumber"] = fragment["21"]["values"][0];
+                            localStorage["attendTime"] = fragment["22"]["values"][0];
+
+                            $("#result").html("Check In Number: " + localStorage["checkinNumber"]); //fragment["21"]["values"][0]);
+                            $("#location").html(localStorage["locationName"]);
+                            $("#attendTime").html(localStorage["attendTime"]);
                         },
                         error: function () {
-                            //$( "#result" ).html(JSON.stringify(response));
-                            alert('POST failed, please try again.');
+                            alert('Your checkin failed - please try again.');
                         }
                     })
-                });
-
-                $("#niagaraButton").click(function () {
-                    getStatus('Niagara');
-                    localStorage["location"] = "pcnniagara";
-                });
-
-                $("#wellandButton").click(function () {
-                    getStatus('Welland');
-                    localStorage["location"] = "pcnwelland";
-                    
                 });
 
                 $('.scrollContent a').click(function (e) {
@@ -214,8 +229,26 @@
         <div id="footerClinicSelect" data-role="footer" data-position="fixed" data-theme="c">
             <div class="footerLogo"><img src="images/logo.png" width="200px" alt="fastwebcheckin logo"></div>
         </div>   
+    </div>
+
+    <div id="clearStorageDialog" data-role="dialog" data-title="Clear Stored Checkin" data-theme="c" data-overlay-theme="d">
+        <div id="clearStorageHeader" data-role="header">
+            <h5>Checkin pending</h5>
+        </div>
+        <div id="clearStorageContent" data-role="content">  
+            <label for="checkinNo">Check in number: </label>
+            <input id="checkinNo" name="checkinNo" type="text" data-role="none" style="width: 60px;"/>
+            <label for="attendTime">Visit clinic at: </label>
+            <input id="attendTime" name="attendTime" type="text" data-role="none" style="width: 60px;"/>
+            <div id="storedCheckinMessage"></div>
+            <a href="#clinicSelectDialog" id="newCheckinButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
+            data-corners="false" data-shadow="false">New</a>
+        </div>
+        <div id="footerClearStorage" data-role="footer" data-position="fixed" data-theme="c">
+            <div class="footerLogo"><img src="images/logo.png" width="200px" alt="fastwebcheckin logo"></div>
+        </div>   
     </div> 
-        
+
     <div id="patientDetails" data-role="page" data-title="PatientDetails" data-theme="d"> 
         <div id="pd" data-role="content" data-theme="c">
         <form id="patientDetailsForm" name="patientDetailsForm1" action="" method="post" >
@@ -320,7 +353,11 @@
             </div>
             <div id="confirm" hidden="hidden">
                 <h4>Confirmation</h4>
+                <div id="resp"></div>
                 <div id="result"></div>
+                Please attend the <span id="location"></span> clinic today at <span id="attendTime"></span><br/> 
+                This is an estimation only. All patients will be placed in the waiting line according to the exact time of 
+                their registration on-line or in person. IF YOU ARRIVE AFTER this time we may not be able to see you today.
             </div>
             </form>
         <script>
