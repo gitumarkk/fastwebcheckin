@@ -29,6 +29,12 @@
         <title>Fast Web Checkin</title>
         <script>
             ///<reference path="script/jquery-2.0.3-vsdoc.js" />
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            function onDeviceReady() {
+                alert('phongegap: onDeviceReady()');
+            }
+
             $(document).ready(function () {
                 //localStorage.clear();
                 getPreviousCheckin();
@@ -56,9 +62,6 @@
                     localStorage["location"] = "pcnwelland";
                     localStorage["locationFriendlyName"] = "PCN Welland";
                     clearLocalStorage();
-                });
-
-                $("#newCheckinButton").click(function () {
                 });
 
                 $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
@@ -97,8 +100,7 @@
                 });
 
                 $("#exit").click(function () {
-                    alert("EXIT clicked");
-                    device.exitApp();
+                    navigator.app.exitApp();
                 });
 
                 $("#showInstructions").click(function () {
