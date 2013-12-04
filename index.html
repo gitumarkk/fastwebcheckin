@@ -96,6 +96,11 @@
                     }
                 });
 
+                $("#exit").click(function () {
+                    alert("EXIT clicked");
+                    device.exitApp();
+                });
+
                 $("#showInstructions").click(function () {
                     var form = $("#patientDetailsForm");
                     form.validate();
@@ -441,6 +446,7 @@
             <div data-role="navbar">
                 <ul>
                     <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Terms of Use</a></li> 
+                    <li><a href="#" id="exit" data-role="button">Exit</a></li>
                 </ul>
             </div>
         </div>

@@ -4,10 +4,6 @@
 /*global vars*/
 var rootURL = "http://dev.fastwebcheckin.com/check/submission";
 
-$.ajaxSetup({
-    cache:false
-})
-
 function getPreviousCheckin(){
     var sdate = localStorage["submittedDate"];
     var loc = localStorage["location"]; 
