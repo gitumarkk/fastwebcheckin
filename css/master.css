@@ -162,13 +162,7 @@ img.logo{
     border-bottom-right-radius: 1em;
 }
 
-div.rightalign {
-    display: block;
-    text-align: right; 
-    float: left;
-    padding: 2px;
-}
-
+/*offline page*/
 #contentOffline div {
     display: inline-block;
     margin-top: 10px;
@@ -181,7 +175,8 @@ div.rightalign {
 }
 
 .schedule td{
-    border:1px solid;
+    border-style: solid;
+    border-width: thin;
     padding: 2px;
 }
 
@@ -191,8 +186,26 @@ div.rightalign {
     padding: 2px;
 }
 
+/*confirmation page*/
+div.rightalign {
+    display: block;
+    text-align: right; 
+    float: left;
+    padding: 2px;
+}
+
+.ui-block-b {
+    font-weight: 700;
+}
+
+#confirmationMessage {
+    border-style: solid;
+    border-width: thin;
+    padding: 2px;
+    word-wrap: break-word;
+}
+
 #confirm {
-    width: 300px;
     padding: 2px;
 }
 

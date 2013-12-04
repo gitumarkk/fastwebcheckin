@@ -161,14 +161,15 @@
                             localStorage["submittedDate"] = response["submitted"];
                             var jsonDate = response["submitted"];
                             var submitDate = new Date(parseInt(jsonDate) * 1000);
+                            submitDateMoment = moment(submitDate).subtract('minutes', 3);
                             localStorage["submitDateFormatted"] = submitDate.toDateString();
+                            localStorage["submitTimeFormatted"] = submitDateMoment.format('h:mm a');
 
                             localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
                             localStorage["attendTime"] = response["data"]["22"]["values"][0];
                             fillConfirmationMessage();
                         },
                         error: function () {
-                            //alert('Your checkin failed - please try again: ' + response);
                             clearLocalStorage();
                             $.mobile.changePage("#offline", { role: "page" });
                         }
@@ -382,7 +383,7 @@
                 <div id="confirm" hidden="hidden">
                     <h4>Web Check-in Confirmation</h4>
                     <p>Confirmation number: <span id="checkinNumber"></span></p>
-                    <p>You have been placed in the waiting line at: <span id="locationConfirmation"></span></p> 
+                    <p>You are in the waiting line at: <span id="locationConfirmation"></span></p> 
                     <p>Please attend the facility today between <span id="attendTimeConfirmation"></span> and **:** *m.
                         Estimate only. Waiting line corresponds to the exact time of registration on-line or in person.</p>
                     <p>IF YOU ATTEND AFTER **:** *m. you may lose your place in line.  IF YOU ARRIVE AFTER 2:15 pm we may not be able to see you today.</p>
@@ -410,7 +411,7 @@
                             Submitted at:
                         </div>
                         <div class="ui-block-b">
-                            <span id="submittedDateConfirmation"></span>
+                            <span id="submittedTimeConfirmation"></span>, <span id="submittedDateConfirmation"></span>
                         </div>
                         <div class="ui-block-a">
                             Email:

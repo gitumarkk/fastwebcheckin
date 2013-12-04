@@ -13,7 +13,7 @@ function getPreviousCheckin(){
     var loc = localStorage["location"]; 
 
     if (localStorage["terms"] == "YES"){
-        alert("getPreviousCheckin(): terms = YES");
+        //alert("getPreviousCheckin(): terms = YES");
         restoreUserDetails();
    
         var checkinDate = new Date(parseInt(sdate) * 1000);
@@ -29,7 +29,7 @@ function getPreviousCheckin(){
             + endOfDay);
 
             fillConfirmationMessage();
-            alert("getPreviousCheckin(): switching to patientDetails page");
+            //alert("getPreviousCheckin(): switching to patientDetails page");
             $.mobile.changePage("#patientDetails", { role: "page" });      
         }
     }
@@ -72,7 +72,10 @@ function fillConfirmationMessage() {
     $("#locationConfirmation").html(localStorage["locationFriendlyName"]);
     $("#firstNameConfirmation").html(localStorage["firstName"]);
     $("#lastNameConfirmation").html(localStorage["lastName"]);
+
     $("#submittedDateConfirmation").html(localStorage["submitDateFormatted"]);
+    $("#submittedTimeConfirmation").html(localStorage["submitTimeFormatted"]);
+
     $("#emailConfirmation").html(localStorage["emailAddress"]);
     $("#postalCodeConfirmation").html(localStorage["postalCode"]);
 
@@ -86,10 +89,12 @@ function fillConfirmationMessage() {
     }
     $("#clinicAddress").html(localStorage["clinicAddress"]);
     $("#clinicMapLinkHref").attr("href", localStorage["clinicMapLinkHref"]);
+
+    $("#footerImage").hide();
 }
 
 function clearLocalStorage() {
-    alert("cleared local storage");
+    //alert("cleared local storage");
     localStorage["checkinNumber"] = "";
     localStorage["attendTime"] = "";
     localStorage["submittedDate"] = "";
