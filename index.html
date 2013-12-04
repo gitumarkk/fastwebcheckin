@@ -165,18 +165,6 @@
                             localStorage["submitDateFormatted"] = submitDate.toDateString();
                             localStorage["submitTimeFormatted"] = submitDateMoment.format('h:mm a');
 
-                            //var cutoff = moment().add('hours', 2);
-                            //alert("attend end time: " + cutoff.format('h:mm a'));
-                            //var c = moment().endOf('day').subtract('hours', 7);                 
-                            //var closetime = c.subtract('minutes', 45)
-                            //alert("close time: " + closetime.format('h:mm a'));
-                            //if (cutoff < closetime) {
-                            //    localStorage["attendTimeEnd"] = cutoff.format('h:mm a');
-                            //}
-                            //else {
-                            //    localStorage["attendTimeEnd"] = closetime.format('h:mm a');
-                            //}
-
                             localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
                             localStorage["attendTime"] = response["data"]["22"]["values"][0];
                             fillConfirmationMessage();

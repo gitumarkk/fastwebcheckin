@@ -70,7 +70,7 @@ function fillConfirmationMessage() {
     $("#attendTimeConfirmation").html(localStorage["attendTime"]);
 
     var dayofWeek = moment().format('D');
-    alert("day of week: " + dayofWeek);
+    //alert("day of week: " + dayofWeek);
     var timeend;
     if (dayofWeek == 1) {
         $.mobile.changePage("#offline", { role: "page" });
@@ -93,7 +93,7 @@ function fillConfirmationMessage() {
     if (dayofWeek == 7) {
         $.mobile.changePage("#offline", { role: "page" });
     }
-    alert("closing time today: " + timeend);
+    //alert("closing time today: " + timeend);
 
     $("#attendTimeEnd1").html(timeend);
     $("#attendTimeEnd2").html(timeend);
