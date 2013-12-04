@@ -165,6 +165,18 @@
                             localStorage["submitDateFormatted"] = submitDate.toDateString();
                             localStorage["submitTimeFormatted"] = submitDateMoment.format('h:mm a');
 
+                            //var cutoff = moment().add('hours', 2);
+                            //alert("attend end time: " + cutoff.format('h:mm a'));
+                            //var c = moment().endOf('day').subtract('hours', 7);                 
+                            //var closetime = c.subtract('minutes', 45)
+                            //alert("close time: " + closetime.format('h:mm a'));
+                            //if (cutoff < closetime) {
+                            //    localStorage["attendTimeEnd"] = cutoff.format('h:mm a');
+                            //}
+                            //else {
+                            //    localStorage["attendTimeEnd"] = closetime.format('h:mm a');
+                            //}
+
                             localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
                             localStorage["attendTime"] = response["data"]["22"]["values"][0];
                             fillConfirmationMessage();
@@ -384,9 +396,9 @@
                     <h4>Web Check-in Confirmation</h4>
                     <p>Confirmation number: <span id="checkinNumber"></span></p>
                     <p>You are in the waiting line at: <span id="locationConfirmation"></span></p> 
-                    <p>Please attend the facility today between <span id="attendTimeConfirmation"></span> and **:** *m.
+                    <p>Please attend the facility today between <span id="attendTimeConfirmation"></span> and <span id="attendTimeEnd1"></span>.
                         Estimate only. Waiting line corresponds to the exact time of registration on-line or in person.</p>
-                    <p>IF YOU ATTEND AFTER **:** *m. you may lose your place in line.  IF YOU ARRIVE AFTER 2:15 pm we may not be able to see you today.</p>
+                    <p>IF YOU ATTEND AFTER <span id="attendTimeEnd2"></span>, you may lose your place in line.  IF YOU ARRIVE AFTER <span id="attendTimeEnd3"></span> we may not be able to see you today.</p>
                     <div id="confirmationMessage" class="ui-grid-a">
                         <div class="ui-block-a">
                             Clinic you will be attending:

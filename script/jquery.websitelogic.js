@@ -29,7 +29,7 @@ function getPreviousCheckin(){
             + endOfDay);
 
             fillConfirmationMessage();
-            //alert("getPreviousCheckin(): switching to patientDetails page");
+            //$.mobile.changePage("#offline", { role: "page" }); 
             $.mobile.changePage("#patientDetails", { role: "page" });      
         }
     }
@@ -68,6 +68,36 @@ function restoreUserDetails(){
 function fillConfirmationMessage() { 
     $("#checkinNumber").html(localStorage["checkinNumber"]);
     $("#attendTimeConfirmation").html(localStorage["attendTime"]);
+
+    var dayofWeek = moment().format('D');
+    alert("day of week: " + dayofWeek);
+    var timeend;
+    if (dayofWeek == 1) {
+        $.mobile.changePage("#offline", { role: "page" });
+    }
+    if (dayofWeek == 2) {
+        timeend = "4:15pm";
+    }
+    if (dayofWeek == 3) {
+        timeend = "7:15pm";
+    }
+    if (dayofWeek == 4) {
+        timeend = "7:15pm";
+    }
+    if (dayofWeek == 5) {
+        timeend = "4:15pm";
+    }
+    if (dayofWeek == 6) {
+        timeend = "4:15pm";
+    }
+    if (dayofWeek == 7) {
+        $.mobile.changePage("#offline", { role: "page" });
+    }
+    alert("closing time today: " + timeend);
+
+    $("#attendTimeEnd1").html(timeend);
+    $("#attendTimeEnd2").html(timeend);
+    $("#attendTimeEnd3").html(timeend);
 
     $("#locationConfirmation").html(localStorage["locationFriendlyName"]);
     $("#firstNameConfirmation").html(localStorage["firstName"]);
