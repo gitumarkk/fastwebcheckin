@@ -23,38 +23,42 @@
         <script src="script/jquery.websitelogic.js"></script>
         <script src="script/enquire.js"></script>
         <script src="script/responsive.js"></script>
+        <script src="script/moment.min.js"></script>
         <script src="script/ad-rotator.js"></script>
 
         <title>Fast Web Checkin</title>
         <script>
             ///<reference path="script/jquery-2.0.3-vsdoc.js" />
             $(document).ready(function () {
+                //localStorage.clear();
                 getPreviousCheckin();
+                restoreUserDetails();
 
-                localStorage["emailPermission"] = 'NO';
-                localStorage["terms"] = 'NO';
-                localStorage["readInstructions"] = 'NO';
-
-                $("#details").show();
-                $("#instructions").hide();
-                $("#terms").hide();
-                $("#final").hide();
-                $("#confirm").hide();
+                if (localStorage["terms"] == "YES") {
+                    $("#details").hide();
+                    $("#confirm").show();
+                }
+                else {
+                    $("#details").show();
+                    $("#instructions").hide();
+                    $("#terms").hide();
+                    $("#final").hide();
+                    $("#confirm").hide();
+                }
 
                 $("#niagaraButton").click(function () {
                     localStorage["location"] = "pcnniagara";
-                    localStorage["locationName"] = "PCN Niagara";
+                    localStorage["locationFriendlyName"] = "PCN Niagara";
+                    clearLocalStorage();
                 });
 
                 $("#wellandButton").click(function () {
                     localStorage["location"] = "pcnwelland";
-                    localStorage["locationName"] = "PCN Welland";
+                    localStorage["locationFriendlyName"] = "PCN Welland";
+                    clearLocalStorage();
                 });
 
                 $("#newCheckinButton").click(function () {
-                    localStorage["location"] = "";
-                    localStorage["checkinNumber"] = "";
-                    localStorage["attendTime"] = "";
                 });
 
                 $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
@@ -123,14 +127,16 @@
                 $("#submit").click(function () {
                     $("#final").hide();
                     $("#confirm").show();
+                    $("#footerImage").hide();
 
                     //for local testing, start chrome with: chromium-browser --disable-web-security
                     $.ajax({
                         type: "POST",
                         url: rootURL,
-                        //beforeSend: function () { $.mobile.loading('show'); },
-                        //complete: function () { $.mobile.loading('hide'); },
-                        data: { 'submission[data][1][values][0]': $('#firstName').val(),
+                        beforeSend: function () { $.mobile.loading('show'); },
+                        complete: function () { $.mobile.loading('hide'); },
+                        data: {
+                            'submission[data][1][values][0]': $('#firstName').val(),
                             'submission[data][2][values][0]': $('#lastName').val(),
                             'submission[data][11][values][0]': $('#emailAddress').val(),
                             'submission[data][14][values][0]': '0',
@@ -150,17 +156,21 @@
                         },
                         dataType: 'json',
                         success: function (response) {
-                            localStorage["submittedDate"] = response["submitted"];
-                            var fragment = response["data"];
-                            localStorage["checkinNumber"] = fragment["21"]["values"][0];
-                            localStorage["attendTime"] = fragment["22"]["values"][0];
+                            storeUserDetails();
 
-                            $("#result").html("Check In Number: " + localStorage["checkinNumber"]); //fragment["21"]["values"][0]);
-                            $("#location").html(localStorage["locationName"]);
-                            $("#attendTime").html(localStorage["attendTime"]);
+                            localStorage["submittedDate"] = response["submitted"];
+                            var jsonDate = response["submitted"];
+                            var submitDate = new Date(parseInt(jsonDate) * 1000);
+                            localStorage["submitDateFormatted"] = submitDate.toDateString();
+
+                            localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
+                            localStorage["attendTime"] = response["data"]["22"]["values"][0];
+                            fillConfirmationMessage();
                         },
                         error: function () {
-                            alert('Your checkin failed - please try again.');
+                            //alert('Your checkin failed - please try again: ' + response);
+                            clearLocalStorage();
+                            $.mobile.changePage("#offline", { role: "page" });
                         }
                     })
                 });
@@ -173,6 +183,7 @@
         </script>
     </head>
     <body>
+
     <div id="splash" data-role="page" data-title="Home" data-theme="b">
         <div data-role="content">
             <div class="centerLogoColumn">
@@ -195,24 +206,25 @@
 
     <div id="offline" data-role="page" data-title="Status" data-theme="d">
         <div id="header" data-role="header">
-            <h5>Clinic Status</h5>
-        </div>
-        <div id="messageHighVolume" data-role="content" hidden="hidden">
-            <h5>Check-in system is offline (high client numbers).</h5>
-        </div>
-        <div id="messageAfterHours" data-role="content" hidden="hidden">
-            <h5>Check-in system is offline (after hours).</h5>
+            <h5>Check-in system is offline</h5>
         </div>
         <div id="contentOffline" data-role="content">
-            <img src="images/logo.png" class="logo" alt="fastwebcheckin logo">
-            <div id="schedule" class="ui-grid-a">
-                <div class="ui-block-a">day</div>
-                <div class="ui-block-b">time</div>
-                <div class="ui-block-c">day</div>
-                <div class="ui-block-d">time</div> 
-            </div> 
+            <div>
+                App Schedule
+                <table class="schedule"><tbody><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
+            </div>
+            
+            <div>
+                Clinic Schedule
+                <table class="schedule"><tbody><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
+            </div>
         </div>
         <div id="footerOffline" data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+            <ul>
+                <li><a href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li> 
+            </ul>
+            </div>
         </div>                                                                                                                                                                                                                                                           
     </div>
 
@@ -235,15 +247,31 @@
         <div id="clearStorageHeader" data-role="header">
             <h5>Checkin pending</h5>
         </div>
-        <div id="clearStorageContent" data-role="content">  
-            <label for="checkinNo">Check in number: </label>
-            <input id="checkinNo" name="checkinNo" type="text" data-role="none" style="width: 60px;"/>
-            <label for="attendTime">Visit clinic at: </label>
-            <input id="attendTime" name="attendTime" type="text" data-role="none" style="width: 60px;"/>
-            <div id="storedCheckinMessage"></div>
+        <div id="clearStorageContent" data-role="content"> 
+            <div id="message" class="ui-grid-a">
+                <div class="ui-block-a rightalign">
+                    <label for="checkinNo">Check in number: </label>
+                </div>
+                <div class="ui-block-b">
+                    <input id="checkinNo" name="checkinNo" type="text" data-role="none"/>
+                </div>
+                <div class="ui-block-a rightalign">
+                    <label for="attendTime">Check in time: </label>
+                </div>
+                <div class="ui-block-b">
+                    <input id="attendTime" name="attendTime" type="text" data-role="none"/>
+                </div> 
+                <div class="ui-block-a rightalign">
+                    <label for="clinic">Clinic: </label>
+                </div>
+                <div class="ui-block-b">
+                    <input id="clinic" name="clinic" type="text" data-role="none"/>
+                </div>
+            </div>
+            <div id="storedCheckinMessage">Click the button below if you would like to submit a new check in.</div>
             <a href="#clinicSelectDialog" id="newCheckinButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
             data-corners="false" data-shadow="false">New</a>
-        </div>
+            </div>
         <div id="footerClearStorage" data-role="footer" data-position="fixed" data-theme="c">
             <div class="footerLogo"><img src="images/logo.png" width="200px" alt="fastwebcheckin logo"></div>
         </div>   
@@ -251,129 +279,172 @@
 
     <div id="patientDetails" data-role="page" data-title="PatientDetails" data-theme="d"> 
         <div id="pd" data-role="content" data-theme="c">
-        <form id="patientDetailsForm" name="patientDetailsForm1" action="" method="post" >
-            <div id="details" class="mainForm">
-            <ul>
-                <li>
-                    <label for="priorityCode" class="ui-hidden-accessible">Priority Code</label>
-                    <input id="priorityCode" name="priorityCode1" placeholder="Priority Code" type="text" data-role="none"
-                        class="topTextBox"/>
-                </li>
-                <li>
-                    <label for="lastName" class="ui-hidden-accessible">Last Name</label>
-                    <input id="lastName" name="lastName1" placeholder="Last Name *" type="text" data-role="none"/>  
-                </li>
-                <li>
-                    <label for="firstName" class="ui-hidden-accessible">First Name</label>
-                    <input id="firstName" name="firstName1" placeholder="First Name *" type="text" data-role="none"/>  
-                </li>
-                <li>
-                    <label for="postalCode" class="ui-hidden-accessible">Postal Code</label>
-                    <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" data-role="none"/>
-                </li>
-                <li>
-                    <label for="emailAddress" class="ui-hidden-accessible">Email</label>
-                    <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email" data-role="none" class="bottomTextBox"/>
-                </li>
-            </ul> 
-            <div>
-                <a href="#" id="showInstructions" data-role="button">Next</a>
-            </div>   
-            </div>
-
-            <div id="instructions" hidden="hidden">
-                <h4>Important Instructions</h4>
-                <div class="info">
-                <p class="important">              
-                Severe life or limb threatening illnesses or injuries should go directly to the nearest hospital emergency 
-                department. For example: conditions such as, but not limited to, chest pain, acute shortness of breath, 
-                profuse bleeding, etc.               
-                </p>
-                <p>
-                Patients cannot pre-register for annual physicals or cosmetic procedures on-line.
-                </p>
-                <p>
-                If you need medication renewal, you are required to bring your empty medication bottles or a print out from 
-                the pharmacy. Our clinic does not prescribe narcotics or habit-forming medications.
-                </p>
-                <p>
-                Canadian patients must present a valid Ontario/provincial health card at reception window or a service fee or
-                a deposit will be required. Not all services that people pre-register for are covered by the Ministry of 
-                Health. Out-of-country patients will be required to pay a service fee for care.
-                </p>
-                <p>
-                You are required to print your FAST WEB CHECK-IN pre-registration confirmation page and bring it with you to 
-                the clinic. If you cannot print it, please record your FAST WEB CHECK-IN NUMBER and provide it to our 
-                receptionist.
-                </p>
-                <p>
-                By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
-                </p>
+            <form id="patientDetailsForm" name="patientDetailsForm1" action="" method="post">
+                <div id="details" class="mainForm">
+                    <ul>
+                        <li>
+                            <label for="priorityCode" class="ui-hidden-accessible">Priority Code</label>
+                            <input id="priorityCode" name="priorityCode1" placeholder="Priority Code" type="text" data-role="none"
+                                class="topTextBox"/>
+                        </li>
+                        <li>
+                            <label for="lastName" class="ui-hidden-accessible">Last Name</label>
+                            <input id="lastName" name="lastName1" placeholder="Last Name *" type="text" data-role="none"/>  
+                        </li>
+                        <li>
+                            <label for="firstName" class="ui-hidden-accessible">First Name</label>
+                            <input id="firstName" name="firstName1" placeholder="First Name *" type="text" data-role="none"/>  
+                        </li>
+                        <li>
+                            <label for="postalCode" class="ui-hidden-accessible">Postal Code</label>
+                            <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" data-role="none"/>
+                        </li>
+                        <li>
+                            <label for="emailAddress" class="ui-hidden-accessible">Email</label>
+                            <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email" data-role="none" class="bottomTextBox"/>
+                        </li>
+                    </ul> 
+                    <div>
+                        <a href="#" id="showInstructions" data-role="button">Next</a>
+                    </div>   
                 </div>
-                <div>
-                <a href="#" id="showTerms" data-role="button">Yes</a>
-            </div>
-            </div>
-            <div id="terms" hidden="hidden">
-                <h4>Terms and Conditions</h4>
-                <p>
-                Your FAST WEB CHECK-IN pre-registration does not constitute the beginning of a clinic/physician and patient 
-                engagement and is not a guarantee of care. The patient engagement will be formalized at our reception window 
-                when registration is finalized.
-                </p>
-                <p>
-                A FAST WEB CHECK-IN pre-registration places a potential patient into the waiting line. Once a patient presents 
-                their FAST WEB CHECK-IN pre-registration confirmation, the registration process will be completed at the 
-                reception window. The system will provide you with a time to attend the clinic. This is an estimation based on
-                current projected wait times. We can not predict, in advance, the number of patients who will register for 
-                care or the nature of the illness or injury that will require treatment. Therefore, you may still have a short
-                wait in our waiting room once you arrive.
-                </p>
-                <p>
-                Your FAST WEB CHECK-IN pre-registration is valid only for the day you submit it. If you do not attend the 
-                clinic on that day, your registration will be cancelled.
-                </p>
-                <p>
-                Some medical services or medical care is not provided or cannot be provided at our clinics. Patients may be 
-                referred to the hospital or specialists to receive care.
-                </p>
-                <p>
-                Your FAST WEB CHECK-IN pre-registration is subject to the entire website Terms of Use listed under the link 
-                located at the bottom of this page.
-                </p>
-                <p>
-                By tapping the button below, I signify that I've read, understand and agree to the Terms and Conditions:
-                </p>
-                <input type="submit" id="showFinal" value="Yes"/>
+
+                <div id="instructions" hidden="hidden">
+                    <h4>Important Instructions</h4>
+                    <div class="info">
+                    <p class="important">              
+                    Severe life or limb threatening illnesses or injuries should go directly to the nearest hospital emergency 
+                    department. For example: conditions such as, but not limited to, chest pain, acute shortness of breath, 
+                    profuse bleeding, etc.               
+                    </p>
+                    <p>
+                    Patients cannot pre-register for annual physicals or cosmetic procedures on-line.
+                    </p>
+                    <p>
+                    If you need medication renewal, you are required to bring your empty medication bottles or a print out from 
+                    the pharmacy. Our clinic does not prescribe narcotics or habit-forming medications.
+                    </p>
+                    <p>
+                    Canadian patients must present a valid Ontario/provincial health card at reception window or a service fee or
+                    a deposit will be required. Not all services that people pre-register for are covered by the Ministry of 
+                    Health. Out-of-country patients will be required to pay a service fee for care.
+                    </p>
+                    <p>
+                    You are required to print your FAST WEB CHECK-IN pre-registration confirmation page and bring it with you to 
+                    the clinic. If you cannot print it, please record your FAST WEB CHECK-IN NUMBER and provide it to our 
+                    receptionist.
+                    </p>
+                    <p>
+                    By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
+                    </p>
+                    </div>
+                    <div>
+                    <a href="#" id="showTerms" data-role="button">Yes</a>
+                </div>
+                </div>
+                <div id="terms" hidden="hidden">
+                    <h4>Terms and Conditions</h4>
+                    <p>
+                    Your FAST WEB CHECK-IN pre-registration does not constitute the beginning of a clinic/physician and patient 
+                    engagement and is not a guarantee of care. The patient engagement will be formalized at our reception window 
+                    when registration is finalized.
+                    </p>
+                    <p>
+                    A FAST WEB CHECK-IN pre-registration places a potential patient into the waiting line. Once a patient presents 
+                    their FAST WEB CHECK-IN pre-registration confirmation, the registration process will be completed at the 
+                    reception window. The system will provide you with a time to attend the clinic. This is an estimation based on
+                    current projected wait times. We can not predict, in advance, the number of patients who will register for 
+                    care or the nature of the illness or injury that will require treatment. Therefore, you may still have a short
+                    wait in our waiting room once you arrive.
+                    </p>
+                    <p>
+                    Your FAST WEB CHECK-IN pre-registration is valid only for the day you submit it. If you do not attend the 
+                    clinic on that day, your registration will be cancelled.
+                    </p>
+                    <p>
+                    Some medical services or medical care is not provided or cannot be provided at our clinics. Patients may be 
+                    referred to the hospital or specialists to receive care.
+                    </p>
+                    <p>
+                    Your FAST WEB CHECK-IN pre-registration is subject to the entire website Terms of Use listed under the link 
+                    located at the bottom of this page.
+                    </p>
+                    <p>
+                    By tapping the button below, I signify that I've read, understand and agree to the Terms and Conditions:
+                    </p>
+                    <input type="submit" id="showFinal" value="Yes"/>
                 
-            </div>
-            <div id="final" hidden="hidden">
-                <h4>You are ready to check in:</h4>
-                <a href="#" id="submit" data-role="button">Check in</a>
-            </div>
-            <div id="confirm" hidden="hidden">
-                <h4>Confirmation</h4>
-                <div id="resp"></div>
-                <div id="result"></div>
-                Please attend the <span id="location"></span> clinic today at <span id="attendTime"></span><br/> 
-                This is an estimation only. All patients will be placed in the waiting line according to the exact time of 
-                their registration on-line or in person. IF YOU ARRIVE AFTER this time we may not be able to see you today.
-            </div>
+                </div>
+                <div id="final" hidden="hidden">
+                    <h4>You are ready to check in:</h4>
+                    <a href="#" id="submit" data-role="button">Check in</a>
+                </div>
+                <div id="confirm" hidden="hidden">
+                    <h4>Web Check-in Confirmation</h4>
+                    <p>Confirmation number: <span id="checkinNumber"></span></p>
+                    <p>You have been placed in the waiting line at: <span id="locationConfirmation"></span></p> 
+                    <p>Please attend the facility today between <span id="attendTimeConfirmation"></span> and **:** *m.
+                        Estimate only. Waiting line corresponds to the exact time of registration on-line or in person.</p>
+                    <p>IF YOU ATTEND AFTER **:** *m. you may lose your place in line.  IF YOU ARRIVE AFTER 2:15 pm we may not be able to see you today.</p>
+                    <div id="confirmationMessage" class="ui-grid-a">
+                        <div class="ui-block-a">
+                            Clinic you will be attending:
+                        </div>
+                        <div class="ui-block-b">
+                            <div id="clinicAddress"></div>
+                            <a id="clinicMapLinkHref" href="www.google.com">Click for directions</a>
+                        </div>
+                        <div class="ui-block-a">
+                            First name:
+                        </div>
+                        <div class="ui-block-b">
+                            <span id="firstNameConfirmation"></span>
+                        </div> 
+                        <div class="ui-block-a">
+                            Last name:
+                        </div>
+                        <div class="ui-block-b">
+                            <span id="lastNameConfirmation"></span>
+                        </div>
+                        <div class="ui-block-a">
+                            Submitted at:
+                        </div>
+                        <div class="ui-block-b">
+                            <span id="submittedDateConfirmation"></span>
+                        </div>
+                        <div class="ui-block-a">
+                            Email:
+                        </div>
+                        <div class="ui-block-b">
+                            <span id="emailConfirmation"></span>
+                        </div>
+                        <div class="ui-block-a">
+                            Postal Code:
+                        </div>
+                        <div class="ui-block-b">
+                            <span id="postalCodeConfirmation"></span>
+                        </div>
+                    </div>
+                    <h4>Instructions:</h4>
+                    <p>Bring this device with you to the clinic - a summary of your check-in will be displayed the next time you start this app.</p>
+                    <!--<a href="#clinicSelectDialog" id="newCheckinButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
+                        data-corners="false" data-shadow="false">New check-in</a>-->
+                </div>
             </form>
-        <script>
-            $("#patientDetailsForm").validate();
-        </script>
+            <script>
+                $("#patientDetailsForm").validate();
+            </script>
         </div>
         <div id="footerDetails" data-role="footer" data-position="fixed" data-theme="c" class="footerLogo">
-            <img src="images/logo.png" width="300" alt="fastwebcheckin logo">
+            <img src="images/logo.png" id="footerImage" width="300" alt="fastwebcheckin logo">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#termsOfUse" data-transition="slideup">Terms of Use</a></li> 
+                    <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Terms of Use</a></li> 
                 </ul>
             </div>
         </div>
-    </div>
-        
+    </div>  
+
     <div id="termsOfUse" data-role="dialog" class="terms" data-tap-toggle="true" data-theme="c" data-overlay-theme="d">
         <div id="headerTerms" data-role="header">
         <h5>Terms of Use</h5>
@@ -495,6 +566,6 @@
                 </ul>
             </div>
         </div>
-    </div>     
+    </div>       
     </body>
 </html>
