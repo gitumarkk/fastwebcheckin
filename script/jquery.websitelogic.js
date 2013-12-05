@@ -5,11 +5,12 @@
 var rootURL = "http://dev.fastwebcheckin.com/check/submission";
 
 function getPreviousCheckin(){
+    alert("called method: getPreviousCheckin()");
     var sdate = localStorage["submittedDate"];
     var loc = localStorage["location"]; 
 
     if (localStorage["terms"] == "YES"){
-        //alert("getPreviousCheckin(): terms = YES");
+        alert("getPreviousCheckin(): terms = YES");
         restoreUserDetails();
    
         var checkinDate = new Date(parseInt(sdate) * 1000);

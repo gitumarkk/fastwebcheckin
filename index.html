@@ -99,10 +99,6 @@
                     }
                 });
 
-                $("#exit").click(function () {
-                    navigator.app.exitApp();
-                });
-
                 $("#showInstructions").click(function () {
                     var form = $("#patientDetailsForm");
                     form.validate();
@@ -380,7 +376,7 @@
                     <p>
                     By tapping the button below, I signify that I've read, understand and agree to the Terms and Conditions:
                     </p>
-                    <input type="submit" id="showFinal" value="Yes"/>
+                    <a href="#" id="showFinal" data-role="button">Yes</a>
                 
                 </div>
                 <div id="final" hidden="hidden">
@@ -448,7 +444,6 @@
             <div data-role="navbar">
                 <ul>
                     <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Terms of Use</a></li> 
-                    <li><a href="#" id="exit" data-role="button">Exit</a></li>
                 </ul>
             </div>
         </div>
