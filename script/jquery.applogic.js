@@ -4,13 +4,44 @@
 /*global vars*/
 var rootURL = "http://dev.fastwebcheckin.com/check/submission";
 
-function getPreviousCheckin(){
-    alert("called method: getPreviousCheckin()");
-    var sdate = localStorage["submittedDate"];
-    var loc = localStorage["location"]; 
+var restData = { 
+    'submission[data][1][values][0]': $('#firstName').val(),
+    'submission[data][2][values][0]': $('#lastName').val(),
+    'submission[data][11][values][0]': $('#emailAddress').val(),
+    'submission[data][14][values][0]': '0',
+    'submission[data][16][values][0]': $('#postalCode').val(),
+    'submission[data][23][values][0]': localStorage["location"],
+    'submission[data][26][values][0]': $('#priorityCode').val(),
+    'submission[data][12][values][0]': localStorage["terms"],
+    'submission[data][19][values][0]': localStorage["readInstructions"],
+    'submission[data][25][values][0]': localStorage["emailPermission"],
+    'submission[data][15][values][0]': '',
+    'submission[data][17][values][0]': '',
+    'submission[data][18][values][0]': '',
+    'submission[data][21][values][0]': '',
+    'submission[data][22][values][0]': '',
+    'submission[data][24][values][0]': '',
+    'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
+};
 
-    if (localStorage["terms"] == "YES"){
-        alert("getPreviousCheckin(): terms = YES");
+function getPreviousCheckin(){
+    var sdate = localStorage["submittedDate"];
+    var loc = localStorage["location"];
+    var terms = localStorage["terms"];
+
+    if (terms != null) {
+        if (terms == "NO") { 
+            //alert("terms = NO"); 
+            return; 
+        }
+    }
+    else { 
+        //alert("terms = null");
+        return;
+    }
+
+    if (terms == "YES"){
+        //alert("terms = YES");
         restoreUserDetails();
    
         var checkinDate = new Date(parseInt(sdate) * 1000);
@@ -19,11 +50,11 @@ function getPreviousCheckin(){
         var endOfDay = moment(checkinDate).endOf('day').subtract('hours', 7).fromNow();
 
         if (Date.daysBetween(today, checkinDate) < 0.3){
-            alert(" Checkin time: " + checkinDate
-            + ". \n Today: " + now.toLocaleString() + "\n Days between: "
-            + Date.daysBetween(today, checkinDate)
-            + "\n Hours (since checkin) until end of day: "
-            + endOfDay);
+            //alert(" Checkin time: " + checkinDate
+            //+ ". \n Today: " + now.toLocaleString() + "\n Days between: "
+            //+ Date.daysBetween(today, checkinDate)
+            //+ "\n Hours (since checkin) until end of day: "
+            //+ endOfDay);
 
             fillConfirmationMessage();
             //$.mobile.changePage("#offline", { role: "page" }); 
@@ -67,7 +98,6 @@ function fillConfirmationMessage() {
     $("#attendTimeConfirmation").html(localStorage["attendTime"]);
 
     var dayofWeek = moment().format('D');
-    //alert("day of week: " + dayofWeek);
     var timeend;
     if (dayofWeek == 1) {
         $.mobile.changePage("#offline", { role: "page" });

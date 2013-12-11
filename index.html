@@ -2,12 +2,15 @@
 
 <html lang="en">
     <head>
+        <title>fastwebcheckin</title>
         <meta charset="utf-8" />
-        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
+        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta http-equiv='X-UA-Compatible' content='chrome=1'>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="apple-touch-icon-precomposed" href="images/AppIcon57x57.png" />
 
-        <script src="http://code.jquery.com/jquery-2.0.3.js"></script><!--debug, get minified for production-->
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script><!--debug, get minified for production-->  
+        <script src="script/jquery-2.0.3.min.js"></script>
+        <script src="script/jquery.validate.js"></script>
         <script src="script/jquery.maskedinput.min.js"></script>
         <script src="script/jquery.scrollto.js"></script>
         <script src="script/jquery.magnific-popup.js"></script>
@@ -20,26 +23,36 @@
         <link rel="stylesheet" type="text/css" href="css/override.css"> 
         <!--<link rel="stylesheet" type="text/css" href="css/responsive.css">-->
 
-        <script src="script/jquery.websitelogic.js"></script>
+        <script src="script/ios/bookmark_bubble.js"></script>
+        <script src="script/ios/example.js"></script>
+
+        <script src="script/ios/bookmarkcp.js"></script>
+        <script src="script/ios/loadbookmarkcp.js"></script>
+
+        <script src="script/jquery.applogic.js"></script>
         <script src="script/enquire.js"></script>
         <script src="script/responsive.js"></script>
         <script src="script/moment.min.js"></script>
         <script src="script/ad-rotator.js"></script>
 
-        <title>Fast Web Checkin</title>
         <script>
             ///<reference path="script/jquery-2.0.3-vsdoc.js" />
-            document.addEventListener("deviceready", onDeviceReady, false);
-
-            function onDeviceReady() {
-                alert('phongegap: onDeviceReady()');
-            }
+            $(document).bind("mobileinit", function () {
+                //jQuery Mobile framework configurations:
+                alert("jqm mobileinit");
+                $.mobile.allowCrossDomainPages = true;
+            });
 
             $(document).ready(function () {
-                //localStorage.clear();
+                //pre-processing:
+                $.mobile.allowCrossDomainPages = true;
+                var cors = $.mobile.allowCrossDomainPages;
+                //alert("CORS enabled: " + cors);
+                runEnquire();
                 getPreviousCheckin();
                 restoreUserDetails();
 
+                //page init:
                 if (localStorage["terms"] == "YES") {
                     $("#details").hide();
                     $("#confirm").show();
@@ -52,22 +65,7 @@
                     $("#confirm").hide();
                 }
 
-                $("#niagaraButton").click(function () {
-                    localStorage["location"] = "pcnniagara";
-                    localStorage["locationFriendlyName"] = "PCN Niagara";
-                    clearLocalStorage();
-                });
-
-                $("#wellandButton").click(function () {
-                    localStorage["location"] = "pcnwelland";
-                    localStorage["locationFriendlyName"] = "PCN Welland";
-                    clearLocalStorage();
-                });
-
-                $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
-
-                $("#postalCode").mask("a9a 9a9");
-
+                //validation:
                 $("#lastName").rules("add", {
                     required: true,
                     minlength: 2,
@@ -99,6 +97,27 @@
                     }
                 });
 
+                //navigation:
+                $("#niagaraButton").click(function () {
+                    localStorage["location"] = "pcnniagara";
+                    localStorage["locationFriendlyName"] = "PCN Niagara";
+                    clearLocalStorage();
+                });
+
+                $("#wellandButton").click(function () {
+                    localStorage["location"] = "pcnwelland";
+                    localStorage["locationFriendlyName"] = "PCN Welland";
+                    clearLocalStorage();
+                });
+
+                $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
+
+                //NOTE: this event is fired on generic hyperlink tags, so be wary in terms of potential script bugs:
+                $('.scrollContent a').click(function (e) {
+                    $('html,body,div,p').scrollTo(this.hash, this.hash);
+                    e.preventDefault();
+                });
+
                 $("#showInstructions").click(function () {
                     var form = $("#patientDetailsForm");
                     form.validate();
@@ -107,6 +126,8 @@
                         alert("By tapping the button below, I give you permission to email me with a confirmation of my check-in and future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy.");
                         $("#details").hide();
                         $("#instructions").show();
+                        $("#footerImage").hide();
+                        $.mobile.silentScroll(0);
                         localStorage["emailPermission"] = 'YES';
                     }
                     else {
@@ -117,13 +138,16 @@
                 $("#showTerms").click(function () {
                     $("#instructions").hide();
                     $("#terms").show();
+                    $("#footerImage").hide();
+                    $.mobile.silentScroll(0);
                     localStorage["readInstructions"] = 'YES';
-
                 });
 
                 $("#showFinal").click(function () {
                     $("#terms").hide();
                     $("#final").show();
+                    $("#footerImage").hide();
+                    $.mobile.silentScroll(0);
                     localStorage["terms"] = 'YES';
                 });
 
@@ -133,30 +157,12 @@
                     $("#footerImage").hide();
 
                     //for local testing, start chrome with: chromium-browser --disable-web-security
-                    $.ajax({
+                    var request = $.ajax({
                         type: "POST",
                         url: rootURL,
-                        beforeSend: function () { $.mobile.loading('show'); },
+                        beforesend: function () { $.mobile.loading('show'); },
                         complete: function () { $.mobile.loading('hide'); },
-                        data: {
-                            'submission[data][1][values][0]': $('#firstName').val(),
-                            'submission[data][2][values][0]': $('#lastName').val(),
-                            'submission[data][11][values][0]': $('#emailAddress').val(),
-                            'submission[data][14][values][0]': '0',
-                            'submission[data][16][values][0]': $('#postalCode').val(),
-                            'submission[data][23][values][0]': localStorage["location"],
-                            'submission[data][26][values][0]': $('#priorityCode').val(),
-                            'submission[data][12][values][0]': localStorage["terms"],
-                            'submission[data][19][values][0]': localStorage["readInstructions"],
-                            'submission[data][25][values][0]': localStorage["emailPermission"],
-                            'submission[data][15][values][0]': '',
-                            'submission[data][17][values][0]': '',
-                            'submission[data][18][values][0]': '',
-                            'submission[data][21][values][0]': '',
-                            'submission[data][22][values][0]': '',
-                            'submission[data][24][values][0]': '',
-                            'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
-                        },
+                        data: restData,
                         dataType: 'json',
                         success: function (response) {
                             storeUserDetails();
@@ -170,25 +176,23 @@
 
                             localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
                             localStorage["attendTime"] = response["data"]["22"]["values"][0];
+                            //localStorage["attendTimeEnd"] = response["data"]["30"]["values"][0];
                             fillConfirmationMessage();
-                        },
-                        error: function () {
-                            clearLocalStorage();
-                            $.mobile.changePage("#offline", { role: "page" });
                         }
-                    })
-                });
+                    });
+                    request.fail(function (jqXHR, textStatus) {
+                        alert("request failed: " + textStatus);
+                        clearLocalStorage();
+                        $.mobile.changePage("#patientDetails", { role: "page" });
+                    });
 
-                $('.scrollContent a').click(function (e) {
-                    $('html,body,div,p').scrollTo(this.hash, this.hash);
-                    e.preventDefault();
                 });
             });
         </script>
     </head>
     <body>
 
-    <div id="splash" data-role="page" data-title="Home" data-theme="b">
+    <div id="splash" data-role="page" data-title="fastwebcheckin" data-theme="b">
         <div data-role="content">
             <div class="centerLogoColumn">
                <img src="images/logo.png" class="logo" alt="fastwebcheckin logo"> 
@@ -283,36 +287,39 @@
 
     <div id="patientDetails" data-role="page" data-title="PatientDetails" data-theme="d"> 
         <div id="pd" data-role="content" data-theme="c">
-            <form id="patientDetailsForm" name="patientDetailsForm1" action="" method="post">
+            <form id="patientDetailsForm" name="patientDetailsForm1" method="post">
                 <div id="details" class="mainForm">
                     <ul>
                         <li>
                             <label for="priorityCode" class="ui-hidden-accessible">Priority Code</label>
                             <input id="priorityCode" name="priorityCode1" placeholder="Priority Code" type="text" data-role="none"
-                                class="topTextBox"/>
+                                data-prevent-focus-zoom="true" class="topTextBox"/>
                         </li>
                         <li>
                             <label for="lastName" class="ui-hidden-accessible">Last Name</label>
-                            <input id="lastName" name="lastName1" placeholder="Last Name *" type="text" data-role="none"/>  
+                            <input id="lastName" name="lastName1" placeholder="Last Name *" autofocus="true" type="text" 
+                                data-prevent-focus-zoom="true" data-role="none"/>  
                         </li>
                         <li>
                             <label for="firstName" class="ui-hidden-accessible">First Name</label>
-                            <input id="firstName" name="firstName1" placeholder="First Name *" type="text" data-role="none"/>  
+                            <input id="firstName" name="firstName1" placeholder="First Name *" type="text" 
+                                data-prevent-focus-zoom="true" data-role="none"/>  
                         </li>
                         <li>
                             <label for="postalCode" class="ui-hidden-accessible">Postal Code</label>
-                            <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" data-role="none"/>
+                            <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" 
+                                data-prevent-focus-zoom="true" data-role="none"/>
                         </li>
                         <li>
                             <label for="emailAddress" class="ui-hidden-accessible">Email</label>
-                            <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email" data-role="none" class="bottomTextBox"/>
+                            <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email" 
+                                data-prevent-focus-zoom="true" data-role ="none" class="bottomTextBox"/>
                         </li>
                     </ul> 
                     <div>
-                        <a href="#" id="showInstructions" data-role="button">Next</a>
+                         <a href="#" id="showInstructions" data-role="button">Next</a>
                     </div>   
                 </div>
-
                 <div id="instructions" hidden="hidden">
                     <h4>Important Instructions</h4>
                     <div class="info">

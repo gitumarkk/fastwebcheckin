@@ -1,3 +1,5 @@
+///<reference path="script/jquery-2.0.3-vsdoc.js" />
+function runEnquire(){
 //iphone 3,4:
 enquire.register('screen and (max-width:320px)', {
     deferSetup: true,
@@ -6,7 +8,10 @@ enquire.register('screen and (max-width:320px)', {
     },
     match: function () {
         //hide big screen content/apply styling
-        $('#adFooter').css({ 'display': 'none' });
+        //$('#adFooter').css({ 'display': 'none' });
+        //alert("iPhone 4");
+        $('#adImage').height(121);
+        $('#adImage').width(320);
     },
     unmatch: function () {
         //show big screen content/apply styling
@@ -44,5 +49,8 @@ enquire.register('screen and (max-width:320px)', {
 //        alert('tablet');
 //    }
 //});
+
+
+}
 
 
