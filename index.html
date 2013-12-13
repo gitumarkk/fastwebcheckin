@@ -251,15 +251,12 @@
         <div id="offlineHeader" data-role="header" data-add-back-btn="true">
             <h5>Check-in system is offline</h5>
         </div>
-        <div id="contentOffline" data-role="content">
-            <div>
-                App Schedule
-                <table class="schedule"><tbody><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
+        <div id="contentOffline" data-role="content" class="scrollContent">
+            <div id="scrollItem202">
+                <table class="schedule"><tbody><tr><th colspan="3"><a href="#scrollItem201">App Schedule</a></th></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
             </div>
-            
             <div>
-                Clinic Schedule
-                <table class="schedule"><tbody><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
+                <table class="schedule"><tbody><tr><th colspan="3"><a id="scrollItem201" href="#scrollItem202">Clinic Schedule</a></th></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
             </div>
         </div>
         <div id="footerOffline" data-role="footer" data-position="fixed">
@@ -316,41 +313,51 @@
                          <a href="#" id="showInstructions" data-role="button">Next</a>
                     </div>   
                 </div>
-                <div id="instructions" hidden="hidden">
-                    <h4>Important Instructions</h4>
-                    <div class="info">
-                    <p class="important">              
-                    Severe life or limb threatening illnesses or injuries should go directly to the nearest hospital emergency 
-                    department. For example: conditions such as, but not limited to, chest pain, acute shortness of breath, 
-                    profuse bleeding, etc.               
-                    </p>
-                    <p>
-                    Patients cannot pre-register for annual physicals or cosmetic procedures on-line.
-                    </p>
-                    <p>
-                    If you need medication renewal, you are required to bring your empty medication bottles or a print out from 
-                    the pharmacy. Our clinic does not prescribe narcotics or habit-forming medications.
-                    </p>
-                    <p>
-                    Canadian patients must present a valid Ontario/provincial health card at reception window or a service fee or
-                    a deposit will be required. Not all services that people pre-register for are covered by the Ministry of 
-                    Health. Out-of-country patients will be required to pay a service fee for care.
-                    </p>
-                    <p>
-                    You are required to print your FAST WEB CHECK-IN pre-registration confirmation page and bring it with you to 
-                    the clinic. If you cannot print it, please record your FAST WEB CHECK-IN NUMBER and provide it to our 
-                    receptionist.
-                    </p>
-                    <p>
-                    By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
-                    </p>
+                <div id="instructions" hidden="hidden" class="scrollContent">
+                    <div class="scrollHeader">
+                        <a href="#scrollItem1">
+                            <h4>Important Instructions</h4>
+                            <div class="scrollIcon"></div>
+                        </a>
                     </div>
-                    <div>
-                    <a href="#" id="showTerms" data-role="button">Yes</a>
+                    <div class="info">
+                        <p class="important">              
+                        Severe life or limb threatening illnesses or injuries should go directly to the nearest hospital emergency 
+                        department. For example: conditions such as, but not limited to, chest pain, acute shortness of breath, 
+                        profuse bleeding, etc.               
+                        </p>
+                        <p>
+                        Patients cannot pre-register for annual physicals or cosmetic procedures on-line.
+                        </p>
+                        <p>
+                        If you need medication renewal, you are required to bring your empty medication bottles or a print out from 
+                        the pharmacy. Our clinic does not prescribe narcotics or habit-forming medications.
+                        </p>
+                        <p>
+                        Canadian patients must present a valid Ontario/provincial health card at reception window or a service fee or
+                        a deposit will be required. Not all services that people pre-register for are covered by the Ministry of 
+                        Health. Out-of-country patients will be required to pay a service fee for care.
+                        </p>
+                        <p>
+                        You are required to print your FAST WEB CHECK-IN pre-registration confirmation page and bring it with you to 
+                        the clinic. If you cannot print it, please record your FAST WEB CHECK-IN NUMBER and provide it to our 
+                        receptionist.
+                        </p>
+                        <p>
+                        By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
+                        </p>
+                    </div>
+                    <div id="scrollItem1">
+                        <a href="#" id="showTerms" data-role="button">Yes</a>
+                    </div>
                 </div>
-                </div>
-                <div id="terms" hidden="hidden">
-                    <h4>Terms and Conditions</h4>
+                <div id="terms" hidden="hidden" class="scrollContent">
+                    <div class="scrollHeader">
+                        <a href="#scrollItem200">
+                            <h4>Terms and Conditions</h4>
+                            <div class="scrollIcon"></div>
+                        </a>
+                    </div>
                     <p>
                     Your FAST WEB CHECK-IN pre-registration does not constitute the beginning of a clinic/physician and patient 
                     engagement and is not a guarantee of care. The patient engagement will be formalized at our reception window 
@@ -379,8 +386,9 @@
                     <p>
                     By tapping the button below, I signify that I've read, understand and agree to the Terms and Conditions:
                     </p>
-                    <a href="#" id="showFinal" data-role="button">Yes</a>
-                
+                    <div id="scrollItem200">
+                        <a href="#" id="showFinal" data-role="button">Yes</a>
+                    </div>
                 </div>
                 <div id="final" hidden="hidden">
                     <h4>You are ready to check in:</h4>

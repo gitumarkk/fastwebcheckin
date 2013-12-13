@@ -8,7 +8,7 @@ enquire.register('screen and (max-width:320px)', {
     },
     match: function () {
         //hide big screen content/apply styling
-        //$('#adFooter').css({ 'display': 'none' });
+        $('#footerDetails').css({ 'display': 'none' });
         //alert("iPhone 4");
         $('#adImage').height(121);
         $('#adImage').width(320);
@@ -20,12 +20,12 @@ enquire.register('screen and (max-width:320px)', {
 }, true)
 .register('screen and (orientation:portrait) and (max-width:720px) and (resolution: 316dpi)', {
     match: function () {
-        alert('Galaxy Nexus portrait');
+        //alert('Galaxy Nexus portrait');
     }
 })
 .register('screen and (orientation:landscape) and (max-width:720px) and (resolution: 316dpi)', {
     match: function () {
-        alert('Galaxy Nexus landscape');
+        //alert('Galaxy Nexus landscape');
     }
 });
 
