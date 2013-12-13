@@ -42,7 +42,7 @@
                 $.mobile.allowCrossDomainPages = true;
             });
 
-            String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
+            String.prototype.contains = function (it) { return this.indexOf(it) != -1; };
 
             $(document).ready(function () {
                 //pre-processing:
@@ -55,11 +55,17 @@
                 if (getPreviousCheckin()) {
                     $("#splash").hide();
                     $("#patientDetails").show();
+
+                    //on details form:
                     $("#details").hide();
+                    $("#instructions").hide();
+                    $("#terms").hide();
+                    $("#final").hide();
                     $("#footerDetails").hide();
                     $("#confirm").show();
                 }
                 else {
+                    //on details form:
                     $("#details").show();
                     $("#instructions").hide();
                     $("#terms").hide();
@@ -126,10 +132,10 @@
                     e.preventDefault();
                 });
 
-                $('.scrollContent2 a').click(function (e) {
-                    $('html,body,div,p').scrollTo(this.hash, this.hash);
-                    e.preventDefault();
-                });
+                //$('.scrollContent2 a').click(function (e) {
+                //    $('html,body,div,p').scrollTo(this.hash, this.hash);
+                //    e.preventDefault();
+                //});
 
                 $("#showInstructions").click(function () {
                     var form = $("#patientDetailsForm");
@@ -168,13 +174,33 @@
                     $("#final").hide();
                     $("#footerImage").hide();
 
+                    alert("POSTing check-in for clinic: " + $("#selectedClinic").val());
+
                     //for local testing if CORS is disabled, start chrome with: chromium-browser --disable-web-security
                     var request = $.ajax({
                         type: "POST",
                         url: rootURL,
                         beforesend: function () { $.mobile.loading('show'); },
                         complete: function () { $.mobile.loading('hide'); },
-                        data: restData,
+                        data: 
+                        {   'submission[data][1][values][0]': $('#firstName').val(),
+                            'submission[data][2][values][0]': $('#lastName').val(),
+                            'submission[data][11][values][0]': $('#emailAddress').val(),
+                            'submission[data][14][values][0]': '0',
+                            'submission[data][16][values][0]': $('#postalCode').val(),
+                            'submission[data][23][values][0]': $("#selectedClinic").val(), //localStorage["location"],
+                            'submission[data][26][values][0]': $('#priorityCode').val(),
+                            'submission[data][12][values][0]': localStorage["terms"],
+                            'submission[data][19][values][0]': localStorage["readInstructions"],
+                            'submission[data][25][values][0]': localStorage["emailPermission"],
+                            'submission[data][15][values][0]': '',
+                            'submission[data][17][values][0]': '',
+                            'submission[data][18][values][0]': '',
+                            'submission[data][21][values][0]': '',
+                            'submission[data][22][values][0]': '',
+                            'submission[data][24][values][0]': '',
+                            'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
+                        },
                         dataType: 'json',
                         success: function (response) {
                             storeUserDetails();
@@ -194,7 +220,6 @@
                             var at = response["data"]["22"]["values"][0];
                             localStorage["attendTime"] = at;
                             if (clinicIsClosed(at)) {
-                                localStorage["terms"] = "NO";
                                 $("#confirm").hide();
 
                                 var header = new String(response["data"]["23"]["values"][0])
@@ -204,13 +229,13 @@
                                     $("#offlineHeader").html("<h5>" + header + "</h5>");
                                 }
 
-                                var clinicName = new String(localStorage["locationFriendlyName"]);
-                                if (clinicName !== 'undefined' && ~header.indexOf(clinicName)) {
-                                    $("#offlineHeader").html("<h5>" + header + "</h5>");
-                                }
-                                else {
-                                    $("#offlineHeader").html("<h5>" + clinicName + " Clinic is offline</h5>");
-                                }
+                                //var clinicName = new String(localStorage["locationFriendlyName"]);
+                                //if (clinicName !== 'undefined' && ~header.indexOf(clinicName)) {
+                                //    $("#offlineHeader").html("<h5>" + header + "</h5>");
+                                //}
+                                //else {
+                                //    $("#offlineHeader").html("<h5>" + clinicName + " Clinic is offline</h5>");
+                                //}
 
                                 $.mobile.changePage("#offline", { role: "page" });
                             }
@@ -256,7 +281,7 @@
         <div id="offlineHeader" data-role="header" data-add-back-btn="true">
             <h5>Check-in system is offline</h5>
         </div>
-        <div id="contentOffline" data-role="content" class="scrollContent2">
+        <div id="contentOffline" data-role="content" class="scrollContent">
             <div id="scrollItem202">
                 <table class="schedule"><tbody><tr><td colspan="3"><a href="#scrollItem201">App Schedule</a><div class="scrollIconSmall"></div></td></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
             </div>
@@ -443,8 +468,7 @@
                             <span id="postalCodeConfirmation"></span>
                         </div>
                     </div>
-                    <h4>Instructions:</h4>
-                    <p>Bring this device with you to the clinic. A summary of your check-in will be displayed the next time you start this app.</p>
+                    <p><span class="internalParagraphHeader">Instructions:</span> Bring this device with you to the clinic. A summary of your check-in will be displayed the next time you start this app.</p>
                     <!--<a href="#clinicSelectDialog" id="newCheckinButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
                         data-corners="false" data-shadow="false">New check-in</a>-->
                 </div>

@@ -7,6 +7,11 @@ p{
    font-size: small; 
 }
 
+.internalParagraphHeader {
+    font-size: larger;
+    font-weight: 600;
+}
+
 div {
     font-family: Arial;
     font-size: large;
@@ -248,5 +253,9 @@ div.rightalign {
 
 #attendTime {
    display: inline-block; 
+}
+
+#clinicAddress {
+    margin-left: 0px!important;
 }
 
