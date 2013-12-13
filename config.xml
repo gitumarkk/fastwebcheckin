@@ -10,7 +10,7 @@
     <name>FastWebCheckin</name>
 
     <description>
-        Phonegap build for iOS, Android and Blackberry. 
+        FastWebCheckin mobeil app - Phonegap Build for iOS, Android and Blackberry. 
     </description>
 
     <author href="http://capacitive.ca" email="mark.cafazzo@capacitive.ca">
@@ -22,7 +22,7 @@
     <gap:platformm name="blackberry"/>
 
     <!--all platforms-->
-    <preference name="orienation" value="portait" />
+    <preference name="orientation" value="portait" />
 
     <!--iOS-->
     <preference name="phonegap-version" value="2.9.0" />
@@ -36,6 +36,7 @@
     <preference name="disable-cursor" value="true" />
 
     <!--android-->
+    <icon src="images/AppIcon57x57.png" />
     <preference name="permissions" value="none"/>
 
 </widget>
