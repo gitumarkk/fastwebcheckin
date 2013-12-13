@@ -4,34 +4,14 @@
 /*global vars*/
 var rootURL = "http://dev.fastwebcheckin.com/check/submission";
 
-//var restData = { 
-//    'submission[data][1][values][0]': $('#firstName').val(),
-//    'submission[data][2][values][0]': $('#lastName').val(),
-//    'submission[data][11][values][0]': $('#emailAddress').val(),
-//    'submission[data][14][values][0]': '0',
-//    'submission[data][16][values][0]': $('#postalCode').val(),
-//    'submission[data][23][values][0]': $("#selectedClinic").val(),//localStorage["location"],
-//    'submission[data][26][values][0]': $('#priorityCode').val(),
-//    'submission[data][12][values][0]': localStorage["terms"],
-//    'submission[data][19][values][0]': localStorage["readInstructions"],
-//    'submission[data][25][values][0]': localStorage["emailPermission"],
-//    'submission[data][15][values][0]': '',
-//    'submission[data][17][values][0]': '',
-//    'submission[data][18][values][0]': '',
-//    'submission[data][21][values][0]': '',
-//    'submission[data][22][values][0]': '',
-//    'submission[data][24][values][0]': '',
-//    'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
-//};
-
 function checkinNumberExists(){
     var cno = new String(localStorage["checkinNumber"]);
     if(cno != 'undefined' && cno.length > 0 && cno != "Not today"){
-        //alert("--- checkinNumber EXISTS --- \n local storage: " + localStorage["checkinNumber"] + " \n string var: " + cno);
+        alert("--- checkinNumber EXISTS --- \n local storage: " + localStorage["checkinNumber"] + " \n string var: " + cno);
         return true;
     } 
     else{
-        //alert("checkinNumber NOT Exists");
+        alert("checkinNumber NOT Exists");
         return false;
     }
 }
@@ -42,8 +22,6 @@ function getPreviousCheckin(){
     var terms = localStorage["terms"];
 
     if (checkinNumberExists()) {
-        restoreUserDetails();
-
         var checkinDate = new Date(parseInt(sdate) * 1000);
         var today = new Date();
         var now = moment();
@@ -57,6 +35,9 @@ function getPreviousCheckin(){
             //+ endOfDay);
 
             fillConfirmationMessage();
+        }
+        else {
+            localStorage["checkinNumber"] = "";
         }
         return true;
     }
