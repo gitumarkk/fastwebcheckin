@@ -51,15 +51,15 @@
                 //alert("CORS enabled: " + cors);
 
                 if (navigator.userAgent.match(/Android/i)) {
-                    window.scrollTo(0,0); // reset in case prev not scrolled  
+                    window.scrollTo(0, 0); // reset in case prev not scrolled  
                     var nPageH = $(document).height();
                     var nViewH = window.outerHeight;
                     if (nViewH > nPageH) {
-                      nViewH -= 250;
-                      $('BODY').css('height',nViewH + 'px');
+                        nViewH -= 250;
+                        $('BODY').css('height', nViewH + 'px');
                     }
-                    window.scrollTo(0,1);
-                  }
+                    window.scrollTo(0, 1);
+                }
 
                 //START page init:
                 runEnquire();
@@ -186,7 +186,11 @@
                     $("#final").hide();
                     $("#footerImage").hide();
 
-                    alert("POSTing check-in for clinic code: " + $("#selectedClinic").val());
+                    var selectedClinic = new String($("#selectedClinic").val());
+                    if (selectedClinic.length == 0) {
+                        selectedClinic = localStorage["location"];
+                    }
+                    alert("POSTing check-in for clinic code: " + selectedClinic);
 
                     //for local testing if CORS is disabled, start chrome with: chromium-browser --disable-web-security
                     var request = $.ajax({
