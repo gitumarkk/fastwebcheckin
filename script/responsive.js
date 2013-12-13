@@ -8,7 +8,7 @@ enquire.register('screen and (max-width:320px)', {
     },
     match: function () {
         //hide big screen content/apply styling
-        $('#footerDetails').css({ 'display': 'none' });
+        //$('#footerDetails').css({ 'display': 'none' });
         //alert("iPhone 4");
         $('#adImage').height(121);
         $('#adImage').width(320);

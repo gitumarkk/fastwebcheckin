@@ -102,6 +102,18 @@ img.logo{
     float: right;
 }
 
+.scrollIconSmall {
+    background: url(images/icons-18-black.png) -214px -7px;
+    background-repeat: no-repeat;
+    width:20px;
+    height:10px;
+    min-width:20px;
+    min-height:10px;
+    padding-left: 0px;
+    margin-top: 0px;
+    float: right;
+}
+
 .scrollHeader{
     border-width: thin;
     border-style: solid;

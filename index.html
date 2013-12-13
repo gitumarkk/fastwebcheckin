@@ -126,6 +126,11 @@
                     e.preventDefault();
                 });
 
+                $('.scrollContent2 a').click(function (e) {
+                    $('html,body,div,p').scrollTo(this.hash, this.hash);
+                    e.preventDefault();
+                });
+
                 $("#showInstructions").click(function () {
                     var form = $("#patientDetailsForm");
                     form.validate();
@@ -251,12 +256,12 @@
         <div id="offlineHeader" data-role="header" data-add-back-btn="true">
             <h5>Check-in system is offline</h5>
         </div>
-        <div id="contentOffline" data-role="content" class="scrollContent">
+        <div id="contentOffline" data-role="content" class="scrollContent2">
             <div id="scrollItem202">
-                <table class="schedule"><tbody><tr><th colspan="3"><a href="#scrollItem201">App Schedule</a></th></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
+                <table class="schedule"><tbody><tr><td colspan="3"><a href="#scrollItem201">App Schedule</a><div class="scrollIconSmall"></div></td></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
             </div>
             <div>
-                <table class="schedule"><tbody><tr><th colspan="3"><a id="scrollItem201" href="#scrollItem202">Clinic Schedule</a></th></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
+                <table class="schedule"><tbody><tr><td colspan="3"><a id="scrollItem201" href="#scrollItem202">Clinic Schedule</a><div class="scrollIconSmall"></div></td></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
             </div>
         </div>
         <div id="footerOffline" data-role="footer" data-position="fixed">
@@ -390,7 +395,7 @@
                         <a href="#" id="showFinal" data-role="button">Yes</a>
                     </div>
                 </div>
-                <div id="final" hidden="hidden">
+                <div id="final" hidden="hidden" style="height: 100%;">
                     <h4>You are ready to check in:</h4>
                     <a href="#" id="submit" data-role="button">Check in</a>
                 </div>
@@ -449,7 +454,7 @@
             </script>
         </div>
         <div id="footerDetails" data-role="footer" data-position="fixed" data-theme="c" class="footerLogo">
-            <img src="images/logo.png" id="footerImage" width="300" alt="fastwebcheckin logo">
+            <!--<img src="images/logo.png" id="footerImage" width="300" alt="fastwebcheckin logo">-->
             <div data-role="navbar">
                 <ul>
                     <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Terms of Use</a></li> 
