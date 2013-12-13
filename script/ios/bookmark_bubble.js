@@ -174,7 +174,7 @@ google.bookmarkbubble.Bubble.prototype.hasHashParameter = google.abstractMethod;
  * necessary.
  * @type {number}
  */
-google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 200;
+google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 3;
 
 
 /**

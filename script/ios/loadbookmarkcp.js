@@ -18,7 +18,7 @@
 /** @fileoverview Example of how to use the bookmark bubble. */
 
 /** Don't show the bubble if click dismiss button at 3 times. */
-google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS=200;
+google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS=3;
 google.bookmarkbubble.Bubble.prototype.REL_ICON_ = 'apple-touch-icon-precomposed';
 google.bookmarkbubble.Bubble.prototype.IMAGE_ANDROID4_MOBILE_BOOKMARK_DATA_URL_ = "images/icon_calendar.png";
 
