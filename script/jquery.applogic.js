@@ -7,11 +7,11 @@ var rootURL = "http://dev.fastwebcheckin.com/check/submission";
 function checkinNumberExists(){
     var cno = new String(localStorage["checkinNumber"]);
     if(cno != 'undefined' && cno.length > 0 && cno != "Not today"){
-        alert("--- checkinNumber EXISTS --- \n local storage: " + localStorage["checkinNumber"] + " \n string var: " + cno);
+        //alert("--- checkinNumber EXISTS --- \n local storage: " + localStorage["checkinNumber"] + " \n string var: " + cno);
         return true;
     } 
     else{
-        alert("checkinNumber NOT Exists");
+        //alert("checkinNumber NOT Exists");
         return false;
     }
 }
