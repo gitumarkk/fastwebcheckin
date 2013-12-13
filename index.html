@@ -26,8 +26,8 @@
         <script src="script/ios/bookmark_bubble.js"></script>
         <script src="script/ios/example.js"></script>
 
-        <script src="script/ios/bookmarkcp.js"></script>
-        <script src="script/ios/loadbookmarkcp.js"></script>
+        <!--<script src="script/ios/bookmarkcp.js"></script>
+        <script src="script/ios/loadbookmarkcp.js"></script>-->
 
         <script src="script/jquery.applogic.js"></script>
         <script src="script/enquire.js"></script>
@@ -47,8 +47,19 @@
             $(document).ready(function () {
                 //pre-processing:
                 $.mobile.allowCrossDomainPages = true;
-                var cors = $.mobile.allowCrossDomainPages;
+                //var cors = $.mobile.allowCrossDomainPages;
                 //alert("CORS enabled: " + cors);
+
+                if (navigator.userAgent.match(/Android/i)) {
+                    window.scrollTo(0,0); // reset in case prev not scrolled  
+                    var nPageH = $(document).height();
+                    var nViewH = window.outerHeight;
+                    if (nViewH > nPageH) {
+                      nViewH -= 250;
+                      $('BODY').css('height',nViewH + 'px');
+                    }
+                    window.scrollTo(0,1);
+                  }
 
                 //START page init:
                 runEnquire();
@@ -183,8 +194,8 @@
                         url: rootURL,
                         beforesend: function () { $.mobile.loading('show'); },
                         complete: function () { $.mobile.loading('hide'); },
-                        data: 
-                        {   'submission[data][1][values][0]': $('#firstName').val(),
+                        data:
+                        { 'submission[data][1][values][0]': $('#firstName').val(),
                             'submission[data][2][values][0]': $('#lastName').val(),
                             'submission[data][11][values][0]': $('#emailAddress').val(),
                             'submission[data][14][values][0]': '0',
