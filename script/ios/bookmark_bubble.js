@@ -182,7 +182,7 @@ google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 200;
  * destruct after this amount of time.
  * @type {number}
  */
-google.bookmarkbubble.Bubble.prototype.TIME_UNTIL_AUTO_DESTRUCT = 10000;
+google.bookmarkbubble.Bubble.prototype.TIME_UNTIL_AUTO_DESTRUCT = 20000;
 
 
 /**

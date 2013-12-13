@@ -24,32 +24,32 @@ var restData = {
     'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
 };
 
+function checkinNumberExists(){
+    var cno = new String(localStorage["checkinNumber"]);
+    if(cno != 'undefined' && cno.length > 0 && cno != "Not today"){
+        //alert("--- checkinNumberExists --- \n local storage: " + localStorage["checkinNumber"] + " \n string var: " + cno);
+        return true;
+    } 
+    else{
+        //alert("checkinNumber NOT Exists");
+        return false;
+    }
+}
+
 function getPreviousCheckin(){
     var sdate = localStorage["submittedDate"];
     var loc = localStorage["location"];
     var terms = localStorage["terms"];
 
-    if (terms != null) {
-        if (terms == "NO") { 
-            //alert("terms = NO"); 
-            return; 
-        }
-    }
-    else { 
-        //alert("terms = null");
-        return;
-    }
-
-    if (terms == "YES"){
-        //alert("terms = YES");
+    if (checkinNumberExists()) {
         restoreUserDetails();
-   
+
         var checkinDate = new Date(parseInt(sdate) * 1000);
         var today = new Date();
         var now = moment();
         var endOfDay = moment(checkinDate).endOf('day').subtract('hours', 7).fromNow();
 
-        if (Date.daysBetween(today, checkinDate) < 0.3){
+        if (Date.daysBetween(today, checkinDate) < 0.3) {
             //alert(" Checkin time: " + checkinDate
             //+ ". \n Today: " + now.toLocaleString() + "\n Days between: "
             //+ Date.daysBetween(today, checkinDate)
@@ -57,9 +57,11 @@ function getPreviousCheckin(){
             //+ endOfDay);
 
             fillConfirmationMessage();
-            //$.mobile.changePage("#offline", { role: "page" }); 
-            $.mobile.changePage("#patientDetails", { role: "page" });      
         }
+        return true;
+    }
+    else {
+        return false;
     }
 };
 
@@ -93,38 +95,21 @@ function restoreUserDetails(){
     $('#postalCode').val(localStorage["postalCode"]);
 }
 
-function fillConfirmationMessage() { 
+function clinicIsClosed(attendTime){
+    //alert("clinicIsClosed parameter: " + attendTime);
+    if(attendTime == 'Not today'){
+        return true;
+    } 
+    else{
+        return false;
+    }
+    return false;    
+}
+
+function fillConfirmationMessage() {    
     $("#checkinNumber").html(localStorage["checkinNumber"]);
     $("#attendTimeConfirmation").html(localStorage["attendTime"]);
-
-    var dayofWeek = moment().format('D');
-    var timeend;
-    if (dayofWeek == 1) {
-        $.mobile.changePage("#offline", { role: "page" });
-    }
-    if (dayofWeek == 2) {
-        timeend = "4:15pm";
-    }
-    if (dayofWeek == 3) {
-        timeend = "7:15pm";
-    }
-    if (dayofWeek == 4) {
-        timeend = "7:15pm";
-    }
-    if (dayofWeek == 5) {
-        timeend = "4:15pm";
-    }
-    if (dayofWeek == 6) {
-        timeend = "4:15pm";
-    }
-    if (dayofWeek == 7) {
-        $.mobile.changePage("#offline", { role: "page" });
-    }
-    //alert("closing time today: " + timeend);
-
-    $("#attendTimeEnd1").html(timeend);
-    $("#attendTimeEnd2").html(timeend);
-    $("#attendTimeEnd3").html(timeend);
+    $("#attendInstructions").html(localStorage["confirmMessage"]);
 
     $("#locationConfirmation").html(localStorage["locationFriendlyName"]);
     $("#firstNameConfirmation").html(localStorage["firstName"]);
@@ -151,7 +136,6 @@ function fillConfirmationMessage() {
 }
 
 function clearLocalStorage() {
-    //alert("cleared local storage");
     localStorage["checkinNumber"] = "";
     localStorage["attendTime"] = "";
     localStorage["submittedDate"] = "";

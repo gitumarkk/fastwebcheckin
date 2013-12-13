@@ -4,10 +4,15 @@
 }
 
 /*fixes for header truncation*/
-.ui-header .ui-title, ui-footer .ui-title{
-    margin-right: 0;
-    margin-left: 0;
+/*.ui-header .ui-title, ui-footer {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
+
+.ui-header .ui-title .ui-btn-text .ui-collapsible-heading {
+    overflow: visible !important;
+    white-space: normal !important;
+}*/
 
 .scroller li {
 position: relative;

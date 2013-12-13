@@ -39,7 +39,6 @@
             ///<reference path="script/jquery-2.0.3-vsdoc.js" />
             $(document).bind("mobileinit", function () {
                 //jQuery Mobile framework configurations:
-                alert("jqm mobileinit");
                 $.mobile.allowCrossDomainPages = true;
             });
 
@@ -48,13 +47,14 @@
                 $.mobile.allowCrossDomainPages = true;
                 var cors = $.mobile.allowCrossDomainPages;
                 //alert("CORS enabled: " + cors);
-                runEnquire();
-                getPreviousCheckin();
-                restoreUserDetails();
 
                 //page init:
-                if (localStorage["terms"] == "YES") {
+                runEnquire();
+                if (getPreviousCheckin()) {
+                    $("#splash").hide();
+                    $("#patientDetails").show();
                     $("#details").hide();
+                    $("#footerDetails").hide();
                     $("#confirm").show();
                 }
                 else {
@@ -64,6 +64,7 @@
                     $("#final").hide();
                     $("#confirm").hide();
                 }
+                restoreUserDetails();
 
                 //validation:
                 $("#lastName").rules("add", {
@@ -101,18 +102,17 @@
                 $("#niagaraButton").click(function () {
                     localStorage["location"] = "pcnniagara";
                     localStorage["locationFriendlyName"] = "PCN Niagara";
-                    clearLocalStorage();
+                    //clearLocalStorage();
                 });
 
                 $("#wellandButton").click(function () {
                     localStorage["location"] = "pcnwelland";
                     localStorage["locationFriendlyName"] = "PCN Welland";
-                    clearLocalStorage();
+                    //clearLocalStorage();
                 });
 
                 $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
 
-                //NOTE: this event is fired on generic hyperlink tags, so be wary in terms of potential script bugs:
                 $('.scrollContent a').click(function (e) {
                     $('html,body,div,p').scrollTo(this.hash, this.hash);
                     e.preventDefault();
@@ -153,10 +153,9 @@
 
                 $("#submit").click(function () {
                     $("#final").hide();
-                    $("#confirm").show();
                     $("#footerImage").hide();
 
-                    //for local testing, start chrome with: chromium-browser --disable-web-security
+                    //for local testing if CORS is disabled, start chrome with: chromium-browser --disable-web-security
                     var request = $.ajax({
                         type: "POST",
                         url: rootURL,
@@ -175,13 +174,35 @@
                             localStorage["submitTimeFormatted"] = submitDateMoment.format('h:mm a');
 
                             localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
-                            localStorage["attendTime"] = response["data"]["22"]["values"][0];
-                            //localStorage["attendTimeEnd"] = response["data"]["30"]["values"][0];
-                            fillConfirmationMessage();
+                            var cmessage = new String(response["data"]["12"]["values"][0]);
+                            cmessage = cmessage.replace("YES", "");
+                            localStorage["confirmMessage"] = cmessage;
+
+                            var at = response["data"]["22"]["values"][0];
+                            localStorage["attendTime"] = at;
+                            if (clinicIsClosed(at)) {
+                                localStorage["terms"] = "NO";
+                                $("#confirm").hide();
+
+                                var header = new String(response["data"]["23"]["values"][0])
+                                header = header.replace("currently: ", "");
+                                header = header.replace("-", "");
+                                $("#offlineHeader").html("<h5>" + header + "</h5>");
+                                //jquery way:
+                                //$("#offlineHeader").each(function () {
+                                //    $(this).html($(this).html().split("currently: ").join(""));
+                                //});
+
+                                $.mobile.changePage("#offline", { role: "page" });
+                            }
+                            else {
+                                $("#confirm").show();
+                                fillConfirmationMessage();
+                            }
                         }
                     });
                     request.fail(function (jqXHR, textStatus) {
-                        alert("request failed: " + textStatus);
+                        alert("We were unable to receive your check-in. \n Please try again later or contact us.");
                         clearLocalStorage();
                         $.mobile.changePage("#patientDetails", { role: "page" });
                     });
@@ -213,7 +234,7 @@
     </div>
 
     <div id="offline" data-role="page" data-title="Status" data-theme="d">
-        <div id="header" data-role="header">
+        <div id="offlineHeader" data-role="header">
             <h5>Check-in system is offline</h5>
         </div>
         <div id="contentOffline" data-role="content">
@@ -228,11 +249,6 @@
             </div>
         </div>
         <div id="footerOffline" data-role="footer" data-position="fixed">
-            <div data-role="navbar">
-            <ul>
-                <li><a href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li> 
-            </ul>
-            </div>
         </div>                                                                                                                                                                                                                                                           
     </div>
 
@@ -250,40 +266,6 @@
             <div class="footerLogo"><img src="images/logo.png" width="200px" alt="fastwebcheckin logo"></div>
         </div>   
     </div>
-
-    <div id="clearStorageDialog" data-role="dialog" data-title="Clear Stored Checkin" data-theme="c" data-overlay-theme="d">
-        <div id="clearStorageHeader" data-role="header">
-            <h5>Checkin pending</h5>
-        </div>
-        <div id="clearStorageContent" data-role="content"> 
-            <div id="message" class="ui-grid-a">
-                <div class="ui-block-a rightalign">
-                    <label for="checkinNo">Check in number: </label>
-                </div>
-                <div class="ui-block-b">
-                    <input id="checkinNo" name="checkinNo" type="text" data-role="none"/>
-                </div>
-                <div class="ui-block-a rightalign">
-                    <label for="attendTime">Check in time: </label>
-                </div>
-                <div class="ui-block-b">
-                    <input id="attendTime" name="attendTime" type="text" data-role="none"/>
-                </div> 
-                <div class="ui-block-a rightalign">
-                    <label for="clinic">Clinic: </label>
-                </div>
-                <div class="ui-block-b">
-                    <input id="clinic" name="clinic" type="text" data-role="none"/>
-                </div>
-            </div>
-            <div id="storedCheckinMessage">Click the button below if you would like to submit a new check in.</div>
-            <a href="#clinicSelectDialog" id="newCheckinButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
-            data-corners="false" data-shadow="false">New</a>
-            </div>
-        <div id="footerClearStorage" data-role="footer" data-position="fixed" data-theme="c">
-            <div class="footerLogo"><img src="images/logo.png" width="200px" alt="fastwebcheckin logo"></div>
-        </div>   
-    </div> 
 
     <div id="patientDetails" data-role="page" data-title="PatientDetails" data-theme="d"> 
         <div id="pd" data-role="content" data-theme="c">
@@ -394,16 +376,14 @@
                     <h4>Web Check-in Confirmation</h4>
                     <p>Confirmation number: <span id="checkinNumber"></span></p>
                     <p>You are in the waiting line at: <span id="locationConfirmation"></span></p> 
-                    <p>Please attend the facility today between <span id="attendTimeConfirmation"></span> and <span id="attendTimeEnd1"></span>.
-                        Estimate only. Waiting line corresponds to the exact time of registration on-line or in person.</p>
-                    <p>IF YOU ATTEND AFTER <span id="attendTimeEnd2"></span>, you may lose your place in line.  IF YOU ARRIVE AFTER <span id="attendTimeEnd3"></span> we may not be able to see you today.</p>
+                    <p id="attendInstructions"></p>
                     <div id="confirmationMessage" class="ui-grid-a">
                         <div class="ui-block-a">
-                            Clinic you will be attending:
+                            Clinic address:
                         </div>
                         <div class="ui-block-b">
                             <div id="clinicAddress"></div>
-                            <a id="clinicMapLinkHref" href="www.google.com">Click for directions</a>
+                            <a id="clinicMapLinkHref" href="www.google.com" target="foo">Click for directions</a>
                         </div>
                         <div class="ui-block-a">
                             First name:
