@@ -42,6 +42,8 @@
                 $.mobile.allowCrossDomainPages = true;
             });
 
+            String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
+
             $(document).ready(function () {
                 //pre-processing:
                 $.mobile.allowCrossDomainPages = true;
@@ -65,6 +67,10 @@
                     $("#confirm").hide();
                 }
                 restoreUserDetails();
+
+                //reset location:
+                localStorage["location"] = "";
+                localStorage["locationFriendlyName"] = "";
 
                 //validation:
                 $("#lastName").rules("add", {
@@ -102,12 +108,14 @@
                 $("#niagaraButton").click(function () {
                     localStorage["location"] = "pcnniagara";
                     localStorage["locationFriendlyName"] = "PCN Niagara";
+                    $("#selectedClinic").val("pcnniagara");
                     //clearLocalStorage();
                 });
 
                 $("#wellandButton").click(function () {
                     localStorage["location"] = "pcnwelland";
                     localStorage["locationFriendlyName"] = "PCN Welland";
+                    $("#selectedClinic").val("pcnwelland");
                     //clearLocalStorage();
                 });
 
@@ -185,13 +193,19 @@
                                 $("#confirm").hide();
 
                                 var header = new String(response["data"]["23"]["values"][0])
-                                header = header.replace("currently: ", "");
-                                header = header.replace("-", "");
-                                $("#offlineHeader").html("<h5>" + header + "</h5>");
-                                //jquery way:
-                                //$("#offlineHeader").each(function () {
-                                //    $(this).html($(this).html().split("currently: ").join(""));
-                                //});
+                                if (header !== undefined) {
+                                    header = header.replace("currently: ", "");
+                                    header = header.replace("-", "");
+                                    $("#offlineHeader").html("<h5>" + header + "</h5>");
+                                }
+
+                                var clinicName = new String(localStorage["locationFriendlyName"]);
+                                if (clinicName !== 'undefined' && ~header.indexOf(clinicName)) {
+                                    $("#offlineHeader").html("<h5>" + header + "</h5>");
+                                }
+                                else {
+                                    $("#offlineHeader").html("<h5>" + clinicName + " Clinic is offline</h5>");
+                                }
 
                                 $.mobile.changePage("#offline", { role: "page" });
                             }
@@ -234,7 +248,7 @@
     </div>
 
     <div id="offline" data-role="page" data-title="Status" data-theme="d">
-        <div id="offlineHeader" data-role="header">
+        <div id="offlineHeader" data-role="header" data-add-back-btn="true">
             <h5>Check-in system is offline</h5>
         </div>
         <div id="contentOffline" data-role="content">
@@ -433,6 +447,7 @@
                     <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Terms of Use</a></li> 
                 </ul>
             </div>
+            <input id="selectedClinic" type="text" data-role="none"/>
         </div>
     </div>  
 

@@ -10,7 +10,7 @@ var restData = {
     'submission[data][11][values][0]': $('#emailAddress').val(),
     'submission[data][14][values][0]': '0',
     'submission[data][16][values][0]': $('#postalCode').val(),
-    'submission[data][23][values][0]': localStorage["location"],
+    'submission[data][23][values][0]': $("#selectedClinic").val(),//localStorage["location"],
     'submission[data][26][values][0]': $('#priorityCode').val(),
     'submission[data][12][values][0]': localStorage["terms"],
     'submission[data][19][values][0]': localStorage["readInstructions"],
@@ -26,7 +26,7 @@ var restData = {
 
 function checkinNumberExists(){
     var cno = new String(localStorage["checkinNumber"]);
-    if(cno != 'undefined' && cno.length > 0 && cno != "Not today"){
+    if(cno !== 'undefined' && cno.length > 0 && cno !== "Not today"){
         //alert("--- checkinNumberExists --- \n local storage: " + localStorage["checkinNumber"] + " \n string var: " + cno);
         return true;
     } 
@@ -85,7 +85,7 @@ function storeUserDetails() {
 
 function restoreUserDetails(){
     var pCode = localStorage["priorityCode"];
-    if (pCode != null) {
+    if (pCode !== null) {
         $('#priorityCode').val(localStorage["priorityCode"]);
     }
 
