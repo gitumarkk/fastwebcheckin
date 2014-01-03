@@ -2,11 +2,15 @@
 ///<reference path="moment.min.js" />
 
 /*global vars*/
-var rootURL = "http://dev.fastwebcheckin.com/check/submission";
+var rootURL = "http://fastwebcheckin.com";
+
+/*global overrides*/
+String.prototype.contains = function (it) { return this.indexOf(it) != -1; };
 
 function checkinNumberExists(){
     var cno = new String(localStorage["checkinNumber"]);
-    if(cno != 'undefined' && cno.length > 0 && cno != "Not today"){
+    var attendTime = new String(localStorage["attendTime"]);
+    if(cno != 'undefined' && cno.length > 1 && attendTime != "Not today"){
         //alert("--- checkinNumber EXISTS --- \n local storage: " + localStorage["checkinNumber"] + " \n string var: " + cno);
         return true;
     } 
@@ -14,6 +18,17 @@ function checkinNumberExists(){
         //alert("checkinNumber NOT Exists");
         return false;
     }
+}
+
+function clinicIsClosed(attendTime){
+    //alert("clinicIsClosed parameter: " + attendTime);
+    if(attendTime == 'Not today'){
+        return true;
+    } 
+    else{
+        return false;
+    }
+    return false;    
 }
 
 function getPreviousCheckin(){
@@ -76,17 +91,6 @@ function restoreUserDetails(){
     $('#postalCode').val(localStorage["postalCode"]);
 }
 
-function clinicIsClosed(attendTime){
-    //alert("clinicIsClosed parameter: " + attendTime);
-    if(attendTime == 'Not today'){
-        return true;
-    } 
-    else{
-        return false;
-    }
-    return false;    
-}
-
 function fillConfirmationMessage() {    
     $("#checkinNumber").html(localStorage["checkinNumber"]);
     $("#attendTimeConfirmation").html(localStorage["attendTime"]);
@@ -94,6 +98,7 @@ function fillConfirmationMessage() {
 
     $("#firstNameConfirmation").html(localStorage["firstName"]);
     $("#lastNameConfirmation").html(localStorage["lastName"]);
+    $("#locationConfirmation").html(localStorage["locationFriendlyName"]);
 
     $("#submittedDateConfirmation").html(localStorage["submitDateFormatted"]);
     $("#submittedTimeConfirmation").html(localStorage["submitTimeFormatted"]);
@@ -126,4 +131,44 @@ function clearLocalStorage() {
     localStorage["terms"] = "NO";
 }
 
+function isClosedOnClinicSelect(){
+    //alert("Checking if " + $("#selectedClinic").val() +  " clinic is closed.");
+    var request = $.ajax({
+        type: "GET",
+        url: rootURL + "/checkin/pcn?f=" + $("#selectedClinic").val(),
+        success: function (response) {
+            var respPara = $(response).find("p:first").text();
+            var responseCheck = respPara.toLowerCase();
+            var respMessage = respPara.replace("Off-line", "offline");
+            var substrStart = respMessage.lastIndexOf("-");
+            var closedMessage = respMessage.toString().substring(substrStart + 2, respMessage.length);
+
+            if (responseCheck.contains("off-line")) {
+                var div1 = $(response).find(".webstatus:first");
+                var div2 = $(response).find(".facstatus:first");
+
+                //var rowIndex = 0;
+                //var rows = $(".schedule tr:gt(0)");
+                //rows.each(function (index) {
+                //    rowIndex = index;
+                //    $(this).children("td").each(function (index) {
+                //        //alert("Cell INDEX: " + index + " TEXT: " + $(this).text());
+                //        if ($(this).text().toString().contains("Closed")) {
+                //            alert("Found Closed text at row index:" + rowIndex + ". cell index:" + index);
+                //            //$('.schedule tr td:nth-child(' + index + ')').attr('colspan', '2');
+                //            //$(this).attr('colspan', '2');
+                //        }
+                //    })
+                //});
+
+                $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
+                $("#reason").html(closedMessage);
+                $("#scrollItem202").html(div1);
+                $("#clinicHours").html(div2);
+
+                $.mobile.changePage("#offline", { role: "page" });
+            }
+        }
+    });
+}
 

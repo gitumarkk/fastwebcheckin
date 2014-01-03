@@ -13,27 +13,27 @@
         <script src="script/jquery.validate.js"></script>
         <script src="script/jquery.maskedinput.min.js"></script>
         <script src="script/jquery.scrollto.js"></script>
-        <script src="script/jquery.magnific-popup.js"></script>
-        <script src="script/jquery.mobile-1.3.2.js"></script><!--debug, get minified for production-->
-        <link href="css/magnific-popup.css" rel="stylesheet" />
-        <link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" /><!--debug, get minified for production--> 
+        
+        <script src="script/jquery.mobile-1.3.2.js"></script>
+        <link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" />
+        <!--<script src="script/jquery.magnific-popup.js"></script>-->
+        <!--<link href="css/magnific-popup.css" rel="stylesheet" />-->      
 
         <!--custom-->
         <link rel="stylesheet" type="text/css" href="css/master.css">
         <link rel="stylesheet" type="text/css" href="css/override.css"> 
         <!--<link rel="stylesheet" type="text/css" href="css/responsive.css">-->
 
-        <script src="script/ios/bookmark_bubble.js"></script>
-        <script src="script/ios/example.js"></script>
+        <script src="script/ios/bookmark_iOS.js"></script>
+        <script src="script/ios/loadbookmark_iOS.js"></script>
+        <script src="script/android_bb/bookmark_AB.js"></script>
+        <script src="script/android_bb/loadbookmark_AB.js"></script>
 
-        <script src="script/ios/bookmarkcp.js"></script>
-        <script src="script/ios/loadbookmarkcp.js"></script>
-
-        <script src="script/jquery.applogic.js"></script>
         <script src="script/enquire.js"></script>
         <script src="script/responsive.js"></script>
         <script src="script/moment.min.js"></script>
         <script src="script/ad-rotator.js"></script>
+        <script src="script/jquery.applogic.js"></script>
 
         <script>
             ///<reference path="script/jquery-2.0.3-vsdoc.js" />
@@ -41,8 +41,6 @@
                 //jQuery Mobile framework configurations:
                 $.mobile.allowCrossDomainPages = true;
             });
-
-            String.prototype.contains = function (it) { return this.indexOf(it) != -1; };
 
             $(document).ready(function () {
                 //pre-processing:
@@ -61,8 +59,15 @@
                     window.scrollTo(0, 1);
                 }
 
-                //START page init:
+                //**START page init:
                 runEnquire();
+                restoreUserDetails();
+
+                //if ($("#selectedClinic").val().length > 0) {
+                //    alert("selected clinic: " + $("#selectedClinic").val());
+                //    checkClosedOnClinicSelect();
+                //}
+
                 if (getPreviousCheckin()) {
                     $("#splash").hide();
                     $("#patientDetails").show();
@@ -83,12 +88,11 @@
                     $("#final").hide();
                     $("#confirm").hide();
                 }
-                restoreUserDetails();
 
                 //reset location:
                 localStorage["location"] = "";
                 localStorage["locationFriendlyName"] = "";
-                //END page init:
+                //**END page init:
 
                 //validation:
                 $("#lastName").rules("add", {
@@ -109,7 +113,6 @@
 
                 $("#postalCode").rules("add", {
                     required: true,
-                    minlength: 6,
                     messages: {
                         required: "&nbsp;&nbsp;Please enter your postal code."
                     }
@@ -127,6 +130,7 @@
                     localStorage["location"] = "pcnniagara";
                     localStorage["locationFriendlyName"] = "PCN Niagara";
                     $("#selectedClinic").val("pcnniagara");
+                    isClosedOnClinicSelect();
                     //clearLocalStorage();
                 });
 
@@ -134,6 +138,7 @@
                     localStorage["location"] = "pcnwelland";
                     localStorage["locationFriendlyName"] = "PCN Welland";
                     $("#selectedClinic").val("pcnwelland");
+                    isClosedOnClinicSelect();
                     //clearLocalStorage();
                 });
 
@@ -147,6 +152,18 @@
                 //$('.scrollContent2 a').click(function (e) {
                 //    $('html,body,div,p').scrollTo(this.hash, this.hash);
                 //    e.preventDefault();
+                //});
+
+                //$("#selectUS").click(function (e) {
+                //    e.preventDefault();
+                //    $("#postalCode").mask("99999");
+                //    $("#postalCode").attr("placeholder", "Zip Code *");
+                //});
+
+                //$("#selectCanada").click(function (e) {
+                //    e.preventDefault();
+                //    $("#postalCode").mask("a9a-9a9");
+                //    $("#postalCode").attr("placeholder", "Postal Code *");
                 //});
 
                 $("#showInstructions").click(function () {
@@ -169,7 +186,7 @@
                 $("#showTerms").click(function () {
                     $("#instructions").hide();
                     $("#terms").show();
-                    $("#footerImage").hide();
+
                     $.mobile.silentScroll(0);
                     localStorage["readInstructions"] = 'YES';
                 });
@@ -177,7 +194,7 @@
                 $("#showFinal").click(function () {
                     $("#terms").hide();
                     $("#final").show();
-                    $("#footerImage").hide();
+
                     $.mobile.silentScroll(0);
                     localStorage["terms"] = 'YES';
                 });
@@ -189,36 +206,39 @@
                     var selectedClinic = new String($("#selectedClinic").val());
                     if (selectedClinic.length == 0) {
                         selectedClinic = localStorage["location"];
+                        alert("selected clinic at POST time: " + selectedClinic);
                     }
-                    alert("POSTing check-in for clinic code: " + selectedClinic);
+                    //alert("POSTing check-in for clinic code: " + selectedClinic);
 
-                    //for local testing if CORS is disabled, start chrome with: chromium-browser --disable-web-security
+                    //for local testing if CORS is disabled, start Chrome with: 
+                    //chromium-browser --disable-web-security
                     var request = $.ajax({
                         type: "POST",
-                        url: rootURL,
+                        url: rootURL + "/check/submission",
                         beforesend: function () { $.mobile.loading('show'); },
                         complete: function () { $.mobile.loading('hide'); },
                         data:
-                        { 'submission[data][1][values][0]': $('#firstName').val(),
-                            'submission[data][2][values][0]': $('#lastName').val(),
-                            'submission[data][11][values][0]': $('#emailAddress').val(),
-                            'submission[data][14][values][0]': '0',
-                            'submission[data][16][values][0]': $('#postalCode').val(),
-                            'submission[data][23][values][0]': $("#selectedClinic").val(), //localStorage["location"],
-                            'submission[data][26][values][0]': $('#priorityCode').val(),
-                            'submission[data][12][values][0]': localStorage["terms"],
-                            'submission[data][19][values][0]': localStorage["readInstructions"],
-                            'submission[data][25][values][0]': localStorage["emailPermission"],
-                            'submission[data][15][values][0]': '',
-                            'submission[data][17][values][0]': '',
-                            'submission[data][18][values][0]': '',
-                            'submission[data][21][values][0]': '',
-                            'submission[data][22][values][0]': '',
-                            'submission[data][24][values][0]': '',
-                            'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
-                        },
+                    { 'submission[data][1][values][0]': $('#firstName').val(),
+                        'submission[data][2][values][0]': $('#lastName').val(),
+                        'submission[data][11][values][0]': $('#emailAddress').val(),
+                        'submission[data][14][values][0]': '0',
+                        'submission[data][16][values][0]': $('#postalCode').val(),
+                        'submission[data][23][values][0]': $("#selectedClinic").val(), //localStorage["location"],
+                        'submission[data][26][values][0]': $('#priorityCode').val(),
+                        'submission[data][12][values][0]': localStorage["terms"],
+                        'submission[data][19][values][0]': localStorage["readInstructions"],
+                        'submission[data][25][values][0]': localStorage["emailPermission"],
+                        'submission[data][15][values][0]': '',
+                        'submission[data][17][values][0]': '',
+                        'submission[data][18][values][0]': '',
+                        'submission[data][21][values][0]': '',
+                        'submission[data][22][values][0]': '',
+                        'submission[data][24][values][0]': '',
+                        'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
+                    },
                         dataType: 'json',
                         success: function (response) {
+                            alert("submit success");
                             storeUserDetails();
 
                             localStorage["submittedDate"] = response["submitted"];
@@ -266,7 +286,6 @@
                         clearLocalStorage();
                         $.mobile.changePage("#patientDetails", { role: "page" });
                     });
-
                 });
             });
         </script>
@@ -298,10 +317,11 @@
             <h5>Check-in system is offline</h5>
         </div>
         <div id="contentOffline" data-role="content" class="scrollContent">
+            <div id="reason"></div><br/>
             <div id="scrollItem202">
                 <table class="schedule"><tbody><tr><td colspan="3"><a href="#scrollItem201">App Schedule</a><div class="scrollIconSmall"></div></td></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
             </div>
-            <div>
+            <div id="clinicHours">
                 <table class="schedule"><tbody><tr><td colspan="3"><a id="scrollItem201" href="#scrollItem202">Clinic Schedule</a><div class="scrollIconSmall"></div></td></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
             </div>
         </div>
@@ -331,12 +351,12 @@
                     <ul>
                         <li>
                             <label for="priorityCode" class="ui-hidden-accessible">Priority Code</label>
-                            <input id="priorityCode" name="priorityCode1" placeholder="Priority Code" type="text" data-role="none"
+                            <input id="priorityCode" name="priorityCode1" placeholder="Priority Code" autofocus="true" type="text" data-role="none"
                                 data-prevent-focus-zoom="true" class="topTextBox"/>
                         </li>
                         <li>
                             <label for="lastName" class="ui-hidden-accessible">Last Name</label>
-                            <input id="lastName" name="lastName1" placeholder="Last Name *" autofocus="true" type="text" 
+                            <input id="lastName" name="lastName1" placeholder="Last Name *" type="text" 
                                 data-prevent-focus-zoom="true" data-role="none"/>  
                         </li>
                         <li>
@@ -344,10 +364,23 @@
                             <input id="firstName" name="firstName1" placeholder="First Name *" type="text" 
                                 data-prevent-focus-zoom="true" data-role="none"/>  
                         </li>
-                        <li>
+                        <li> 
                             <label for="postalCode" class="ui-hidden-accessible">Postal Code</label>
-                            <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" 
-                                data-prevent-focus-zoom="true" data-role="none"/>
+                                <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" 
+                                data-prevent-focus-zoom="true" data-role="none" />
+                            <!--<div id="postalCodeContainer">
+                                
+                            </div>-->
+
+                            <!--<div id="countrySelectionContainer">
+                                <fieldset data-role="controlgroup" data-role="fieldcontain" data-type="horizontal" data-mini="true" data-prevent-focus-zoom="true" id="countrySelector">
+                                    <label for="selectCanada">Canada</label>
+                                    <input type="radio" name="selectCanada" id="selectCanada" value="canada" checked="checked" />
+         	                        
+                                    <label for="selectUS">US</label>  
+         	                        <input type="radio" name="selectUS" id="selectUS" value="usa"/>
+                                </fieldset>
+                            </div>-->   	                    
                         </li>
                         <li>
                             <label for="emailAddress" class="ui-hidden-accessible">Email</label>
@@ -443,7 +476,7 @@
                 <div id="confirm" hidden="hidden" class="scrollContent">
                     <div class="scrollHeader">
                         <a href="#clinicAddress">
-                            <h3>Web Check-in Confirmation</h3>
+                            <h4>Web Check-in Confirmation</h4>
                             <div class="scrollIcon"></div>
                         </a>
                     </div>

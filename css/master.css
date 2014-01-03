@@ -193,20 +193,20 @@ img.logo{
 }
 
 .schedule {
-    border-spacing:0;
-    border:1px solid;
+    border-collapse: collapse;
+    background-color: #f0eaea;
 }
 
-.schedule td{
-    border-style: solid;
-    border-width: thin;
-    padding: 2px;
+.schedule th, tbody, td {
+    border:  1px solid black;  
 }
 
 .schedule th{
-    background-color: #f0eaea;
-    border:1px solid;
-    padding: 2px;
+    background-color: #d6c8c8;
+}
+
+.schedule td{
+    padding:  3px;
 }
 
 /*confirmation page*/
