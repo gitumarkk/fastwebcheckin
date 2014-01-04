@@ -40,11 +40,14 @@
             $(document).bind("mobileinit", function () {
                 //jQuery Mobile framework configurations:
                 $.mobile.allowCrossDomainPages = true;
+                $.support.cors = true;
+                alert("CORS enabled: " + $.support.cors);
             });
 
             $(document).ready(function () {
                 //pre-processing:
                 $.mobile.allowCrossDomainPages = true;
+                $.support.cors = true;
                 //var cors = $.mobile.allowCrossDomainPages;
                 //alert("CORS enabled: " + cors);
 
@@ -142,29 +145,73 @@
                     //clearLocalStorage();
                 });
 
+                function isClosedOnClinicSelect() {
+                    $.get(rootURL + "/checkin/pcn?f=" + $("#selectedClinic").val(), function (response) {
+                        alert("GET succeeded");
+                        var respPara = $(response).find("p:first").text();
+                        var responseCheck = respPara.toLowerCase();
+                        var respMessage = respPara.replace("Off-line", "offline");
+                        var substrStart = respMessage.lastIndexOf("-");
+                        var closedMessage = respMessage.toString().substring(substrStart + 2, respMessage.length);
+                        alert("response successfully read: " + closedMessage);
+
+                        if (responseCheck.contains("off-line")) {
+                            alert("Clinic is offline");
+                            var div1 = $(response).find(".webstatus:first");
+                            var div2 = $(response).find(".facstatus:first");
+
+                            $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
+                            $("#reason").html(closedMessage);
+                            $("#scrollItem202").html(div1);
+                            $("#clinicHours").html(div2);
+
+                            $.mobile.changePage("#offline", { role: "page" });
+                        }
+                    }).done(function () {
+                        alert("done");
+                    }).fail(function () {
+                        alert("failed");
+                    }).always(function () {
+                        alert("always");
+                    });
+
+                    //var request = $.ajax({
+                    //    type: "GET",
+                    //    dataType: "html",
+                    //    url: rootURL + "/checkin/pcn?f=" + $("#selectedClinic").val(),
+                    //    success: function (response) {
+                    //        alert("closed check succeeded");
+                    //        var respPara = $(response).find("p:first").text();
+                    //        var responseCheck = respPara.toLowerCase();
+                    //        var respMessage = respPara.replace("Off-line", "offline");
+                    //        var substrStart = respMessage.lastIndexOf("-");
+                    //        var closedMessage = respMessage.toString().substring(substrStart + 2, respMessage.length);
+
+                    //        if (responseCheck.contains("off-line")) {
+                    //            alert("Clinic is offline");
+                    //            var div1 = $(response).find(".webstatus:first");
+                    //            var div2 = $(response).find(".facstatus:first");
+
+                    //            $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
+                    //            $("#reason").html(closedMessage);
+                    //            $("#scrollItem202").html(div1);
+                    //            $("#clinicHours").html(div2);
+
+                    //            $.mobile.changePage("#offline", { role: "page" });
+                    //        }
+                    //    }
+                    //});
+                    //request.fail(function (jqXHR, textStatus) {
+                    //    alert("closed check failed: " + rootURL);
+                    //});
+                }
+
                 $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
 
                 $('.scrollContent a').click(function (e) {
                     $('html,body,div,p').scrollTo(this.hash, this.hash);
                     e.preventDefault();
                 });
-
-                //$('.scrollContent2 a').click(function (e) {
-                //    $('html,body,div,p').scrollTo(this.hash, this.hash);
-                //    e.preventDefault();
-                //});
-
-                //$("#selectUS").click(function (e) {
-                //    e.preventDefault();
-                //    $("#postalCode").mask("99999");
-                //    $("#postalCode").attr("placeholder", "Zip Code *");
-                //});
-
-                //$("#selectCanada").click(function (e) {
-                //    e.preventDefault();
-                //    $("#postalCode").mask("a9a-9a9");
-                //    $("#postalCode").attr("placeholder", "Postal Code *");
-                //});
 
                 $("#showInstructions").click(function () {
                     var form = $("#patientDetailsForm");
@@ -296,7 +343,8 @@
         <div data-role="content">
             <div class="centerLogoColumn">
                <img src="images/logo.png" class="logo" alt="fastwebcheckin logo"> 
-            </div>                                                                                                                                                                                                                                              
+            </div> 
+            <div class="version">version 1.4.g</div>                                                                                                                                                                                                                                            
         </div>
         <div id="adFooter" data-role="footer" data-position="fixed" data-theme="f">
             <div id="adContainer">
@@ -307,6 +355,8 @@
             <div data-role="navbar">
             <ul>
                 <li><a href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li> 
+                <!--<li><div class="version"><input id="rootURL" name="rootURL1" type="text" 
+                   value="http://old.fastwebcheckin.com" data-prevent-focus-zoom="true" data-role="none"/> </div></li>-->
             </ul>
             </div>
         </div>

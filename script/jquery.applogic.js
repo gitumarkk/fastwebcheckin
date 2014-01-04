@@ -131,12 +131,14 @@ function clearLocalStorage() {
     localStorage["terms"] = "NO";
 }
 
-function isClosedOnClinicSelect(){
-    //alert("Checking if " + $("#selectedClinic").val() +  " clinic is closed.");
+function isClosedOnClinicSelect2(){
+    alert("Checking if " + localStorage["location"] +  " clinic is closed.");
     var request = $.ajax({
         type: "GET",
-        url: rootURL + "/checkin/pcn?f=" + $("#selectedClinic").val(),
+        dataType: "html",
+        url: rootURL + "/checkin/pcn?f=" + localStorage["location"],
         success: function (response) {
+            alert("closed check succeeded");
             var respPara = $(response).find("p:first").text();
             var responseCheck = respPara.toLowerCase();
             var respMessage = respPara.replace("Off-line", "offline");
@@ -144,22 +146,9 @@ function isClosedOnClinicSelect(){
             var closedMessage = respMessage.toString().substring(substrStart + 2, respMessage.length);
 
             if (responseCheck.contains("off-line")) {
+                alert("Clinic is offline");
                 var div1 = $(response).find(".webstatus:first");
                 var div2 = $(response).find(".facstatus:first");
-
-                //var rowIndex = 0;
-                //var rows = $(".schedule tr:gt(0)");
-                //rows.each(function (index) {
-                //    rowIndex = index;
-                //    $(this).children("td").each(function (index) {
-                //        //alert("Cell INDEX: " + index + " TEXT: " + $(this).text());
-                //        if ($(this).text().toString().contains("Closed")) {
-                //            alert("Found Closed text at row index:" + rowIndex + ". cell index:" + index);
-                //            //$('.schedule tr td:nth-child(' + index + ')').attr('colspan', '2');
-                //            //$(this).attr('colspan', '2');
-                //        }
-                //    })
-                //});
 
                 $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
                 $("#reason").html(closedMessage);
@@ -170,5 +159,8 @@ function isClosedOnClinicSelect(){
             }
         }
     });
+    request.fail(function (jqXHR, textStatus) {
+        alert("closed check failed: " + rootURL);
+        });
 }
 
