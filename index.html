@@ -146,17 +146,26 @@
                 });
 
                 function isClosedOnClinicSelect() {
-                    $.get(rootURL + "/checkin/pcn?f=" + $("#selectedClinic").val(), function (response) {
-                        alert("GET succeeded");
+                    $.get(rootURL + "/status/" + $("#selectedClinic").val(), function (response) {
                         var respPara = $(response).find("p:first").text();
                         var responseCheck = respPara.toLowerCase();
                         var respMessage = respPara.replace("Off-line", "offline");
-                        var substrStart = respMessage.lastIndexOf("-");
-                        var closedMessage = respMessage.toString().substring(substrStart + 2, respMessage.length);
-                        alert("response successfully read: " + closedMessage);
+                        var dashes = respMessage.split('-');
+                        //alert("# of dashes: " + dashes.length);
+                        var startIndex = respMessage.lastIndexOf("-");
+
+                        var closedMessage;
+                        if (dashes.length == 3) {
+                            $("#reason").remove();
+                        }
+                        else if (dashes.length == 4) {
+                            closedMessage = respMessage.toString().substring(startIndex + 1, respMessage.length);
+                        }
+
+                        alert("response successfully read: " + respMessage);
 
                         if (responseCheck.contains("off-line")) {
-                            alert("Clinic is offline");
+                            //alert("Clinic is offline");
                             var div1 = $(response).find(".webstatus:first");
                             var div2 = $(response).find(".facstatus:first");
 
@@ -168,11 +177,11 @@
                             $.mobile.changePage("#offline", { role: "page" });
                         }
                     }).done(function () {
-                        alert("done");
+                        alert("ClinicClosed check GET done.");
                     }).fail(function () {
-                        alert("failed");
-                    }).always(function () {
-                        alert("always");
+                        alert("ClinicClosed check GET failed.");
+                    }).success(function () {
+                        alert("ClinicClosed check GET succeeded.");
                     });
 
                     //var request = $.ajax({
