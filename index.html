@@ -34,326 +34,14 @@
         <script src="script/moment.min.js"></script>
         <script src="script/ad-rotator.js"></script>
         <script src="script/jquery.applogic.js"></script>
-
-        <script>
-            ///<reference path="script/jquery-2.0.3-vsdoc.js" />
-            $(document).bind("mobileinit", function () {
-                //jQuery Mobile framework configurations:
-                $.mobile.allowCrossDomainPages = true;
-                $.support.cors = true;
-                alert("CORS enabled: " + $.support.cors);
-            });
-
-            $(document).ready(function () {
-                //pre-processing:
-                $.mobile.allowCrossDomainPages = true;
-                $.support.cors = true;
-                //var cors = $.mobile.allowCrossDomainPages;
-                //alert("CORS enabled: " + cors);
-
-                if (navigator.userAgent.match(/Android/i)) {
-                    window.scrollTo(0, 0); // reset in case prev not scrolled  
-                    var nPageH = $(document).height();
-                    var nViewH = window.outerHeight;
-                    if (nViewH > nPageH) {
-                        nViewH -= 250;
-                        $('BODY').css('height', nViewH + 'px');
-                    }
-                    window.scrollTo(0, 1);
-                }
-
-                //**START page init:
-                runEnquire();
-                restoreUserDetails();
-
-                //if ($("#selectedClinic").val().length > 0) {
-                //    alert("selected clinic: " + $("#selectedClinic").val());
-                //    checkClosedOnClinicSelect();
-                //}
-
-                if (getPreviousCheckin()) {
-                    $("#splash").hide();
-                    $("#patientDetails").show();
-
-                    //on details form:
-                    $("#details").hide();
-                    $("#instructions").hide();
-                    $("#terms").hide();
-                    $("#final").hide();
-                    $("#footerDetails").hide();
-                    $("#confirm").show();
-                }
-                else {
-                    //on details form:
-                    $("#details").show();
-                    $("#instructions").hide();
-                    $("#terms").hide();
-                    $("#final").hide();
-                    $("#confirm").hide();
-                }
-
-                //reset location:
-                localStorage["location"] = "";
-                localStorage["locationFriendlyName"] = "";
-                //**END page init:
-
-                //validation:
-                $("#lastName").rules("add", {
-                    required: true,
-                    minlength: 2,
-                    messages: {
-                        required: "&nbsp;&nbsp;Please enter your last name."
-                    }
-                });
-
-                $("#firstName").rules("add", {
-                    required: true,
-                    minlength: 2,
-                    messages: {
-                        required: "&nbsp;&nbsp;Please enter your first name."
-                    }
-                });
-
-                $("#postalCode").rules("add", {
-                    required: true,
-                    messages: {
-                        required: "&nbsp;&nbsp;Please enter your postal code."
-                    }
-                });
-
-                $("#emailAddress").rules("add", {
-                    required: true,
-                    messages: {
-                        required: "&nbsp;&nbsp;Please enter your email."
-                    }
-                });
-
-                //navigation:
-                $("#niagaraButton").click(function () {
-                    localStorage["location"] = "pcnniagara";
-                    localStorage["locationFriendlyName"] = "PCN Niagara";
-                    $("#selectedClinic").val("pcnniagara");
-                    isClosedOnClinicSelect();
-                    //clearLocalStorage();
-                });
-
-                $("#wellandButton").click(function () {
-                    localStorage["location"] = "pcnwelland";
-                    localStorage["locationFriendlyName"] = "PCN Welland";
-                    $("#selectedClinic").val("pcnwelland");
-                    isClosedOnClinicSelect();
-                    //clearLocalStorage();
-                });
-
-                function isClosedOnClinicSelect() {
-                    $.get(rootURL + "/status/" + $("#selectedClinic").val(), function (response) {
-                        var respPara = $(response).find("p:first").text();
-                        var responseCheck = respPara.toLowerCase();
-                        var respMessage = respPara.replace("Off-line", "offline");
-                        var dashes = respMessage.split('-');
-                        //alert("# of dashes: " + dashes.length);
-                        var startIndex = respMessage.lastIndexOf("-");
-
-                        var closedMessage;
-                        if (dashes.length == 3) {
-                            $("#reason").remove();
-                        }
-                        else if (dashes.length == 4) {
-                            closedMessage = respMessage.toString().substring(startIndex + 1, respMessage.length);
-                        }
-
-                        alert("response successfully read: " + respMessage);
-
-                        if (responseCheck.contains("off-line")) {
-                            //alert("Clinic is offline");
-                            var div1 = $(response).find(".webstatus:first");
-                            var div2 = $(response).find(".facstatus:first");
-
-                            $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
-                            $("#reason").html(closedMessage);
-                            $("#scrollItem202").html(div1);
-                            $("#clinicHours").html(div2);
-
-                            $.mobile.changePage("#offline", { role: "page" });
-                        }
-                    }).done(function () {
-                        alert("ClinicClosed check GET done.");
-                    }).fail(function () {
-                        alert("ClinicClosed check GET failed.");
-                    }).success(function () {
-                        alert("ClinicClosed check GET succeeded.");
-                    });
-
-                    //var request = $.ajax({
-                    //    type: "GET",
-                    //    dataType: "html",
-                    //    url: rootURL + "/checkin/pcn?f=" + $("#selectedClinic").val(),
-                    //    success: function (response) {
-                    //        alert("closed check succeeded");
-                    //        var respPara = $(response).find("p:first").text();
-                    //        var responseCheck = respPara.toLowerCase();
-                    //        var respMessage = respPara.replace("Off-line", "offline");
-                    //        var substrStart = respMessage.lastIndexOf("-");
-                    //        var closedMessage = respMessage.toString().substring(substrStart + 2, respMessage.length);
-
-                    //        if (responseCheck.contains("off-line")) {
-                    //            alert("Clinic is offline");
-                    //            var div1 = $(response).find(".webstatus:first");
-                    //            var div2 = $(response).find(".facstatus:first");
-
-                    //            $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
-                    //            $("#reason").html(closedMessage);
-                    //            $("#scrollItem202").html(div1);
-                    //            $("#clinicHours").html(div2);
-
-                    //            $.mobile.changePage("#offline", { role: "page" });
-                    //        }
-                    //    }
-                    //});
-                    //request.fail(function (jqXHR, textStatus) {
-                    //    alert("closed check failed: " + rootURL);
-                    //});
-                }
-
-                $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
-
-                $('.scrollContent a').click(function (e) {
-                    $('html,body,div,p').scrollTo(this.hash, this.hash);
-                    e.preventDefault();
-                });
-
-                $("#showInstructions").click(function () {
-                    var form = $("#patientDetailsForm");
-                    form.validate();
-
-                    if (form.valid()) {
-                        alert("By tapping the button below, I give you permission to email me with a confirmation of my check-in and future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy.");
-                        $("#details").hide();
-                        $("#instructions").show();
-                        $("#footerImage").hide();
-                        $.mobile.silentScroll(0);
-                        localStorage["emailPermission"] = 'YES';
-                    }
-                    else {
-                        alert('Please fully complete your check in details.');
-                    }
-                });
-
-                $("#showTerms").click(function () {
-                    $("#instructions").hide();
-                    $("#terms").show();
-
-                    $.mobile.silentScroll(0);
-                    localStorage["readInstructions"] = 'YES';
-                });
-
-                $("#showFinal").click(function () {
-                    $("#terms").hide();
-                    $("#final").show();
-
-                    $.mobile.silentScroll(0);
-                    localStorage["terms"] = 'YES';
-                });
-
-                $("#submit").click(function () {
-                    $("#final").hide();
-                    $("#footerImage").hide();
-
-                    var selectedClinic = new String($("#selectedClinic").val());
-                    if (selectedClinic.length == 0) {
-                        selectedClinic = localStorage["location"];
-                        alert("selected clinic at POST time: " + selectedClinic);
-                    }
-                    //alert("POSTing check-in for clinic code: " + selectedClinic);
-
-                    //for local testing if CORS is disabled, start Chrome with: 
-                    //chromium-browser --disable-web-security
-                    var request = $.ajax({
-                        type: "POST",
-                        url: rootURL + "/check/submission",
-                        beforesend: function () { $.mobile.loading('show'); },
-                        complete: function () { $.mobile.loading('hide'); },
-                        data:
-                    { 'submission[data][1][values][0]': $('#firstName').val(),
-                        'submission[data][2][values][0]': $('#lastName').val(),
-                        'submission[data][11][values][0]': $('#emailAddress').val(),
-                        'submission[data][14][values][0]': '0',
-                        'submission[data][16][values][0]': $('#postalCode').val(),
-                        'submission[data][23][values][0]': $("#selectedClinic").val(), //localStorage["location"],
-                        'submission[data][26][values][0]': $('#priorityCode').val(),
-                        'submission[data][12][values][0]': localStorage["terms"],
-                        'submission[data][19][values][0]': localStorage["readInstructions"],
-                        'submission[data][25][values][0]': localStorage["emailPermission"],
-                        'submission[data][15][values][0]': '',
-                        'submission[data][17][values][0]': '',
-                        'submission[data][18][values][0]': '',
-                        'submission[data][21][values][0]': '',
-                        'submission[data][22][values][0]': '',
-                        'submission[data][24][values][0]': '',
-                        'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
-                    },
-                        dataType: 'json',
-                        success: function (response) {
-                            alert("submit success");
-                            storeUserDetails();
-
-                            localStorage["submittedDate"] = response["submitted"];
-                            var jsonDate = response["submitted"];
-                            var submitDate = new Date(parseInt(jsonDate) * 1000);
-                            submitDateMoment = moment(submitDate).subtract('minutes', 3);
-                            localStorage["submitDateFormatted"] = submitDate.toDateString();
-                            localStorage["submitTimeFormatted"] = submitDateMoment.format('h:mm a');
-
-                            localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
-                            var cmessage = new String(response["data"]["12"]["values"][0]);
-                            cmessage = cmessage.replace("YES", "");
-                            localStorage["confirmMessage"] = cmessage;
-
-                            var at = response["data"]["22"]["values"][0];
-                            localStorage["attendTime"] = at;
-                            if (clinicIsClosed(at)) {
-                                $("#confirm").hide();
-
-                                var header = new String(response["data"]["23"]["values"][0])
-                                if (header !== undefined) {
-                                    header = header.replace("currently: ", "");
-                                    header = header.replace("-", "");
-                                    $("#offlineHeader").html("<h5>" + header + "</h5>");
-                                }
-
-                                //var clinicName = new String(localStorage["locationFriendlyName"]);
-                                //if (clinicName !== 'undefined' && ~header.indexOf(clinicName)) {
-                                //    $("#offlineHeader").html("<h5>" + header + "</h5>");
-                                //}
-                                //else {
-                                //    $("#offlineHeader").html("<h5>" + clinicName + " Clinic is offline</h5>");
-                                //}
-
-                                $.mobile.changePage("#offline", { role: "page" });
-                            }
-                            else {
-                                $("#confirm").show();
-                                fillConfirmationMessage();
-                            }
-                        }
-                    });
-                    request.fail(function (jqXHR, textStatus) {
-                        alert("We were unable to receive your check-in. \n Please try again later or contact us.");
-                        clearLocalStorage();
-                        $.mobile.changePage("#patientDetails", { role: "page" });
-                    });
-                });
-            });
-        </script>
     </head>
     <body>
-
     <div id="splash" data-role="page" data-title="fastwebcheckin" data-theme="b">
         <div data-role="content">
             <div class="centerLogoColumn">
                <img src="images/logo.png" class="logo" alt="fastwebcheckin logo"> 
             </div> 
-            <div class="version">version 1.4.g</div>                                                                                                                                                                                                                                            
+            <div class="version">version 1.5</div>                                                                                                                                                                                                                                            
         </div>
         <div id="adFooter" data-role="footer" data-position="fixed" data-theme="f">
             <div id="adContainer">
@@ -722,6 +410,277 @@
                 </ul>
             </div>
         </div>
-    </div>       
+    </div> 
+        
+    <script>
+        ///<reference path="script/jquery-2.0.3-vsdoc.js" />
+        $(document).bind("mobileinit", function () {
+            //jQuery Mobile framework configurations:
+            $.mobile.allowCrossDomainPages = true;
+            $.support.cors = true;
+            alert("CORS enabled: " + $.support.cors);
+        });
+
+        $(document).ready(function () {
+            //pre-processing:
+            $.mobile.allowCrossDomainPages = true;
+            $.support.cors = true;
+            //var cors = $.mobile.allowCrossDomainPages;
+            //alert("CORS enabled: " + cors);
+
+            if (navigator.userAgent.match(/Android/i)) {
+                window.scrollTo(0, 0); // reset in case prev not scrolled  
+                var nPageH = $(document).height();
+                var nViewH = window.outerHeight;
+                if (nViewH > nPageH) {
+                    nViewH -= 250;
+                    $('BODY').css('height', nViewH + 'px');
+                }
+                window.scrollTo(0, 1);
+            }
+
+            //**START page init:
+            runEnquire();
+            restoreUserDetails();
+
+            //if ($("#selectedClinic").val().length > 0) {
+            //    alert("selected clinic: " + $("#selectedClinic").val());
+            //    checkClosedOnClinicSelect();
+            //}
+
+            if (getPreviousCheckin()) {
+                $("#splash").hide();
+                $("#patientDetails").show();
+
+                //on details form:
+                $("#details").hide();
+                $("#instructions").hide();
+                $("#terms").hide();
+                $("#final").hide();
+                $("#footerDetails").hide();
+                $("#confirm").show();
+            }
+            else {
+                //on details form:
+                $("#details").show();
+                $("#instructions").hide();
+                $("#terms").hide();
+                $("#final").hide();
+                $("#confirm").hide();
+            }
+
+            //reset location:
+            localStorage["location"] = "";
+            localStorage["locationFriendlyName"] = "";
+            //**END page init:
+
+            //validation:
+            $("#lastName").rules("add", {
+                required: true,
+                minlength: 2,
+                messages: {
+                    required: "&nbsp;&nbsp;Please enter your last name."
+                }
+            });
+
+            $("#firstName").rules("add", {
+                required: true,
+                minlength: 2,
+                messages: {
+                    required: "&nbsp;&nbsp;Please enter your first name."
+                }
+            });
+
+            $("#postalCode").rules("add", {
+                required: true,
+                messages: {
+                    required: "&nbsp;&nbsp;Please enter your postal code."
+                }
+            });
+
+            $("#emailAddress").rules("add", {
+                required: true,
+                messages: {
+                    required: "&nbsp;&nbsp;Please enter your email."
+                }
+            });
+
+            //navigation:
+            $("#niagaraButton").click(function () {
+                localStorage["location"] = "pcnniagara";
+                localStorage["locationFriendlyName"] = "PCN Niagara";
+                $("#selectedClinic").val("pcnniagara");
+                isClosedOnClinicSelect();
+                //clearLocalStorage();
+            });
+
+            $("#wellandButton").click(function () {
+                localStorage["location"] = "pcnwelland";
+                localStorage["locationFriendlyName"] = "PCN Welland";
+                $("#selectedClinic").val("pcnwelland");
+                isClosedOnClinicSelect();
+                //clearLocalStorage();
+            });
+
+            function isClosedOnClinicSelect() {
+                $.get(rootURL + "/status/" + $("#selectedClinic").val(), function (response) {
+                    var respPara = $(response).find("p:first").text();
+                    var responseCheck = respPara.toLowerCase();
+                    var respMessage = respPara.replace("Off-line", "offline");
+                    var dashes = respMessage.split('-');
+                    //alert("# of dashes: " + dashes.length);
+                    var startIndex = respMessage.lastIndexOf("-");
+
+                    var closedMessage;
+                    if (dashes.length == 3) {
+                        $("#reason").remove();
+                    }
+                    else if (dashes.length == 4) {
+                        closedMessage = respMessage.toString().substring(startIndex + 1, respMessage.length);
+                    }
+
+                    //alert("response successfully read: " + respMessage);
+
+                    if (responseCheck.contains("off-line")) {
+                        //alert("Clinic is offline");
+                        var div1 = $(response).find(".webstatus:first");
+                        var div2 = $(response).find(".facstatus:first");
+
+                        $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
+                        $("#reason").html(closedMessage);
+                        $("#scrollItem202").html(div1);
+                        $("#clinicHours").html(div2);
+
+                        $.mobile.changePage("#offline", { role: "page" });
+                    }
+                }).fail(function () {
+                    alert("ClinicClosed check GET failed.");
+                }).success(function () {
+                    //alert("ClinicClosed check GET succeeded.");
+                });
+            }
+
+            $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
+
+            $('.scrollContent a').click(function (e) {
+                $('html,body,div,p').scrollTo(this.hash, this.hash);
+                e.preventDefault();
+            });
+
+            $("#showInstructions").click(function () {
+                var form = $("#patientDetailsForm");
+                form.validate();
+
+                if (form.valid()) {
+                    alert("By tapping the button below, I give you permission to email me with a confirmation of my check-in and future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy.");
+                    $("#details").hide();
+                    $("#instructions").show();
+                    $("#footerImage").hide();
+                    $.mobile.silentScroll(0);
+                    localStorage["emailPermission"] = 'YES';
+                }
+                else {
+                    alert('Please fully complete your check in details.');
+                }
+            });
+
+            $("#showTerms").click(function () {
+                $("#instructions").hide();
+                $("#terms").show();
+
+                $.mobile.silentScroll(0);
+                localStorage["readInstructions"] = 'YES';
+            });
+
+            $("#showFinal").click(function () {
+                $("#terms").hide();
+                $("#final").show();
+
+                $.mobile.silentScroll(0);
+                localStorage["terms"] = 'YES';
+            });
+
+            $("#submit").click(function () {
+                $("#final").hide();
+                $("#footerImage").hide();
+
+                var selectedClinic = new String($("#selectedClinic").val());
+                if (selectedClinic.length == 0) {
+                    selectedClinic = localStorage["location"];
+                    alert("selected clinic at POST time: " + selectedClinic);
+                }
+                //alert("POSTing check-in for clinic code: " + selectedClinic);
+
+                //for local testing if CORS is disabled, start Chrome with: 
+                //chromium-browser --disable-web-security
+                var request = $.ajax({
+                    type: "POST",
+                    url: rootURL + "/check/submission",
+                    beforesend: function () { $.mobile.loading('show'); },
+                    complete: function () { $.mobile.loading('hide'); },
+                    data:
+                { 'submission[data][1][values][0]': $('#firstName').val(),
+                    'submission[data][2][values][0]': $('#lastName').val(),
+                    'submission[data][11][values][0]': $('#emailAddress').val(),
+                    'submission[data][14][values][0]': '0',
+                    'submission[data][16][values][0]': $('#postalCode').val(),
+                    'submission[data][23][values][0]': $("#selectedClinic").val(), //localStorage["location"],
+                    'submission[data][26][values][0]': $('#priorityCode').val(),
+                    'submission[data][12][values][0]': localStorage["terms"],
+                    'submission[data][19][values][0]': localStorage["readInstructions"],
+                    'submission[data][25][values][0]': localStorage["emailPermission"],
+                    'submission[data][15][values][0]': '',
+                    'submission[data][17][values][0]': '',
+                    'submission[data][18][values][0]': '',
+                    'submission[data][21][values][0]': '',
+                    'submission[data][22][values][0]': '',
+                    'submission[data][24][values][0]': '',
+                    'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
+                },
+                    dataType: 'json',
+                    success: function (response) {
+                        alert("submit success");
+                        storeUserDetails();
+
+                        localStorage["submittedDate"] = response["submitted"];
+                        var jsonDate = response["submitted"];
+                        var submitDate = new Date(parseInt(jsonDate) * 1000);
+                        submitDateMoment = moment(submitDate).subtract('minutes', 3);
+                        localStorage["submitDateFormatted"] = submitDate.toDateString();
+                        localStorage["submitTimeFormatted"] = submitDateMoment.format('h:mm a');
+
+                        localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
+                        var cmessage = new String(response["data"]["12"]["values"][0]);
+                        cmessage = cmessage.replace("YES", "");
+                        localStorage["confirmMessage"] = cmessage;
+
+                        var at = response["data"]["22"]["values"][0];
+                        localStorage["attendTime"] = at;
+                        if (clinicIsClosed(at)) {
+                            $("#confirm").hide();
+
+                            var header = new String(response["data"]["23"]["values"][0])
+                            if (header !== undefined) {
+                                header = header.replace("currently: ", "");
+                                header = header.replace("-", "");
+                                $("#offlineHeader").html("<h5>" + header + "</h5>");
+                            }
+
+                            $.mobile.changePage("#offline", { role: "page" });
+                        }
+                        else {
+                            $("#confirm").show();
+                            fillConfirmationMessage();
+                        }
+                    }
+                });
+                request.fail(function (jqXHR, textStatus) {
+                    alert("We were unable to receive your check-in. \n Please try again later or contact us.");
+                    clearLocalStorage();
+                    $.mobile.changePage("#patientDetails", { role: "page" });
+                });
+            });
+        });
+    </script>      
     </body>
 </html>
