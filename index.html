@@ -51,25 +51,22 @@
         <div id="footerSplash" data-role="footer" data-position="fixed">
             <div data-role="navbar">
             <ul>
-                <li><a href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li> 
-                <!--<li><div class="version"><input id="rootURL" name="rootURL1" type="text" 
-                   value="http://old.fastwebcheckin.com" data-prevent-focus-zoom="true" data-role="none"/> </div></li>-->
+                <li><a id="chooseClinic" href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Choose a clinic</a></li> 
             </ul>
             </div>
         </div>
     </div>
 
     <div id="offline" data-role="page" data-title="fastwebcheckin" data-theme="d">
-        <div id="offlineHeader" data-role="header" data-add-back-btn="true">
+        <div id="offlineHeader" data-role="header">
             <h5>Check-in system is offline</h5>
         </div>
         <div id="contentOffline" data-role="content" class="scrollContent">
-            <div id="reason"></div><br/>
+            <div id="reason"></div>
             <div id="scrollItem202">
-                <table class="schedule"><tbody><tr><td colspan="3"><a href="#scrollItem201">App Schedule</a><div class="scrollIconSmall"></div></td></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>7:15 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>4:15 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
+                <div id="defaultOffline"></div>
             </div>
             <div id="clinicHours">
-                <table class="schedule"><tbody><tr><td colspan="3"><a id="scrollItem201" href="#scrollItem202">Clinic Schedule</a><div class="scrollIconSmall"></div></td></tr><tr><th>Day</th><th>Open</th><th>Close</th></tr><tr><td>Sunday</td><td colspan="2"> Closed </td></tr><tr><td>Monday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Tuesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Wednesday</td><td>9:00 am</td><td>8:00 pm</td></tr><tr><td>Thursday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Friday</td><td>9:00 am</td><td>5:00 pm</td></tr><tr><td>Saturday</td><td colspan="2"> Closed </td></tr><tr><td>Holidays</td><td colspan="2"> Closed </td></tr></tbody></table>
             </div>
         </div>
         <div id="footerOffline" data-role="footer" data-position="fixed">
@@ -81,9 +78,9 @@
             <h5>Choose a clinic</h5>
         </div>
         <div id="contentClinicSelect" data-role="content">
-            <a href="#patientDetails?clinic=niagara" id="niagaraButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
+            <a href="#" id="niagaraButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
             data-corners="false" data-shadow="false">PCN Niagara Falls</a>
-            <a href="#patientDetails?clinic=welland" id="wellandButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
+            <a href="#" id="wellandButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
             data-corners="false" data-shadow="false">PCN Welland</a>
         </div>
         <div id="footerClinicSelect" data-role="footer" data-position="fixed" data-theme="c">
@@ -421,6 +418,12 @@
             alert("CORS enabled: " + $.support.cors);
         });
 
+        $("#offline").on("pageinit", function (e, data) {
+            if ($("#defaultOffline").length > 0) {
+                $.mobile.changePage("#splash", { role: "page", changeHash: false  });
+            }
+        });
+
         $(document).ready(function () {
             //pre-processing:
             $.mobile.allowCrossDomainPages = true;
@@ -443,10 +446,10 @@
             runEnquire();
             restoreUserDetails();
 
-            //if ($("#selectedClinic").val().length > 0) {
-            //    alert("selected clinic: " + $("#selectedClinic").val());
-            //    checkClosedOnClinicSelect();
-            //}
+            if ($("#selectedClinic").val().length > 0) {
+                alert("selected clinic: " + $("#selectedClinic").val());
+                checkClosedOnClinicSelect();
+            }
 
             if (getPreviousCheckin()) {
                 $("#splash").hide();
@@ -539,8 +542,6 @@
                         closedMessage = respMessage.toString().substring(startIndex + 1, respMessage.length);
                     }
 
-                    //alert("response successfully read: " + respMessage);
-
                     if (responseCheck.contains("off-line")) {
                         //alert("Clinic is offline");
                         var div1 = $(response).find(".webstatus:first");
@@ -551,7 +552,10 @@
                         $("#scrollItem202").html(div1);
                         $("#clinicHours").html(div2);
 
-                        $.mobile.changePage("#offline", { role: "page" });
+                        $.mobile.changePage("#offline", { role: "page", changeHash: false });
+                    }
+                    else {
+                        $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
                     }
                 }).fail(function () {
                     alert("ClinicClosed check GET failed.");
