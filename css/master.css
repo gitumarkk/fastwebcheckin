@@ -13,6 +13,10 @@ p{
     margin-right: auto;  
 }
 
+#reason {
+    font-size: 10pt;
+}
+
 .internalParagraphHeader {
     font-size: larger;
     font-weight: 600;

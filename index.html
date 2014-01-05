@@ -420,7 +420,7 @@
 
         $("#offline").on("pageinit", function (e, data) {
             if ($("#defaultOffline").length > 0) {
-                $.mobile.changePage("#splash", { role: "page", changeHash: false  });
+                $.mobile.changePage("#splash", { role: "page", changeHash: false });
             }
         });
 
@@ -525,17 +525,18 @@
                 $.get(rootURL + "/status/" + $("#selectedClinic").val(), function (response) {
                     var respPara = $(response).find("p:first").text();
                     var responseCheck = respPara.toLowerCase();
-                    var respMessage = respPara.replace("Off-line", "offline");
-                    var dashes = respMessage.split('-');
+                    //alert(respPara);
+                    //var respMessage = respPara.replace("Off-line", "offline");
+                    var dashes = respPara.split('-');
                     //alert("# of dashes: " + dashes.length);
-                    var startIndex = respMessage.lastIndexOf("-");
+                    var startIndex = responseCheck.lastIndexOf("-");
 
-                    var closedMessage;
-                    if (dashes.length == 3) {
+                    var closedMessage;  
+                    if (dashes.length < 4) {
                         $("#reason").remove();
                     }
                     else if (dashes.length == 4) {
-                        closedMessage = respMessage.toString().substring(startIndex + 1, respMessage.length);
+                        closedMessage = respPara.toString().substring(startIndex + 1, respPara.length);
                     }
 
                     if (responseCheck.contains("off-line")) {
@@ -544,7 +545,7 @@
                         var div2 = $(response).find(".facstatus:first");
 
                         $("#offlineHeading").text(localStorage["locationFriendlyName"] + " Clinic is offline");
-                        $("#reason").html(closedMessage);
+                        $("#reason").html(closedMessage + "<br/>");
                         $("#scrollItem202").html(div1);
                         $("#clinicHours").html(div2);
 
