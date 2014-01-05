@@ -7,6 +7,12 @@ p{
    font-size: small; 
 }
 
+#offlineHeading {
+    font-size: 12pt; 
+    margin-left: auto;
+    margin-right: auto;  
+}
+
 .internalParagraphHeader {
     font-size: larger;
     font-weight: 600;

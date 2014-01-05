@@ -41,7 +41,7 @@
             <div class="centerLogoColumn">
                <img src="images/logo.png" class="logo" alt="fastwebcheckin logo"> 
             </div> 
-            <div class="version">version 1.5</div>                                                                                                                                                                                                                                            
+            <div class="version">version 1.7</div>                                                                                                                                                                                                                                            
         </div>
         <div id="adFooter" data-role="footer" data-position="fixed" data-theme="f">
             <div id="adContainer">
@@ -57,9 +57,9 @@
         </div>
     </div>
 
-    <div id="offline" data-role="page" data-title="fastwebcheckin" data-theme="d">
+    <div id="offline" data-role="page" data-title="fastwebcheckin" data-theme="d" data-add-back-btn="true">
         <div id="offlineHeader" data-role="header">
-            <h5>Check-in system is offline</h5>
+            <h4 id="offlineHeading">Check-in system is offline</h4>
         </div>
         <div id="contentOffline" data-role="content" class="scrollContent">
             <div id="reason"></div>
@@ -426,6 +426,7 @@
 
         $(document).ready(function () {
             //pre-processing:
+            $.mobile.page.prototype.options.domCache = false;
             $.mobile.allowCrossDomainPages = true;
             $.support.cors = true;
             //var cors = $.mobile.allowCrossDomainPages;
@@ -542,7 +543,7 @@
                         var div1 = $(response).find(".webstatus:first");
                         var div2 = $(response).find(".facstatus:first");
 
-                        $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
+                        $("#offlineHeading").text(localStorage["locationFriendlyName"] + " Clinic is offline");
                         $("#reason").html(closedMessage);
                         $("#scrollItem202").html(div1);
                         $("#clinicHours").html(div2);
