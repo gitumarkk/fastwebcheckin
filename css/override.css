@@ -1,6 +1,8 @@
 /*dialogs*/
 .ui-dialog-contain {
 	max-width: 800px;
+    margin-top: 2%;
+    top: 10px;
 }
 
 /*fixes for header truncation*/

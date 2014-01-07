@@ -1,16 +1,32 @@
 /*base*/
+/*body {
+    min-height: 800px;
+}*/
+
 body html{
     font-family: 'Telex', sans-serif;
 }
 
 p{
-   font-size: small; 
+   font-size: 6pt; 
+}
+
+#info p {
+    font-size: 6pt;
+}
+
+#termsAndConditions p {
+    font-size: 6pt;
+}
+
+#contentTerms p{
+    font-size: 6pt;
 }
 
 #offlineHeading {
     font-size: 12pt; 
     margin-left: auto;
-    margin-right: auto;  
+    margin-right: auto; 
 }
 
 #reason {
@@ -19,17 +35,15 @@ p{
 
 .internalParagraphHeader {
     font-size: larger;
-    font-weight: 600;
-}
-
-#confirm {
-    font-family: Arial;
-    font-size: large;
-    margin: 6px 6px 6px 6px;
+    font-weight: 800;
 }
 
 .important{
     font-weight: bold;
+}
+
+.heading {
+    font-size: medium;
 }
 
 .version {
@@ -51,11 +65,37 @@ p{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 40px;
+    margin-top: 10px;
+}
+
+#confirmationMessage {
+    border-style: solid;
+    border-width: thin;
+    padding: 2px;
+    word-wrap: break-word;
+}
+
+#confirm {
+    /*padding: 2px;*/
+    font-size: smaller; 
+    height: auto;
+}
+
+#confirm p{
+    font-size: x-small; 
+}
+
+.confirmHeader {
+    font-size: 10pt;
+    font-weight: 700;
 }
 
 #confirm div {
     font-size: small; 
+}
+
+#checkinNumber {
+    font-weight: 700;
 }
 
 /*dialogs and popups*/
@@ -106,10 +146,6 @@ img.logo{
 .scrollContent{
     display: inline-block;
     float: multicol;
-}
-
-.scrollContent a:hover{
-    text-decoration-line: overline;
 }
 
 .scrollContent a{
@@ -242,17 +278,6 @@ div.rightalign {
 
 .ui-block-b {
     font-weight: 700;
-}
-
-#confirmationMessage {
-    border-style: solid;
-    border-width: thin;
-    padding: 2px;
-    word-wrap: break-word;
-}
-
-#confirm {
-    padding: 2px;
 }
 
 #message {

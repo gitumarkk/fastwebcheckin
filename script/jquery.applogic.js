@@ -7,11 +7,11 @@ var rootURL = "http://fastwebcheckin.com";
 /*global overrides*/
 String.prototype.contains = function (it) { return this.indexOf(it) != -1; };
 
-function checkinNumberExists(){
+function checkinNumberExists() {
     var cno = new String(localStorage["checkinNumber"]);
     var attendTime = new String(localStorage["attendTime"]);
     if(cno != 'undefined' && cno.length > 1 && attendTime != "Not today"){
-        //alert("--- checkinNumber EXISTS --- \n local storage: " + localStorage["checkinNumber"] + " \n string var: " + cno);
+        //alert("--- checkinNumber EXISTS --- \n local storage: " + localStorage["checkinNumber"] + " \n string checkinNumber var: " + cno + " \n string attendTime var: " + attendTime);
         return true;
     } 
     else{
@@ -33,6 +33,7 @@ function clinicIsClosed(attendTime){
 
 function getPreviousCheckin(){
     var sdate = localStorage["submittedDate"];
+    //alert("submittedDate: " + sdate);
     var loc = localStorage["location"];
     var terms = localStorage["terms"];
 
@@ -119,48 +120,19 @@ function fillConfirmationMessage() {
     $("#clinicAddress").html(localStorage["clinicAddress"]);
     $("#clinicMapLinkHref").attr("href", localStorage["clinicMapLinkHref"]);
 
-    $("#footerImage").hide();
+    //$("#footerImage").hide();
 }
 
 function clearLocalStorage() {
-    localStorage["checkinNumber"] = "";
-    localStorage["attendTime"] = "";
-    localStorage["submittedDate"] = "";
+    //alert("clearLocalStorage() called");
+    localStorage.removeItem("checkinNumber");
+    localStorage.removeItem("attendTime");
+    localStorage.removeItem("submittedDate");
+    //localStorage["checkinNumber"] = "";
+    //localStorage["attendTime"] = "";
+    //localStorage["submittedDate"] = "";
     localStorage["emailPermission"] = "NO";
     localStorage["readInstructions"] = "NO";
     localStorage["terms"] = "NO";
-}
-
-function isClosedOnClinicSelect2(){
-    alert("Checking if " + localStorage["location"] +  " clinic is closed.");
-    var request = $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: rootURL + "/checkin/pcn?f=" + localStorage["location"],
-        success: function (response) {
-            alert("closed check succeeded");
-            var respPara = $(response).find("p:first").text();
-            var responseCheck = respPara.toLowerCase();
-            var respMessage = respPara.replace("Off-line", "offline");
-            var substrStart = respMessage.lastIndexOf("-");
-            var closedMessage = respMessage.toString().substring(substrStart + 2, respMessage.length);
-
-            if (responseCheck.contains("off-line")) {
-                alert("Clinic is offline");
-                var div1 = $(response).find(".webstatus:first");
-                var div2 = $(response).find(".facstatus:first");
-
-                $("#offlineHeader").html("<h5>" + localStorage["locationFriendlyName"] + " Clinic is offline" + "</h5>");
-                $("#reason").html(closedMessage);
-                $("#scrollItem202").html(div1);
-                $("#clinicHours").html(div2);
-
-                $.mobile.changePage("#offline", { role: "page" });
-            }
-        }
-    });
-    request.fail(function (jqXHR, textStatus) {
-        alert("closed check failed: " + rootURL);
-        });
 }
 

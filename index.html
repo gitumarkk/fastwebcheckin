@@ -7,7 +7,12 @@
         <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta http-equiv='X-UA-Compatible' content='chrome=1'>
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <link rel="apple-touch-icon-precomposed" href="images/AppIcon57x57.png" />
+        <link rel="apple-touch-icon-precomposed" href="images/App-Icon-57.png" />
+        <link rel="apple-touch-icon-precomposed" href="images/App-Icon-72.png" />
+        <link rel="apple-touch-icon" href="images/ios/icon.png" /> 
+        <link rel="apple-touch-icon" sizes="72x72" href="images/ios/icon-72.png" /> 
+        <link rel="apple-touch-icon" sizes="114x114" href="images/ios/icon@2x.png" /> 
+        <link rel="apple-touch-icon" sizes="144x144" href="images/ios/icon-72@2x.png" />
 
         <script src="script/jquery-2.0.3.min.js"></script>
         <script src="script/jquery.validate.js"></script>
@@ -57,8 +62,9 @@
         </div>
     </div>
 
-    <div id="offline" data-role="page" data-title="fastwebcheckin" data-theme="d" data-add-back-btn="true">
+    <div id="offline" data-role="page" data-title="fastwebcheckin" data-theme="d">
         <div id="offlineHeader" data-role="header">
+            <a href="#splash" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
             <h4 id="offlineHeading">Check-in system is offline</h4>
         </div>
         <div id="contentOffline" data-role="content" class="scrollContent">
@@ -111,20 +117,7 @@
                         <li> 
                             <label for="postalCode" class="ui-hidden-accessible">Postal Code</label>
                                 <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" 
-                                data-prevent-focus-zoom="true" data-role="none" />
-                            <!--<div id="postalCodeContainer">
-                                
-                            </div>-->
-
-                            <!--<div id="countrySelectionContainer">
-                                <fieldset data-role="controlgroup" data-role="fieldcontain" data-type="horizontal" data-mini="true" data-prevent-focus-zoom="true" id="countrySelector">
-                                    <label for="selectCanada">Canada</label>
-                                    <input type="radio" name="selectCanada" id="selectCanada" value="canada" checked="checked" />
-         	                        
-                                    <label for="selectUS">US</label>  
-         	                        <input type="radio" name="selectUS" id="selectUS" value="usa"/>
-                                </fieldset>
-                            </div>-->   	                    
+                                data-prevent-focus-zoom="true" data-role="none" />                    
                         </li>
                         <li>
                             <label for="emailAddress" class="ui-hidden-accessible">Email</label>
@@ -162,14 +155,12 @@
                         Health. Out-of-country patients will be required to pay a service fee for care.
                         </p>
                         <p>
-                        You are required to print your FAST WEB CHECK-IN pre-registration confirmation page and bring it with you to 
-                        the clinic. If you cannot print it, please record your FAST WEB CHECK-IN NUMBER and provide it to our 
-                        receptionist.
-                        </p>
-                        <p>
-                        By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
+                        You are required to present your FAST WEB CHECK-IN pre-registration confirmation CHECK-IN NUMBER to our receptionist.
                         </p>
                     </div>
+                    <p>
+                        By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
+                    </p>
                     <div id="scrollItem1">
                         <a href="#" id="showTerms" data-role="button">Yes</a>
                     </div>
@@ -181,49 +172,47 @@
                             <div class="scrollIcon"></div>
                         </a>
                     </div>
+                    <div id="termsAndConditions">
+                        <p>
+                        Your FAST WEB CHECK-IN pre-registration does not constitute the beginning of a clinic/physician and patient 
+                        engagement and is not a guarantee of care. The patient engagement will be formalized at our reception window 
+                        when registration is finalized.
+                        </p>
+                        <p>
+                        A FAST WEB CHECK-IN pre-registration places a potential patient into the waiting line. Once a patient presents 
+                        their FAST WEB CHECK-IN pre-registration confirmation, the registration process will be completed at the 
+                        reception window. The system will provide you with a time to attend the clinic. This is an estimation based on
+                        current projected wait times. We can not predict, in advance, the number of patients who will register for 
+                        care or the nature of the illness or injury that will require treatment. Therefore, you may still have a short
+                        wait in our waiting room once you arrive.
+                        </p>
+                        <p>
+                        Your FAST WEB CHECK-IN pre-registration is valid only for the day you submit it. If you do not attend the 
+                        clinic on that day, your registration will be cancelled.
+                        </p>
+                        <p>
+                        Some medical services or medical care is not provided or cannot be provided at our clinics. Patients may be 
+                        referred to the hospital or specialists to receive care.
+                        </p>
+                        <p>
+                        Your FAST WEB CHECK-IN pre-registration is subject to the entire website Terms of Use listed under the link 
+                        located at the bottom of this page.
+                        </p>
+                    </div>
                     <p>
-                    Your FAST WEB CHECK-IN pre-registration does not constitute the beginning of a clinic/physician and patient 
-                    engagement and is not a guarantee of care. The patient engagement will be formalized at our reception window 
-                    when registration is finalized.
-                    </p>
-                    <p>
-                    A FAST WEB CHECK-IN pre-registration places a potential patient into the waiting line. Once a patient presents 
-                    their FAST WEB CHECK-IN pre-registration confirmation, the registration process will be completed at the 
-                    reception window. The system will provide you with a time to attend the clinic. This is an estimation based on
-                    current projected wait times. We can not predict, in advance, the number of patients who will register for 
-                    care or the nature of the illness or injury that will require treatment. Therefore, you may still have a short
-                    wait in our waiting room once you arrive.
-                    </p>
-                    <p>
-                    Your FAST WEB CHECK-IN pre-registration is valid only for the day you submit it. If you do not attend the 
-                    clinic on that day, your registration will be cancelled.
-                    </p>
-                    <p>
-                    Some medical services or medical care is not provided or cannot be provided at our clinics. Patients may be 
-                    referred to the hospital or specialists to receive care.
-                    </p>
-                    <p>
-                    Your FAST WEB CHECK-IN pre-registration is subject to the entire website Terms of Use listed under the link 
-                    located at the bottom of this page.
-                    </p>
-                    <p>
-                    By tapping the button below, I signify that I've read, understand and agree to the Terms and Conditions:
+                        By tapping the button below, I signify that I've read, understand and agree to the Terms and Conditions:
                     </p>
                     <div id="scrollItem200">
                         <a href="#" id="showFinal" data-role="button">Yes</a>
                     </div>
                 </div>
-                <div id="final" hidden="hidden" style="height: 100%;">
+                <div id="final" hidden="hidden" style="height: 500px;">
                     <h4>You are ready to check in:</h4>
                     <a href="#" id="submit" data-role="button">Check in</a>
                 </div>
-                <div id="confirm" hidden="hidden" class="scrollContent">
-                    <div class="scrollHeader">
-                        <a href="#clinicAddress">
-                            <h4>Web Check-in Confirmation</h4>
-                            <div class="scrollIcon"></div>
-                        </a>
-                    </div>
+                <div id="confirm" hidden="hidden">
+                    <div class="confirmHeader">Web Check-in Confirmation</div>
+
                     <p>Confirmation number: <span id="checkinNumber"></span></p>
                     <p>You are in the waiting line at: <span id="locationConfirmation"></span> Clinic</p> 
                     <p id="attendInstructions"></p>
@@ -232,8 +221,7 @@
                             Clinic address:
                         </div>
                         <div class="ui-block-b">
-                            <div id="clinicAddress"></div>
-                            <a id="clinicMapLinkHref" href="www.google.com" target="foo">Click for directions</a>
+                            <a id="clinicMapLinkHref" href="www.google.com" rel="external" target="foo">Click for directions</a>
                         </div>
                         <div class="ui-block-a">
                             First name:
@@ -266,23 +254,21 @@
                             <span id="postalCodeConfirmation"></span>
                         </div>
                     </div>
-                    <p><span class="internalParagraphHeader">Instructions:</span> Bring this device with you to the clinic. A summary of your check-in will be displayed the next time you start this app.</p>
-                    <!--<a href="#clinicSelectDialog" id="newCheckinButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
-                        data-corners="false" data-shadow="false">New check-in</a>-->
+                    <p><span class="internalParagraphHeader">Instructions:</span> Bring this device with you to the clinic. This screen will display when you start this app.</p>                
                 </div>
             </form>
             <script>
                 $("#patientDetailsForm").validate();
             </script>
         </div>
-        <div id="footerDetails" data-role="footer" data-position="fixed" data-theme="c" class="footerLogo">
-            <!--<img src="images/logo.png" id="footerImage" width="300" alt="fastwebcheckin logo">-->
+        <div id="footerDetails" data-role="footer" data-position="fixed" data-theme="d" class="footerLogo">
+            <!--<img src="images/logo.png" id="footerImage" width="300" alt="fastwebcheckin logo">-->           
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="right" data-transition="slideup">Terms of Use</a></li> 
+                    <li><a href="#" id="clearCheckin" data-role="button" data-icon="arrow-l" data-iconpos="top">New Check-in</a></li>
+                    <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Terms of Use</a></li> 
                 </ul>
             </div>
-            <input id="selectedClinic" type="text" data-role="none" hidden="hidden"/>
         </div>
     </div>  
 
@@ -353,7 +339,7 @@
             <div id="item12" class="scrollHeader">
             <a href="#item13"><div><h4>Trademarks</h4></div>
                 <div class="scrollIcon"></div></a></div>
-            <p>Fastwebcheckin.mobile and Fastwebcheckin.com is/are trademarks of the Owner. Other names, words, titles, phrases, logos, designs, graphics, icons and trademarks displayed on the Website may constitute registered or unregistered trademarks of the Owner or third parties. While certain trademarks of third parties may be used by the Owner under license, the display of third-party trademarks on the Website should not be taken to imply any relationship or license between the Owner and the owner of the trademark or to imply that the Owner endorses the products, services, procedures, business, or other information of the owner of the said trademark.</p>
+            <p>Fastwebcheckin.com is a trademark of the Owner. Other names, words, titles, phrases, logos, designs, graphics, icons and trademarks displayed on the Website may constitute registered or unregistered trademarks of the Owner or third parties. While certain trademarks of third parties may be used by the Owner under license, the display of third-party trademarks on the Website should not be taken to imply any relationship or license between the Owner and the owner of the trademark or to imply that the Owner endorses the products, services, procedures, business, or other information of the owner of the said trademark.</p>
 
             <div id="item13" class="scrollHeader">
             <a href="#item14"><div><h4>Software license and ownership</h4></div>
@@ -410,12 +396,24 @@
     </div> 
         
     <script>
+        //window.addEventListener("load", function()
+        //{
+        //    if (navigator.userAgent.match(/Android/i)) {
+        //        window.scrollTo(0, 1);
+        //        //setTimeout( function(){ window.scrollTo(0, 1); }, 100 );
+        //    }
+        //}
+
         ///<reference path="script/jquery-2.0.3-vsdoc.js" />
         $(document).bind("mobileinit", function () {
             //jQuery Mobile framework configurations:
             $.mobile.allowCrossDomainPages = true;
             $.support.cors = true;
             //alert("CORS enabled: " + $.support.cors);
+        });
+
+        $("#termsOfUse").on("pagehide", function (e, data) {
+            $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
         });
 
         $("#offline").on("pageinit", function (e, data) {
@@ -429,44 +427,14 @@
             $.mobile.page.prototype.options.domCache = false;
             $.mobile.allowCrossDomainPages = true;
             $.support.cors = true;
+            //$.mobile.buttonMarkup.hoverDelay = 0;
             //var cors = $.mobile.allowCrossDomainPages;
             //alert("CORS enabled: " + cors);
-
-            if (navigator.userAgent.match(/Android/i)) {
-                window.scrollTo(0, 0); // reset in case prev not scrolled  
-                var nPageH = $(document).height();
-                var nViewH = window.outerHeight;
-                if (nViewH > nPageH) {
-                    nViewH -= 250;
-                    $('BODY').css('height', nViewH + 'px');
-                }
-                window.scrollTo(0, 1);
-            }
 
             //**START page init:
             runEnquire();
             restoreUserDetails();
-
-            if (getPreviousCheckin()) {
-                $("#splash").hide();
-                $("#patientDetails").show();
-
-                //on details form:
-                $("#details").hide();
-                $("#instructions").hide();
-                $("#terms").hide();
-                $("#final").hide();
-                $("#footerDetails").hide();
-                $("#confirm").show();
-            }
-            else {
-                //on details form:
-                $("#details").show();
-                $("#instructions").hide();
-                $("#terms").hide();
-                $("#final").hide();
-                $("#confirm").hide();
-            }
+            checkPreviousCheckin();
 
             //reset location:
             localStorage["location"] = "";
@@ -504,62 +472,31 @@
                 }
             });
 
-            //navigation:
+            //navigation/click events:
             $("#niagaraButton").click(function () {
+                //alert("niagaraButton clicked");
                 localStorage["location"] = "pcnniagara";
                 localStorage["locationFriendlyName"] = "PCN Niagara";
-                $("#selectedClinic").val("pcnniagara");
+                //$("#selectedClinic").val("pcnniagara");
                 isClosedOnClinicSelect();
                 //clearLocalStorage();
             });
 
             $("#wellandButton").click(function () {
+                //alert("wellandButton clicked");
                 localStorage["location"] = "pcnwelland";
                 localStorage["locationFriendlyName"] = "PCN Welland";
-                $("#selectedClinic").val("pcnwelland");
+                //$("#selectedClinic").val("pcnwelland");
                 isClosedOnClinicSelect();
                 //clearLocalStorage();
             });
 
-            function isClosedOnClinicSelect() {
-                $.get(rootURL + "/status/" + $("#selectedClinic").val(), function (response) {
-                    var respPara = $(response).find("p:first").text();
-                    var responseCheck = respPara.toLowerCase();
-                    //alert(respPara);
-                    //var respMessage = respPara.replace("Off-line", "offline");
-                    var dashes = respPara.split('-');
-                    //alert("# of dashes: " + dashes.length);
-                    var startIndex = responseCheck.lastIndexOf("-");
-
-                    var closedMessage;  
-                    if (dashes.length < 4) {
-                        $("#reason").remove();
-                    }
-                    else if (dashes.length == 4) {
-                        closedMessage = respPara.toString().substring(startIndex + 1, respPara.length);
-                    }
-
-                    if (responseCheck.contains("off-line")) {
-                        //alert("Clinic is offline");
-                        var div1 = $(response).find(".webstatus:first");
-                        var div2 = $(response).find(".facstatus:first");
-
-                        $("#offlineHeading").text(localStorage["locationFriendlyName"] + " Clinic is offline");
-                        $("#reason").html(closedMessage + "<br/>");
-                        $("#scrollItem202").html(div1);
-                        $("#clinicHours").html(div2);
-
-                        $.mobile.changePage("#offline", { role: "page", changeHash: false });
-                    }
-                    else {
-                        $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
-                    }
-                }).fail(function () {
-                    alert("ClinicClosed check GET failed.");
-                }).success(function () {
-                    //alert("ClinicClosed check GET succeeded.");
-                });
-            }
+            $("#clearCheckin").click(function () {
+                //alert("clear checkin");
+                clearLocalStorage();
+                checkPreviousCheckin();
+                $.mobile.changePage("#splash", { role: "page", changeHash: false });
+            });
 
             $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
 
@@ -576,7 +513,7 @@
                     alert("By tapping the button below, I give you permission to email me with a confirmation of my check-in and future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy.");
                     $("#details").hide();
                     $("#instructions").show();
-                    $("#footerImage").hide();
+                    //$("#footerImage").hide();
                     $.mobile.silentScroll(0);
                     localStorage["emailPermission"] = 'YES';
                 }
@@ -603,13 +540,13 @@
 
             $("#submit").click(function () {
                 $("#final").hide();
-                $("#footerImage").hide();
+                //$("#footerImage").hide();
 
-                var selectedClinic = new String($("#selectedClinic").val());
-                if (selectedClinic.length == 0) {
-                    selectedClinic = localStorage["location"];
-                    alert("selected clinic at POST time: " + selectedClinic);
-                }
+                var selectedClinic = localStorage["location"]; //new String($("#selectedClinic").val());
+                //if (selectedClinic.length == 0) {
+                //selectedClinic = localStorage["location"];
+                //alert("selected clinic at POST time: " + selectedClinic);
+                //}
                 //alert("POSTing check-in for clinic code: " + selectedClinic);
 
                 //for local testing if CORS is disabled, start Chrome with: 
@@ -625,7 +562,7 @@
                     'submission[data][11][values][0]': $('#emailAddress').val(),
                     'submission[data][14][values][0]': '0',
                     'submission[data][16][values][0]': $('#postalCode').val(),
-                    'submission[data][23][values][0]': $("#selectedClinic").val(), //localStorage["location"],
+                    'submission[data][23][values][0]': localStorage["location"],
                     'submission[data][26][values][0]': $('#priorityCode').val(),
                     'submission[data][12][values][0]': localStorage["terms"],
                     'submission[data][19][values][0]': localStorage["readInstructions"],
@@ -640,7 +577,7 @@
                 },
                     dataType: 'json',
                     success: function (response) {
-                        alert("submit success");
+                        //alert("submit success");
                         storeUserDetails();
 
                         localStorage["submittedDate"] = response["submitted"];
@@ -678,9 +615,76 @@
                 request.fail(function (jqXHR, textStatus) {
                     alert("We were unable to receive your check-in. \n Please try again later or contact us.");
                     clearLocalStorage();
-                    $.mobile.changePage("#patientDetails", { role: "page" });
+                    //$.mobile.changePage("#patientDetails", { role: "page" });
                 });
             });
+
+            //functions:
+            function isClosedOnClinicSelect() {
+                $.get(rootURL + "/status/" + localStorage["location"], function (response) {
+                    var respPara = $(response).find("p:first").text();
+                    var responseCheck = respPara.toLowerCase();
+                    //alert(respPara);
+                    //var respMessage = respPara.replace("Off-line", "offline");
+                    var dashes = respPara.split('-');
+                    //alert("# of dashes: " + dashes.length);
+                    var startIndex = responseCheck.lastIndexOf("-");
+
+                    var closedMessage;
+                    if (dashes.length < 4) {
+                        $("#reason").remove();
+                    }
+                    else if (dashes.length == 4) {
+                        closedMessage = respPara.toString().substring(startIndex + 1, respPara.length);
+                    }
+
+                    if (responseCheck.contains("off-line")) {
+                        //alert("Clinic is offline");
+                        var div1 = $(response).find(".webstatus:first");
+                        var div2 = $(response).find(".facstatus:first");
+
+                        $("#offlineHeading").text(localStorage["locationFriendlyName"] + " Clinic is offline");
+                        $("#reason").html(closedMessage + "<br/>");
+                        $("#scrollItem202").html(div1);
+                        $("#clinicHours").html(div2);
+
+                        $.mobile.changePage("#offline", { role: "page", changeHash: false });
+                    }
+                    else {
+                        $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
+                    }
+                }).fail(function () {
+                    alert("Clinic closed/open check failed. \n Please try again later or contact us.");
+                }).success(function () {
+                    //alert("ClinicClosed check GET succeeded.");
+                });
+            }
+
+            function checkPreviousCheckin() {
+                if (getPreviousCheckin()) {
+                    //fillConfirmationMessage();
+                    //alert("previous checkin");
+                    $("#splash").hide();
+                    $("#patientDetails").show();
+
+                    //on details form:
+                    $("#details").hide();
+                    $("#instructions").hide();
+                    $("#terms").hide();
+                    $("#final").hide();
+                    $("#confirm").show();
+                    $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
+                }
+                else {
+                    //alert("no previous checkin, or checkin cleared");
+                    //on details form:
+                    $("#details").show();
+                    $("#instructions").hide();
+                    $("#terms").hide();
+                    $("#final").hide();
+                    $("#confirm").hide();
+                }
+            };
         });
     </script>      
     </body>
