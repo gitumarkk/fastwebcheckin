@@ -7,7 +7,7 @@ body html{
     font-family: 'Telex', sans-serif;
 }
 
-p{
+/*p{
    font-size: 6pt; 
 }
 
@@ -21,20 +21,20 @@ p{
 
 #contentTerms p{
     font-size: 6pt;
-}
+}*/
 
 #offlineHeading {
-    font-size: 12pt; 
+    font-size: 2em; 
     margin-left: auto;
     margin-right: auto; 
 }
 
 #reason {
-    font-size: 10pt;
+    font-size: 2em;
 }
 
 .internalParagraphHeader {
-    font-size: larger;
+    font-size: 2em;
     font-weight: 800;
 }
 
@@ -47,7 +47,7 @@ p{
 }
 
 .version {
-    font-size: x-small;
+    font-size: smaller;
     text-align: center;
     margin-top: 40px;
     width: auto;
@@ -76,23 +76,22 @@ p{
 }
 
 #confirm {
-    /*padding: 2px;*/
-    font-size: smaller; 
+    /*padding: 2px;*/ 
     height: auto;
 }
 
-#confirm p{
+/*#confirm p{
     font-size: x-small; 
-}
+}*/
 
 .confirmHeader {
-    font-size: 10pt;
+    font-size: 2em;
     font-weight: 700;
 }
 
-#confirm div {
+/*#confirm div {
     font-size: small; 
-}
+}*/
 
 #checkinNumber {
     font-weight: 700;
@@ -108,14 +107,14 @@ p{
   margin: 0 auto; 
 }
 
-.terms p{
+/*.terms p{
     padding: 2px;
     font-size: x-small;
 }
 
 .terms h4{
     font-size: small;
-}
+}*/
 
 /*ad rotator*/
 img.ad{
@@ -207,7 +206,7 @@ img.logo{
 }
 
 .mainForm li {
-    font-size: x-small;
+    font-size: smaller;
     color: #f00; 
 }
 
@@ -219,7 +218,7 @@ img.logo{
     border-color: #ababab;
     margin-top: 2px;   
     padding: 10px;
-    font-size: 10pt;
+    /*font-size: 10pt;*/
     outline: none;
 }
 
@@ -274,10 +273,6 @@ div.rightalign {
     text-align: right; 
     float: left;
     padding: 2px;
-}
-
-.ui-block-b {
-    font-weight: 700;
 }
 
 #message {

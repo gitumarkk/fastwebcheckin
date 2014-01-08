@@ -1,3 +1,8 @@
+/*grid system*/
+.ui-block-b {
+    font-weight: 700;
+}
+
 /*dialogs*/
 .ui-dialog-contain {
 	max-width: 800px;
