@@ -1,40 +1,22 @@
 /*base*/
-/*body {
-    min-height: 800px;
-}*/
-
 body html{
     font-family: 'Telex', sans-serif;
 }
 
-/*p{
-   font-size: 6pt; 
-}
-
-#info p {
-    font-size: 6pt;
+p{
+   font-size: 10pt; 
 }
 
 #termsAndConditions p {
-    font-size: 6pt;
+    font-size: 10pt;
 }
 
 #contentTerms p{
     font-size: 6pt;
-}*/
-
-#offlineHeading {
-    font-size: 2em; 
-    margin-left: auto;
-    margin-right: auto; 
-}
-
-#reason {
-    font-size: 2em;
 }
 
 .internalParagraphHeader {
-    font-size: 2em;
+    font-size: 11pt;
     font-weight: 800;
 }
 
@@ -46,10 +28,19 @@ body html{
     font-size: medium;
 }
 
-.version {
+#instructionsFooter {
+    height: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+
+/*START************pages (JQM DIVs)*/
+/*splash page*/
+.splashInfo {
     font-size: smaller;
     text-align: center;
-    margin-top: 40px;
+    margin-top: 10px;
     width: auto;
     height: auto;
     display: block;
@@ -59,15 +50,75 @@ body html{
     clear: both;
 }
 
-/*pages (can be DIVs)*/
+#HTML5Detection{
+    margin-top: 2px;
+}
+
+/*checkin form page*/
+.mainForm ul{
+    padding: 0em 0em 0em 0em;
+    margin-left: 0em;
+    margin-right: 1.5em;
+    list-style: none;
+}
+
+.mainForm li {
+    font-size: smaller;
+    color: #f00; 
+}
+
+.mainForm input{
+    height: 30px;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ababab;
+    margin-top: 2px;   
+    padding: 10px;
+    /*font-size: 10pt;*/
+    outline: none;
+}
+
+.submitButton{
+    height: 30px;
+    width: 100%;
+    font-size: medium;
+    font-weight: bold;
+    border-width: thin;
+    border-style: solid;
+    border-color: #211e1e;
+    background-color: #d6c8c8;
+}
+
+.topTextBox{
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+}
+
+.bottomTextBox{
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+/*offline page*/
 #schedule{
     width: 500px;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
+    margin-top: 2px;
 }
 
+#reason {
+    display: block;
+}
+
+#offlineHeading {
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+/*confirm page*/
 #confirmationMessage {
     border-style: solid;
     border-width: thin;
@@ -80,22 +131,75 @@ body html{
     height: auto;
 }
 
-/*#confirm p{
-    font-size: x-small; 
-}*/
-
 .confirmHeader {
-    font-size: 2em;
+    font-size: 12pt;
     font-weight: 700;
 }
-
-/*#confirm div {
-    font-size: small; 
-}*/
 
 #checkinNumber {
     font-weight: 700;
 }
+
+/*offline page*/
+#contentOffline div {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.schedule {
+    border-collapse: collapse;
+    background-color: #f0eaea;
+}
+
+.schedule th, tbody, td {
+    border:  1px solid black;  
+}
+
+.schedule th{
+    background-color: #d6c8c8;
+}
+
+.schedule td{
+    padding:  3px;
+}
+
+/*confirmation page*/
+div.rightalign {
+    display: block;
+    text-align: right; 
+    float: left;
+    padding: 2px;
+}
+
+#message {
+    width: 300px;
+    padding: 2px;
+}
+
+#message input {
+    width: 86px;
+    padding: 2px;
+}
+
+#clearStorageContent {
+    width: 480px;
+    margin: auto;
+}
+
+#location {
+    display: inline-block;
+}
+
+#attendTime {
+   display: inline-block; 
+}
+
+#clinicAddress {
+    margin-left: 0px!important;
+}
+
+/*END************pages (JQM DIVs)*/
 
 /*dialogs and popups*/
 .popup {
@@ -133,7 +237,7 @@ img.ad{
 
 /*images and icons*/
 img.logo{
-    width: 300px;
+    /*width: 300px;*/
     display: block;
     flex-align: center;
     padding-top: 24px;
@@ -195,110 +299,5 @@ img.logo{
 
 .footerLogo{
     text-align: center;
-}
-
-/*checkin form*/
-.mainForm ul{
-    padding: 0em 0em 0em 0em;
-    margin-left: 0em;
-    margin-right: 1.5em;
-    list-style: none;
-}
-
-.mainForm li {
-    font-size: smaller;
-    color: #f00; 
-}
-
-.mainForm input{
-    height: 30px;
-    width: 100%;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #ababab;
-    margin-top: 2px;   
-    padding: 10px;
-    /*font-size: 10pt;*/
-    outline: none;
-}
-
-.submitButton{
-    height: 30px;
-    width: 100%;
-    font-size: medium;
-    font-weight: bold;
-    border-width: thin;
-    border-style: solid;
-    border-color: #211e1e;
-    background-color: #d6c8c8;
-}
-
-.topTextBox{
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
-}
-
-.bottomTextBox{
-    border-bottom-left-radius: 1em;
-    border-bottom-right-radius: 1em;
-}
-
-/*offline page*/
-#contentOffline div {
-    display: inline-block;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-.schedule {
-    border-collapse: collapse;
-    background-color: #f0eaea;
-}
-
-.schedule th, tbody, td {
-    border:  1px solid black;  
-}
-
-.schedule th{
-    background-color: #d6c8c8;
-}
-
-.schedule td{
-    padding:  3px;
-}
-
-/*confirmation page*/
-div.rightalign {
-    display: block;
-    text-align: right; 
-    float: left;
-    padding: 2px;
-}
-
-#message {
-    width: 300px;
-    padding: 2px;
-}
-
-#message input {
-    width: 86px;
-    padding: 2px;
-}
-
-#clearStorageContent {
-    width: 480px;
-    margin: auto;
-}
-
-#location {
-    display: inline-block;
-}
-
-#attendTime {
-   display: inline-block; 
-}
-
-#clinicAddress {
-    margin-left: 0px!important;
 }
 

@@ -1,8 +1,14 @@
 ///<reference path="jquery-2.0.3-vsdoc.js" />
+///<reference path="modernizr-2.7.1-custom.js" />
 ///<reference path="moment.min.js" />
 
 /*global vars*/
 var rootURL = "http://fastwebcheckin.com";
+var showAlerts = false;
+var showHTML5Features = false;
+var showAppVersion = true;
+var showVersion = true;
+var appVersionInfo = "App version 1.2 (i+a)";
 
 /*global overrides*/
 String.prototype.contains = function (it) { return this.indexOf(it) != -1; };
@@ -33,7 +39,10 @@ function clinicIsClosed(attendTime){
 
 function getPreviousCheckin(){
     var sdate = localStorage["submittedDate"];
-    //alert("submittedDate: " + sdate);
+    if(showAlerts){
+       //alert("submittedDate: " + sdate); 
+    }
+    
     var loc = localStorage["location"];
     var terms = localStorage["terms"];
 
@@ -44,11 +53,13 @@ function getPreviousCheckin(){
         var endOfDay = moment(checkinDate).endOf('day').subtract('hours', 7).fromNow();
 
         if (Date.daysBetween(today, checkinDate) < 0.3) {
-            //alert(" Checkin time: " + checkinDate
-            //+ ". \n Today: " + now.toLocaleString() + "\n Days between: "
-            //+ Date.daysBetween(today, checkinDate)
-            //+ "\n Hours (since checkin) until end of day: "
-            //+ endOfDay);
+            if (showAlerts) {
+                //alert(" Checkin time: " + checkinDate
+                //+ ". \n Today: " + now.toLocaleString() + "\n Days between: "
+                //+ Date.daysBetween(today, checkinDate)
+                //+ "\n Hours (since checkin) until end of day: "
+                //+ endOfDay);
+            }
 
             fillConfirmationMessage();
         }

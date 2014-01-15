@@ -7,46 +7,48 @@
         <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta http-equiv='X-UA-Compatible' content='chrome=1'>
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <link rel="apple-touch-icon-precomposed" href="images/App-Icon-57.png" />
-        <link rel="apple-touch-icon-precomposed" href="images/App-Icon-72.png" />
-        <link rel="apple-touch-icon" href="images/ios/icon.png" /> 
+        <link rel="apple-touch-icon-precomposed" href="images/ios/apple-touch-icon-114x114-precomposed.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="images/ios/icon-72.png" /> 
         <link rel="apple-touch-icon" sizes="114x114" href="images/ios/icon@2x.png" /> 
         <link rel="apple-touch-icon" sizes="144x144" href="images/ios/icon-72@2x.png" />
 
         <script src="script/jquery-2.0.3.min.js"></script>
         <script src="script/jquery.validate.js"></script>
+        <!--<script src="script/bootstrap.min.js"></script>-->
         <script src="script/jquery.maskedinput.min.js"></script>
         <script src="script/jquery.scrollto.js"></script>
         
+        <script src="script/modernizr-2.7.1-custom.js"></script>
         <script src="script/jquery.mobile-1.3.2.js"></script>
-        <link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" />
-        <!--<script src="script/jquery.magnific-popup.js"></script>-->
-        <!--<link href="css/magnific-popup.css" rel="stylesheet" />-->      
+        <link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" />     
 
         <!--custom-->
         <link rel="stylesheet" type="text/css" href="css/master.css">
         <link rel="stylesheet" type="text/css" href="css/override.css"> 
-        <link rel="stylesheet" type="text/css" href="css/responsiveFonts.css">
+        <!--<link rel="stylesheet" type="text/css" href="css/responsiveFonts.css">-->
+
+        <script src="script/jquery.applogic.js"></script>
+        <script src="script/enquire.js"></script>
+        <script src="script/responsive.js"></script>
+        <script src="script/moment.min.js"></script>
+        <script src="script/ad-rotator.js"></script>
 
         <script src="script/ios/bookmark_iOS.js"></script>
         <script src="script/ios/loadbookmark_iOS.js"></script>
         <script src="script/android_bb/bookmark_AB.js"></script>
         <script src="script/android_bb/loadbookmark_AB.js"></script>
-
-        <script src="script/enquire.js"></script>
-        <script src="script/responsive.js"></script>
-        <script src="script/moment.min.js"></script>
-        <script src="script/ad-rotator.js"></script>
-        <script src="script/jquery.applogic.js"></script>
+        
     </head>
     <body>
+
     <div id="splash" data-role="page" data-title="fastwebcheckin" data-theme="b">
         <div data-role="content">
             <div class="centerLogoColumn">
                <img src="images/logo.png" class="logo" alt="fastwebcheckin logo"> 
             </div> 
-            <div class="version">version 1.7</div>                                                                                                                                                                                                                                            
+            <div id="appVersion" class="splashInfo" hidden="hidden"></div>
+            <div id="HTML5Detection" class="splashInfo"></div>
+            <div id="websiteLink" class="splashInfo" hidden="hidden"></div>                                                                                                                                                                                                                                        
         </div>
         <div id="adFooter" data-role="footer" data-position="fixed" data-theme="f">
             <div id="adContainer">
@@ -68,7 +70,7 @@
             <h4 id="offlineHeading">Check-in system is offline</h4>
         </div>
         <div id="contentOffline" data-role="content" class="scrollContent">
-            <div id="reason"></div>
+            <div id="reason"></div><br/>
             <div id="scrollItem202">
                 <div id="defaultOffline"></div>
             </div>
@@ -157,11 +159,11 @@
                         <p>
                         You are required to present your FAST WEB CHECK-IN pre-registration confirmation CHECK-IN NUMBER to our receptionist.
                         </p>
-                    </div>
+                    </div> 
                     <p>
                         By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
-                    </p>
-                    <div id="scrollItem1">
+                    </p>  
+                    <div id="scrollItem1">               
                         <a href="#" id="showTerms" data-role="button">Yes</a>
                     </div>
                 </div>
@@ -221,7 +223,7 @@
                             Clinic address:
                         </div>
                         <div class="ui-block-b">
-                            <a id="clinicMapLinkHref" href="www.google.com" rel="external" target="foo">Click for directions</a>
+                            <a id="clinicMapLinkHref" href="http://www.google.com" rel="external" target="foo">Click for directions</a>
                         </div>
                         <div class="ui-block-a">
                             First name:
@@ -261,16 +263,68 @@
                 $("#patientDetailsForm").validate();
             </script>
         </div>
-        <div id="footerDetails" data-role="footer" data-position="fixed" data-theme="d" class="footerLogo">
+        <div id="footerDetails" data-role="footer" data-position="fixed" data-overlay-theme="d" class="footerLogo">
             <!--<img src="images/logo.png" id="footerImage" width="300" alt="fastwebcheckin logo">-->           
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#" id="clearCheckin" data-role="button" data-icon="arrow-l" data-iconpos="top">New Check-in</a></li>
-                    <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Terms of Use</a></li> 
+                    <li><a href="#" id="clearCheckin" data-role="button" data-icon="arrow-l" data-iconpos="top">Restart</a></li>
+                    <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Terms</a></li>
+                    <!--<li><a href="#privacyPolicy" data-role="button" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Privacy</a></li>--> 
                 </ul>
             </div>
         </div>
     </div>  
+
+    <div id="privacyPolicy" data-role="dialog" class="terms" data-tap-toggle="true" data-theme="c" data-overlay-theme="d">
+        <div id="headerTerms" data-role="header">
+        <h5>Privacy Policy</h5>
+        </div>
+        <div id="contentPrivacyPolicy" data-role="content" class="scrollContent terms">
+            <p>This privacy policy demonstrates our firm commitment to your privacy and the protection of your information.</p>
+            <div id="pitem1" class="scrollHeader">
+                <a href="#pitem2"><div><h4>Why did you receive email from us?</h4></div>
+                <div class="scrollIcon"></div></a>
+            </div>
+            <ul>
+                <li>You used our FastWebCheckin app and entered your email address.</li>
+                <li>The form states “By giving my email address I give Primary Care Niagara permission to contact me by email”</li>
+            </ul>
+
+            <div id="pitem2" class="scrollHeader">
+                <a href="#pitem3"><div><h4>How can you stop receiving email from us?</h4></div>
+                <div class="scrollIcon"></div></a>
+            </div>
+            <ul>
+                <li>Each email sent contains an easy, automated way for you to cease receiving email from us, or to change your expressed interests.</li>
+                <li>If you wish to do this, simply click on the Unsubscribe link at the end of every email.</li>
+                <li>We will immediately remove you from our emailing list.</li>
+            </ul>
+
+            <div id="pitem3" class="scrollHeader">
+                <a href="#pitem4"><div><h4>How we protect your privacy</h4></div>
+                <div class="scrollIcon"></div></a>
+            </div>
+            <ul>
+                <li>We use appropriate security measures to protect against the loss, misuse and alteration of data used by our system.</li>
+            </ul>
+
+            <div id="pitem4" class="scrollHeader">
+                <a href="#pitem1"><div><h4>Keeping your personal information private</h4></div>
+                <div class="scrollIcon up"></div></a>
+            </div>
+            <ul>
+                <li>We will never share, sell, or rent individual personal information with anyone for their promotional use without your advance permission or unless ordered by a court of law.</li>
+                <li>Information submitted to us is only available to employees managing this information for purposes of contacting you or sending you emails based on your request for information, and to contracted service providers for purposes of providing services relating to our communications with you.</li>
+            </ul>
+        </div>
+        <div id="footerPrivacyPolicy" data-role="footer" data-position="fixed">
+            <div data-role="navbar" data-mini="true">
+                <ul>
+                    <li><a href="#patientDetails" data-icon="arrow-d" data-iconpos="top" data-transition="slideup">Close</a></li> 
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <div id="termsOfUse" data-role="dialog" class="terms" data-tap-toggle="true" data-theme="c" data-overlay-theme="d">
         <div id="headerTerms" data-role="header">
@@ -279,8 +333,7 @@
         <div id="contentTerms" data-role="content" class="scrollContent terms"> 
             <div id="item1" class="scrollHeader">
                 <a href="#item2"><div><h4>Acceptance</h4></div>
-                <div class="scrollIcon"></div></a>
-            </div>
+                <div class="scrollIcon"></div></a></div>
             <p>It is important that you read all the following terms and conditions carefully. This Terms of Use Agreement ("Agreement") is a legal agreement between you and Fervseco Inc., the owner and operator ("Owner") of this Website (the "Website"). "). It states the terms and conditions under which you may access and use the Website and all written and other information and materials displayed, linked to, or otherwise made available through the Website, including, without limitation, articles, text, photographs, images, illustrations, audio clips, video clips, computer software and code (the "Content"). By accessing and using the Website, you are indicating your acceptance to be bound by the terms and conditions of this Agreement. If you do not accept these terms and conditions, you must not access or use the Website. The Owner may revise this Agreement at any time by updating this posting. Use of the Website after such changes are posted will signify your acceptance of these revised terms. You should visit this page periodically to review this Agreement.</p>
          
             <div id="item2" class="scrollHeader">
@@ -396,14 +449,6 @@
     </div> 
         
     <script>
-        //window.addEventListener("load", function()
-        //{
-        //    if (navigator.userAgent.match(/Android/i)) {
-        //        window.scrollTo(0, 1);
-        //        //setTimeout( function(){ window.scrollTo(0, 1); }, 100 );
-        //    }
-        //}
-
         ///<reference path="script/jquery-2.0.3-vsdoc.js" />
         $(document).bind("mobileinit", function () {
             //jQuery Mobile framework configurations:
@@ -428,17 +473,16 @@
             $.mobile.allowCrossDomainPages = true;
             $.support.cors = true;
             //$.mobile.buttonMarkup.hoverDelay = 0;
-            //var cors = $.mobile.allowCrossDomainPages;
-            //alert("CORS enabled: " + cors);
 
             //**START page init:
             runEnquire();
+            runDeviceDetection();
             restoreUserDetails();
             checkPreviousCheckin();
 
             //reset location:
-            localStorage["location"] = "";
-            localStorage["locationFriendlyName"] = "";
+            //localStorage["location"] = "";
+            //localStorage["locationFriendlyName"] = "";
             //**END page init:
 
             //validation:
@@ -474,7 +518,9 @@
 
             //navigation/click events:
             $("#niagaraButton").click(function () {
-                //alert("niagaraButton clicked");
+                if (showAlerts) {
+                    alert("niagaraButton clicked");
+                }
                 localStorage["location"] = "pcnniagara";
                 localStorage["locationFriendlyName"] = "PCN Niagara";
                 //$("#selectedClinic").val("pcnniagara");
@@ -483,7 +529,9 @@
             });
 
             $("#wellandButton").click(function () {
-                //alert("wellandButton clicked");
+                if (showAlerts) {
+                    alert("wellandButton clicked");
+                }
                 localStorage["location"] = "pcnwelland";
                 localStorage["locationFriendlyName"] = "PCN Welland";
                 //$("#selectedClinic").val("pcnwelland");
@@ -492,7 +540,9 @@
             });
 
             $("#clearCheckin").click(function () {
-                //alert("clear checkin");
+                if (showAlerts) {
+                    alert("clear checkin");
+                }
                 clearLocalStorage();
                 checkPreviousCheckin();
                 $.mobile.changePage("#splash", { role: "page", changeHash: false });
@@ -510,7 +560,7 @@
                 form.validate();
 
                 if (form.valid()) {
-                    alert("By tapping the button below, I give you permission to email me with a confirmation of my check-in and future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy.");
+                    alert("By tapping the button below, I am confirming my check-in and granting you permission to email me with future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy located at PrimaryCareNiagara.com");
                     $("#details").hide();
                     $("#instructions").show();
                     //$("#footerImage").hide();
@@ -543,11 +593,9 @@
                 //$("#footerImage").hide();
 
                 var selectedClinic = localStorage["location"]; //new String($("#selectedClinic").val());
-                //if (selectedClinic.length == 0) {
-                //selectedClinic = localStorage["location"];
-                //alert("selected clinic at POST time: " + selectedClinic);
-                //}
-                //alert("POSTing check-in for clinic code: " + selectedClinic);
+                if (showAlerts) {
+                    alert("POSTing check-in for clinic code: " + selectedClinic);
+                }
 
                 //for local testing if CORS is disabled, start Chrome with: 
                 //chromium-browser --disable-web-security
@@ -577,7 +625,9 @@
                 },
                     dataType: 'json',
                     success: function (response) {
-                        //alert("submit success");
+                        if (showAlerts) {
+                            alert("submit success");
+                        }
                         storeUserDetails();
 
                         localStorage["submittedDate"] = response["submitted"];
@@ -590,6 +640,8 @@
                         localStorage["checkinNumber"] = response["data"]["21"]["values"][0];
                         var cmessage = new String(response["data"]["12"]["values"][0]);
                         cmessage = cmessage.replace("YES", "");
+                        cmessage = cmessage.replace("<b>", "");
+                        cmessage = cmessage.replace("</b>", "");
                         localStorage["confirmMessage"] = cmessage;
 
                         var at = response["data"]["22"]["values"][0];
@@ -627,7 +679,9 @@
                     //alert(respPara);
                     //var respMessage = respPara.replace("Off-line", "offline");
                     var dashes = respPara.split('-');
-                    //alert("# of dashes: " + dashes.length);
+                    if (showAlerts) {
+                        alert("# of dashes: " + dashes.length);
+                    }
                     var startIndex = responseCheck.lastIndexOf("-");
 
                     var closedMessage;
@@ -639,7 +693,9 @@
                     }
 
                     if (responseCheck.contains("off-line")) {
-                        //alert("Clinic is offline");
+                        if (showAlerts) {
+                            //alert("Clinic is offline");
+                        }
                         var div1 = $(response).find(".webstatus:first");
                         var div2 = $(response).find(".facstatus:first");
 
@@ -651,19 +707,23 @@
                         $.mobile.changePage("#offline", { role: "page", changeHash: false });
                     }
                     else {
-                        $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
+                        $.mobile.changePage("#patientDetails", { role: "page", changeHash: true });
                     }
                 }).fail(function () {
                     alert("Clinic closed/open check failed. \n Please try again later or contact us.");
                 }).success(function () {
-                    //alert("ClinicClosed check GET succeeded.");
+                    if (showAlerts) {
+                        //alert("ClinicClosed check GET succeeded.");
+                    }
                 });
             }
 
             function checkPreviousCheckin() {
                 if (getPreviousCheckin()) {
                     //fillConfirmationMessage();
-                    //alert("previous checkin");
+                    if (showAlerts) {
+                        alert("previous checkin");
+                    }
                     $("#splash").hide();
                     $("#patientDetails").show();
 
@@ -676,7 +736,9 @@
                     $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
                 }
                 else {
-                    //alert("no previous checkin, or checkin cleared");
+                    if (showAlerts) {
+                        alert("no previous checkin, or checkin cleared");
+                    }
                     //on details form:
                     $("#details").show();
                     $("#instructions").hide();
@@ -684,6 +746,61 @@
                     $("#final").hide();
                     $("#confirm").hide();
                 }
+            };
+
+            function runDeviceDetection() {
+                /*html feature checks:*/
+                if (showHTML5Features) {
+                    $("#HTML5Detection").html("<b>HTML5 feature support:</b>");
+                    $("#HTML5Detection").append("<ul>");
+                    if (Modernizr.localstorage) {
+                        //alert("Your browser supports Local Storage.");
+                        $("#HTML5Detection").append("<li>Local Storage</li>");
+                    }
+                    if (Modernizr.applicationcache) {
+                        //alert("Your browser supports Application Cache.");
+                        $("#HTML5Detection").append("<li>Application Cache</li>");
+                    }
+                    if (Modernizr.websqldatabase) {
+                        //alert("Your browser supports Web SQL Database.");
+                        $("#HTML5Detection").append("<li>Web SQL Database</li>");
+                    }
+                    $("#HTML5Detection").append("</ul>");
+                }
+
+                /*display version:*/
+                if (showVersion) {
+                    var ua = navigator.userAgent;
+                    if (ua.indexOf("Android") >= 0) {
+                        var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
+                        var vslice = ua.slice(ua.lastIndexOf("Android") + 7);
+                        var vsub = vslice.substr(0, 3);
+                        $("#HTML5Detection").append("running Android " + androidversion); //+ " v: " + vsub + "");
+                        if (androidversion < 3.5) {
+                            $("#websiteLink").show();
+                            $("#websiteLink").html("<a href='http://fastwebcheckin.com/pcn' rel='external' target='foo'>fastwebcheckin website</a>");
+                            alert("Android OS " + androidversion + " is not supported by this app. \nPlease check in on our website.  If you choose to continue using this app, basic navigation and features may not function properly.");
+                            //$.mobile.changePage("#splash", { role: "page", changeHash: false });
+                        }
+                    }
+                    if (ua.indexOf("Chrome") >= 0) {
+                        var vslice = ua.slice(ua.lastIndexOf("Chrome") + 7);
+                        var vsub = vslice.substr(0, 4);
+                        var chromeversion = parseFloat(ua.slice(ua.indexOf("Chrome") + 7));
+                        $("#HTML5Detection").append("<br/>Chrome version: " + chromeversion);
+                    }
+                }
+
+                if (showAppVersion) {
+                    $("#appVersion").html(appVersionInfo);
+                    $("#appVersion").show();
+                }
+            }
+
+            function getAndroidVersion(ua) {
+                var ua = ua || navigator.userAgent;
+                var match = ua.match(/Android\s([0-9\.]*)/);
+                return match ? match[1] : false;
             };
         });
     </script>      

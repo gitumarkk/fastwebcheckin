@@ -4,42 +4,51 @@ function runEnquire(){
     enquire.register('screen and (max-width:320px)', {
         deferSetup: true,
         setup: function () {
-            //load big screen content
         },
         match: function () {
-            //hide big screen content/apply styling
-            //$('#footerDetails').css({ 'display': 'none' });
-            //alert("iPhone 4");
-            //$('#adImage').height(121);
-            //$('#adImage').width(320);
+            if (showAlerts) {
+                alert("iPhone 4 match (max-width:320px)");
+            }
+            $('.logo').css({ 'width': '300' });
+            $('#adImage').height(121);
+            $('#adImage').width(320);
         },
         unmatch: function () {
-            //show big screen content/apply styling
-            //$('#adFooter').css({ 'display': 'block' });
+            if (showAlerts) {
+                alert("iPhone 4 unmatch (max-width:320px)");
+            }
+            //$('.logo').css({ 'width': '200' });
+            $('#adFooter').css({ 'display': 'block' });
         }
     }, true)
-.register('screen and (orientation:portrait) and (max-width:720px) and (resolution: 316dpi)', {//and (max-width:720px) 
-    match: function () {
-        alert('Galaxy Nexus portrait');
-    }
+.register('screen and (max-width:300px)', {
+    match: function(){
+       $('.logo').css({ 'width': '200' }); 
+    } 
 })
-.register('screen and (orientation:landscape) and (max-width:720px) and (resolution: 316dpi)', {//and (max-width:720px)
+.register('screen and (orientation:portrait)', { //and (resolution: 316dpi) - Galaxy nexus
     match: function () {
-        alert('Galaxy Nexus landscape');
-        //$('#adFooter').css({ 'display': 'none' });
-    }
-}).register('screen and (min-width:25em) and (orientation:landscape)', {
-    match: function () {
-        //alert('400px breakpoint match on orientationchange');
-        $('#adFooter').css({ 'display': 'none' });
-    },
-    unmatch: function () { 
-        //alert('400px breakpoint unmatch on orientationchange');
+        if (showAlerts) {
+            alert('Device in portrait');
+        }
+        $('.logo').css({ 'width': '300' });
         $('#adFooter').css({ 'display': 'block' });
     }
-    }).register('screen and (min-width:41em)', {
-        match: function () {
-        //alert('tablet');
+})
+.register('screen and (orientation:landscape)', {
+    match: function () {
+        if (showAlerts) {
+            alert('Device in landscape');
+        }
+        $('.logo').css({ 'width': '320' });
+        $('#adFooter').css({ 'display': 'none' });
+    }
+}).register('screen and (min-width:41em)', {
+    match: function () {
+        if (showAlerts) {
+            alert('tablet (41em)');
+        }
+        $('.logo').css({ 'width': '400' });
         $('#adFooter').css({ 'display': 'block' });
     }
 });
