@@ -32,11 +32,8 @@
         <script src="script/responsive.js"></script>
         <script src="script/moment.min.js"></script>
         <script src="script/ad-rotator.js"></script>
-
-        <script src="script/ios/bookmark_iOS.js"></script>
         <script src="script/ios/loadbookmark_iOS.js"></script>
         <script src="script/android_bb/bookmark_AB.js"></script>
-        <script src="script/android_bb/loadbookmark_AB.js"></script>
         
     </head>
     <body>
@@ -454,7 +451,9 @@
             //jQuery Mobile framework configurations:
             $.mobile.allowCrossDomainPages = true;
             $.support.cors = true;
-            //alert("CORS enabled: " + $.support.cors);
+            if (showAlerts) {
+                alert("CORS enabled: " + $.support.cors);
+            }
         });
 
         $("#termsOfUse").on("pagehide", function (e, data) {

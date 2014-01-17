@@ -47,10 +47,10 @@
  *
  * Supported browsers: iPhone / iPod / iPad Safari 3.0+
  */
-
 var google = google || {};
 google.bookmarkbubble = google.bookmarkbubble || {};
 
+var isChromeOnIOS = navigator.userAgent.toLowerCase().indexOf('chrome') > -1 && navigator.userAgent.toLowerCase().indexOf('iphone') > -1;
 
 /**
  * Binds a context object to the function.
@@ -200,7 +200,7 @@ google.bookmarkbubble.Bubble.prototype.hasHashParameter = google.abstractMethod;
  * necessary.
  * @type {number}
  */
-google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 2;
+google.bookmarkbubble.Bubble.prototype.NUMBER_OF_TIMES_TO_DISMISS = 3;
 
 
 /**
@@ -271,7 +271,7 @@ google.bookmarkbubble.Bubble.prototype.msg = {
   android4:
     '<b>Install this app:</b><br /> 1) Tap <img src="'+ google.bookmarkbubble.Bubble.prototype.IMAGE_ANDROID4_MOBILE_BOOKMARK_DATA_URL_ +'" style="height: 1.5em;display: inline-block;padding:0;margin:0;" />,<br /> 2) Select "<b>Save to bookmarks</b>",<br /> 3) Select "<b>Add to</b>" and then "<b>Home</b>"',
   android41:
-    '<b>Install this app:</b><br /> 1) Add to Bookmarks,<br /> 2) Tap and Hold the bookmark,<br /> 3) Select "<b>Add Shortcut</b>"',
+    '<b>Install this app:</b><br /> 1) Add to Bookmarks,<br /> 2) Tap and Hold the bookmark,<br /> 3) Select "<b>Add to home screen</b>"',
   blackberry:
     '<b>Install this app:</b><br /> Tap <img src="'+ google.bookmarkbubble.Bubble.prototype.IMAGE_BLACKBERRY_ICON_DATA_URL_ +'" style="height: 1em;display: inline-block;padding:0;margin:0" />, select "<b>Add to Home Screen</b>"',
   playbook:
@@ -302,7 +302,7 @@ google.bookmarkbubble.Bubble.prototype.REL_ICON_ =
  * @private
  */
 google.bookmarkbubble.Bubble.prototype.MOBILE_SAFARI_USERAGENT_REGEX_ =
-    /iPhone|iPod|iPad|Android|BlackBerry|PlayBook/;
+    /iPhone|iPod|iPad|Android|BlackBerry|PlayBook|Chrome/;
 
 
 /**
@@ -575,7 +575,7 @@ google.bookmarkbubble.Bubble.prototype.autoDestruct_ = function() {
  * @private
  */
 google.bookmarkbubble.Bubble.prototype.getVisibleYPosition_ = function() {
-  return this.isIpad_() || this.isPlayBook_() || this.getAndroidVersion_() >= this.getVersion_(3, 0) ?
+  return this.isIpad_() || isChromeOnIOS || this.isPlayBook_() || this.getAndroidVersion_() >= this.getVersion_(3, 0) ?
       window.pageYOffset + 17 :
       window.pageYOffset - this.element_.offsetHeight + window.innerHeight - 17;
 };
@@ -587,7 +587,7 @@ google.bookmarkbubble.Bubble.prototype.getVisibleYPosition_ = function() {
  * @private
  */
 google.bookmarkbubble.Bubble.prototype.getHiddenYPosition_ = function() {
-  return this.isIpad_() || this.isPlayBook_() || this.getAndroidVersion_() >= this.getVersion_(3, 0) ?
+  return this.isIpad_() || isChromeOnIOS || this.isPlayBook_() || this.getAndroidVersion_() >= this.getVersion_(3, 0) ?
       window.pageYOffset - this.element_.offsetHeight :
       window.pageYOffset + window.innerHeight;
 };
@@ -641,127 +641,129 @@ google.bookmarkbubble.Bubble.prototype.getLink = function(rel) {
  * @return {Element} The bubble element.
  * @private
  */
-google.bookmarkbubble.Bubble.prototype.build_ = function() {
-  var bubble = document.createElement('div');
-  var isIpad = this.isIpad_();
-  var isAndroid = this.isAndroid_();
-  var isPlayBook = this.isPlayBook_();
-  var isBlackBerry = this.isBlackBerry_();
+google.bookmarkbubble.Bubble.prototype.build_ = function () {
+    var bubble = document.createElement('div');
+    var isIpad = this.isIpad_();
+    var isAndroid = this.isAndroid_();
+    var isPlayBook = this.isPlayBook_();
+    var isBlackBerry = this.isBlackBerry_();
 
+    bubble.style.position = 'absolute';
+    bubble.style.zIndex = 100000;
+    bubble.style.width = '100%';
+    bubble.style.left = '0';
+    bubble.style.top = '0';
 
-  bubble.style.position = 'absolute';
-  bubble.style.zIndex = 100000;
-  bubble.style.width = '100%';
-  bubble.style.left = '0';
-  bubble.style.top = '0';
-
-  var bubbleInner = document.createElement('div');
-  bubbleInner.style.position = 'relative';
-  bubbleInner.style.width = '214px';
-  if (this.getAndroidVersion_() >= this.getVersion_(3, 0)) {
-    bubbleInner.style.margin = '0 0 0 ' +(window.innerWidth - 240) + 'px';
-  } else {
-    bubbleInner.style.margin = isIpad ? '0 0 0 82px' : '0 auto';
-  }
-  bubbleInner.style.border = '2px solid #fff';
-  bubbleInner.style.padding = '1em 1.5em 1em 0.5em';
-  bubbleInner.style.WebkitBorderRadius = '8px';
-  bubbleInner.style.WebkitBoxShadow = '0 0 8px rgba(0, 0, 0, 0.7)';
-  bubbleInner.style.WebkitBackgroundSize = '100% 8px';
-  bubbleInner.style.backgroundColor = '#eee';
-  bubbleInner.style.background = '#cddcf3 -webkit-gradient(linear, ' +
+    var bubbleInner = document.createElement('div');
+    bubbleInner.style.position = 'relative';
+    bubbleInner.style.width = '214px';
+    if (this.getAndroidVersion_() >= this.getVersion_(3, 0)) {
+        bubbleInner.style.margin = '0 0 0 ' + (window.innerWidth - 240) + 'px';
+    } else {
+        bubbleInner.style.margin = isIpad ? '0 0 0 82px' : '0 auto';
+    }
+    bubbleInner.style.border = '2px solid #fff';
+    bubbleInner.style.padding = '1em 1.5em 1em 0.5em';
+    bubbleInner.style.WebkitBorderRadius = '8px';
+    bubbleInner.style.WebkitBoxShadow = '0 0 8px rgba(0, 0, 0, 0.7)';
+    bubbleInner.style.WebkitBackgroundSize = '100% 8px';
+    bubbleInner.style.backgroundColor = '#eee';
+    bubbleInner.style.background = '#cddcf3 -webkit-gradient(linear, ' +
       'left bottom, left top, ' + isIpad || isPlayBook || this.getAndroidVersion_() >= this.getVersion_(3, 0) ?
           'from(#cddcf3), to(#b3caed)) no-repeat top' :
           'from(#b3caed), to(#cddcf3)) no-repeat bottom';
-  bubbleInner.style.font = '0.75em sans-serif';
-  bubble.appendChild(bubbleInner);
+    bubbleInner.style.font = '0.75em sans-serif';
+    bubble.appendChild(bubbleInner);
 
-  // The "Add to Home Screen" text is intended to be the exact same text
-  // that is displayed in the menu of Android / Mobile Safari.
-  if (isAndroid) {
-    bubbleInner.style.font = '0.625em sans-serif';
-    if (this.getAndroidVersion_() < this.getVersion_(3, 0)) {
-      bubbleInner.innerHTML = this.msg.android;
-    }
-    else {
-      if ((this.getAndroidVersion_() < this.getVersion_(4, 0)) && this.isMobile_()) {
-        bubbleInner.innerHTML = this.msg.android3;
-      }
-      else {
-        if ((this.getAndroidVersion_() < this.getVersion_(4, 1)) && this.isMobile_()) {
-          bubbleInner.innerHTML = this.msg.android4;
+    // The "Add to Home Screen" text is intended to be the exact same text
+    // that is displayed in the menu of Android / Mobile Safari.
+    if (isAndroid) {
+        bubbleInner.style.font = '0.625em sans-serif';
+        if (this.getAndroidVersion_() < this.getVersion_(3, 0)) {
+            bubbleInner.innerHTML = this.msg.android;
         }
         else {
-          bubbleInner.innerHTML = this.msg.android41;
+            if ((this.getAndroidVersion_() < this.getVersion_(4, 0)) && this.isMobile_()) {
+                bubbleInner.innerHTML = this.msg.android3;
+            }
+            else {
+                if ((this.getAndroidVersion_() < this.getVersion_(4, 1)) && this.isMobile_()) {
+                    bubbleInner.innerHTML = this.msg.android4;
+                }
+                else {
+                    bubbleInner.innerHTML = this.msg.android41;
+                }
+            }
         }
-      }
     }
-  }
-  else if (isBlackBerry) {
-    bubbleInner.innerHTML = this.msg.blackberry;
-  }
-  else if(isPlayBook) {
-    bubbleInner.innerHTML = this.msg.playbook;
-    bubbleInner.style.position = 'absolute';
-    bubbleInner.style.right = '0px';
-  }
-  else {
-    if (this.getIosVersion_() >= this.getVersion_(7, 0)) {
-      bubbleInner.innerHTML = this.msg.ios7orlater;
+    else if (isChromeOnIOS) {
+        bubbleInner.innerHTML = this.msg.android41;
     }
-    else if (this.getIosVersion_() >= this.getVersion_(4, 2)) {
-      bubbleInner.innerHTML = this.msg.ios42orlater;
+    else if (isBlackBerry) {
+        bubbleInner.innerHTML = this.msg.blackberry;
+    }
+    else if (isPlayBook) {
+        bubbleInner.innerHTML = this.msg.playbook;
+        bubbleInner.style.position = 'absolute';
+        bubbleInner.style.right = '0px';
     }
     else {
-      bubbleInner.innerHTML = this.msg.ioslegacy;
+        if (this.getIosVersion_() >= this.getVersion_(7, 0)) {
+            bubbleInner.innerHTML = this.msg.ios7orlater;
+        }
+        else if (this.getIosVersion_() >= this.getVersion_(4, 2)) {
+            bubbleInner.innerHTML = this.msg.ios42orlater;
+        }
+        else {
+            bubbleInner.innerHTML = this.msg.ioslegacy;
+        }
     }
-  }
 
-  var icon = document.createElement('div');
-  icon.style['float'] = 'left';
-  icon.style.width = '55px';
-  icon.style.height = '55px';
-  icon.style.margin = '-2px 7px 3px 5px';
-  icon.style.background =
+    var icon = document.createElement('div');
+    icon.style['float'] = 'left';
+    icon.style.width = '55px';
+    icon.style.height = '55px';
+    icon.style.margin = '-2px 7px 3px 5px';
+    icon.style.background =
       '#fff url(' + this.getIconUrl_() + ') no-repeat 0 0';
-  icon.style.WebkitBackgroundSize = 'contain';
-  icon.style.WebkitBorderRadius = '10px';
-  icon.style.WebkitBoxShadow = '0 2px 5px rgba(0, 0, 0, 0.4)';
-  bubbleInner.insertBefore(icon, bubbleInner.firstChild);
+    icon.style.WebkitBackgroundSize = 'contain';
+    icon.style.WebkitBorderRadius = '10px';
+    icon.style.WebkitBoxShadow = '0 2px 5px rgba(0, 0, 0, 0.4)';
+    bubbleInner.insertBefore(icon, bubbleInner.firstChild);
 
-  var arrow = document.createElement('div');
-  arrow.style.backgroundImage = 'url(' + this.IMAGE_ARROW_DATA_URL_ + ')';
-  arrow.style.width = '25px';
-  arrow.style.height = '19px';
-  arrow.style.position = 'absolute';
-  arrow.style.left = '111px';
-  if (isIpad || isPlayBook) {
-    arrow.style.WebkitTransform = 'rotate(180deg)';
-    arrow.style.top = '-19px';
+    var arrow = document.createElement('div');
+    arrow.style.backgroundImage = 'url(' + this.IMAGE_ARROW_DATA_URL_ + ')';
+    arrow.style.width = '25px';
+    arrow.style.height = '19px';
+    arrow.style.position = 'absolute';
     arrow.style.left = '111px';
-  } else if (this.getAndroidVersion_() >= this.getVersion_(3, 0)) {
-    arrow.style.WebkitTransform = 'scale(1, -1)';
-    arrow.style.top = '-19px';
-    arrow.style.left = '180px';
-  } else {
-    arrow.style.bottom = '-19px';
-    arrow.style.left = '111px';
-  }
-  bubbleInner.appendChild(arrow);
+    if (isIpad || isPlayBook || isChromeOnIOS) {
+        arrow.style.WebkitTransform = 'rotate(180deg)';
+        arrow.style.top = '-19px';
+        arrow.style.left = '111px';
+    } else if (this.getAndroidVersion_() >= this.getVersion_(3, 0)) {
+        arrow.style.WebkitTransform = 'scale(1, -1)';
+        arrow.style.top = '-19px';
+        arrow.style.left = '180px';
+    } else {
+        arrow.style.bottom = '-19px';
+        arrow.style.left = '111px';
+    }
+    bubbleInner.appendChild(arrow);
 
-  var close = document.createElement('a');
-  close.onclick = google.bind(this.closeClickHandler_, this);
-  close.style.position = 'absolute';
-  close.style.display = 'block';
-  close.style.top = '-5px';
-  close.style.right = '-5px';
-  close.style.width = '16px';
-  close.style.height = '16px';
-  close.style.border = '10px solid transparent';
-  close.style.background =
+    var close = document.createElement('a');
+    close.onclick = google.bind(this.closeClickHandler_, this);
+    close.style.position = 'absolute';
+    close.style.display = 'block';
+    close.style.top = '-5px';
+    close.style.right = '-5px';
+    close.style.width = '16px';
+    close.style.height = '16px';
+    close.style.border = '10px solid transparent';
+    close.style.background =
       'url(' + this.IMAGE_CLOSE_DATA_URL_ + ') no-repeat';
-  close.style.WebkitBackgroundSize = "contain";
-  bubbleInner.appendChild(close);
+    close.style.WebkitBackgroundSize = "contain";
+    bubbleInner.appendChild(close);
 
-  return bubble;
+    return bubble;
 };

@@ -7,8 +7,8 @@ var rootURL = "http://fastwebcheckin.com";
 var showAlerts = false;
 var showHTML5Features = false;
 var showAppVersion = true;
-var showVersion = true;
-var appVersionInfo = "App version 1.2 (i+a)";
+var showVersion = false;
+var appVersionInfo = "App version 1.3 (iOS5+, Android 3.6+, BB10)";
 
 /*global overrides*/
 String.prototype.contains = function (it) { return this.indexOf(it) != -1; };

@@ -28,9 +28,12 @@ if(typeof(page_popup_bubble)=="undefined"){
   page_popup_bubble = "#index";
 }
 
-
 /** bookmark bubble initialized in mobileinit event for jquery mobile. */
 $(document).bind("mobileinit", function(){
+
+    if(showAlerts){
+        alert("running bookmark script (loader) - mobileinit");
+    }
 
  $(page_popup_bubble).live('pageinit',function() {
   window.setTimeout(function() {
