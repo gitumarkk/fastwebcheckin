@@ -10,16 +10,19 @@
     <name>FastWebCheckin</name>
 
     <description>
-        FastWebCheckin mobile app - Phonegap Build for iOS, Android and Blackberry. 
+        FastWebCheckin mobile app
     </description>
 
-    <author href="http://capacitive.ca" email="mark.cafazzo@capacitive.ca">
+    <author href="http://www.capacitive.ca" email="mark.cafazzo@capacitive.ca">
         Mark Cafazzo 
     </author>
 
-    <gap:platformm name="ios"/>
-    <gap:platformm name="android"/>
-    <gap:platformm name="blackberry"/>
+    <gap:platform name="ios"/>
+    <gap:platform name="android"/>
+    <gap:platform name="blackberry"/>
+
+    <gap:splash src="logo.png" />
+    <gap:splash src="splash.png" />
 
     <!--all platforms-->
     <preference name="orientation" value="portait" />
@@ -27,16 +30,23 @@
     <!--iOS-->
     <preference name="phonegap-version" value="2.9.0" />
     <preference name="webviewbounce" value="false" />
-    <preference name="prerendered-icon" value="true" />
+    <preference name="prerendered-icon" value="false" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
     <preference name="detect-data-types" value="false" />
     <preference name="exit-on-suspend" value="true" />
+
+    <icon src="images/ios/icon.png" gap:platform="ios" width="57" height="57" />
+    <icon src="images/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="images/ios/icon@2x.png" gap:platform="ios" width="114" height="114" />
+
+    <!-- retina iPad support: PhoneGap 2.5.0+ only -->
+    <icon src="images/ios/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
 
     <!--blackberry-->
     <preference name="disable-cursor" value="true" />
 
     <!--android-->
-    <icon src="images/AppIcon57x57.png" />
+    <icon src="icon.png"/>
     <preference name="permissions" value="none"/>
 
 </widget>
