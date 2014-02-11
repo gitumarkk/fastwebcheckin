@@ -125,7 +125,18 @@
                         </li>
                     </ul> 
                     <div>
-                         <a href="#" id="showInstructions" data-role="button">Next</a>
+                        <a href="#confirmCheckin" id="showInstructions" data-role="button" data-rel="popup">Next</a>
+
+                        <div id="confirmCheckin" data-role="popup" data-theme="c" data-overlay-theme="a">
+                            <div id="confirmHeader" data-role="header">
+                                <h5>Confirmation</h5>
+                            </div>
+                            <div id="confirmContent" data-role="content">
+                                <p>By tapping the button below, I am confirming my check-in and granting you permission to email me with future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy located at PrimaryCareNiagara.com</p>
+                                <a href="#" id="confirmCheckinButton" data-role="button">OK</a>
+                            </div>
+                        </div>
+
                     </div>   
                 </div>
                 <div id="instructions" hidden="hidden" class="scrollContent">
@@ -444,6 +455,8 @@
             </div>
         </div>
     </div> 
+
+    
         
     <script>
         ///<reference path="script/jquery-2.0.3-vsdoc.js" />
@@ -516,6 +529,10 @@
             });
 
             //navigation/click events:
+            $("#confirmCheckinButton").click(function () {
+                $("#confirmCheckin").popup('close');
+            });
+
             $("#niagaraButton").click(function () {
                 if (showAlerts) {
                     alert("niagaraButton clicked");
@@ -559,7 +576,8 @@
                 form.validate();
 
                 if (form.valid()) {
-                    alert("By tapping the button below, I am confirming my check-in and granting you permission to email me with future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy located at PrimaryCareNiagara.com");
+                    //$("#confirmCheckin").popup('open');
+                    //alert("By tapping the button below, I am confirming my check-in and granting you permission to email me with future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy located at PrimaryCareNiagara.com");
                     $("#details").hide();
                     $("#instructions").show();
                     //$("#footerImage").hide();
