@@ -21,8 +21,7 @@
     <gap:platform name="android"/>
     <gap:platform name="blackberry"/>
 
-    <gap:splash src="logo.png" />
-    <gap:splash src="splash.png" />
+    <preference name="SplashScreenDelay" value="500000" />
 
     <!--all platforms-->
     <preference name="orientation" value="portait" />
