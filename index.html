@@ -479,6 +479,11 @@
             }
         });
 
+        $(document).load(function () {
+            $.mobile.loading('hide');
+            $.mobile.pageLoading(true);
+        });
+
         $(document).ready(function () {
             //pre-processing:
             $.mobile.page.prototype.options.domCache = false;
