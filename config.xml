@@ -3,18 +3,18 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.fastwebcheckin.mobile"
         versionCode="10" 
-        version   = "1.0.0.1">
+        version   = "1.0.0.2">
 
     <!-- versionCode is optional and Android only -->
 
-    <name>FastWebCheckin</name>
+    <name>WebCheckin</name>
 
     <description>
         FastWebCheckin mobile app
     </description>
 
     <author href="http://www.capacitive.ca" email="mark.cafazzo@capacitive.ca">
-        Mark Cafazzo 
+        Mark Cafazzo
     </author>
 
     <gap:platform name="ios"/>
@@ -36,14 +36,14 @@
     <icon src="images/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
     <icon src="images/ios/icon@2x.png" gap:platform="ios" width="114" height="114" />
 
+    <!-- retina iPad support: PhoneGap 2.5.0+ only -->
+    <icon src="images/ios/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
+
     <icon src="images/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
     <icon src="images/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
     <icon src="images/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
     <icon src="images/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
     <icon src="images/android/xxhdpi.png" gap:platform="android" gap:density="xxhdpi" />
-
-    <!-- retina iPad support: PhoneGap 2.5.0+ only -->
-    <icon src="images/ios/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
 
     <!--blackberry-->
     <preference name="disable-cursor" value="true" />
