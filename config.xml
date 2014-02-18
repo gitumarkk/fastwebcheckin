@@ -51,6 +51,6 @@
 
     <!--android-->
     <icon src="icon.png"/>
-    <!--<preference name="permissions" value="none"/>-->
+    <preference name="permissions" value="none"/>
 
 </widget>
