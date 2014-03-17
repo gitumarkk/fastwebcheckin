@@ -36,6 +36,9 @@
     <icon src="images/ios/icon.png" gap:platform="ios" width="57" height="57" />
     <icon src="images/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
     <icon src="images/ios/icon@2x.png" gap:platform="ios" width="114" height="114" />
+    <icon src="images/ios/icon76px.png" gap:platform="ios" width="76" height="76" />
+    <icon src="images/ios/icon120px.png" gap:platform="ios" width="129" height="120" />
+    <icon src="images/ios/icon152px.png" gap:platform="ios" width="152" height="152" />
 
     <!-- retina iPad support: PhoneGap 2.5.0+ only -->
     <icon src="images/ios/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
