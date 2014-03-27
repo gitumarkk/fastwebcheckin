@@ -6,6 +6,7 @@
         version   = "1.0.0.2">
 
     <!-- versionCode is optional and Android only -->
+    <!--master repo-->
 
     <name>WebCheckin</name>
 
