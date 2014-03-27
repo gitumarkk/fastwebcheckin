@@ -26,7 +26,7 @@
     <preference name="fullscreen" value="true" />
 
     <!--iOS-->
-    <preference name="phonegap-version" value="3.1.0" />
+    <preference name="phonegap-version" value="2.9.0" />
     <preference name="webviewbounce" value="false" />
     <preference name="prerendered-icon" value="false" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
@@ -43,6 +43,7 @@
     <!-- retina iPad support: PhoneGap 2.5.0+ only -->
     <icon src="images/ios/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
 
+    <!--android-->
     <icon src="images/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
     <icon src="images/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
     <icon src="images/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
@@ -51,8 +52,9 @@
 
     <!--blackberry-->
     <preference name="disable-cursor" value="true" />
+    <icon src="icon.png" gap:platform="blackberry" />
 
-    <!--android-->
+    <!--defaults-->
     <icon src="icon.png"/>
     <preference name="permissions" value="none"/>
 
