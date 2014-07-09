@@ -125,10 +125,16 @@
                             <label for="emailAddress" class="ui-hidden-accessible">Email</label>
                             <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email" 
                                 data-prevent-focus-zoom="true" data-role ="none" class="bottomTextBox"/>
-                            <div class="emailPermission">
-                                <label for="emailPermission">Email me with Clinic news and info</label>
-                                <input id="emailPermission" name="emailPermission1" type="checkbox" data-prevent-focus-zoom="true" data-role="none"/>
-                            </div>
+                            <div class="ui-field-contain emailPermit" >
+                                <fieldset data-role="controlgroup" data-type="horizontal">
+    	                            <legend>Email me with Clinic news and info:</legend>
+         	                        <input type="radio" name="emailPermission" id="emailPermissionYes" value="YES"/>
+         	                        <label for="emailPermissionYes">Yes</label>
+         	                        <input type="radio" name="emailPermission" id="emailPermissionNo" value="NO" checked/>
+         	                        <label for="emailPermissionNo">No</label>
+                                </fieldset>
+                            </div>   
+                            <!--<input id="emailPermission" name="emailPermission1" type="radio" data-prevent-focus-zoom="true" data-role="none"/>-->
                         </li>
                     </ul> 
                     <div class=confirm>
@@ -553,6 +559,19 @@
             //navigation/click events:
             $("#emailPermission").click(function ()
             {
+                if (localStorage["emailPermission"] == "NO")
+                {
+                    localStorage["emailPermission"] = "YES";
+                    return;
+                }
+                if (localStorage["emailPermission"] == "YES")
+                {
+                    localStorage["emailPermission"] = "NO";
+                    return;
+                }
+            });
+
+            $("input[type='radio']").bind( "change", function(event, ui) {
                 if (localStorage["emailPermission"] == "NO")
                 {
                     localStorage["emailPermission"] = "YES";
