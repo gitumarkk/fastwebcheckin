@@ -301,3 +301,27 @@ img.logo{
     text-align: center;
 }
 
+.emailPermission {
+    padding-left: 6px;
+    padding-bottom: 12px;
+    padding-top: 10px;
+}
+
+#emailPermission {
+    margin-top: -6px;
+    margin-left: 12px;
+}
+
+.emailPermission label {
+    color: #211e1e;
+    float:left;
+}
+
+li:not(#foo) > div > input[type='checkbox'] {
+    float: left;
+    width: 24px;
+}
+
+.confirm {
+    padding-top: 6px;
+}
