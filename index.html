@@ -557,20 +557,6 @@
             });
 
             //navigation/click events:
-            $("#emailPermission").click(function ()
-            {
-                if (localStorage["emailPermission"] == "NO")
-                {
-                    localStorage["emailPermission"] = "YES";
-                    return;
-                }
-                if (localStorage["emailPermission"] == "YES")
-                {
-                    localStorage["emailPermission"] = "NO";
-                    return;
-                }
-            });
-
             $("input[type='radio']").bind( "change", function(event, ui) {
                 if (localStorage["emailPermission"] == "NO")
                 {

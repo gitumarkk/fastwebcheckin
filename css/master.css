@@ -308,6 +308,7 @@ img.logo{
 }
 
 .emailPermit legend {
+    margin-top: 12px;
     color: #211e1e;
     font-size: 11pt;
 }
