@@ -125,9 +125,13 @@
                             <label for="emailAddress" class="ui-hidden-accessible">Email</label>
                             <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email" 
                                 data-prevent-focus-zoom="true" data-role ="none" class="bottomTextBox"/>
+                            <div class="emailPermission">
+                                <label for="emailPermission">Email me with Clinic news and info</label>
+                                <input id="emailPermission" name="emailPermission1" type="checkbox" data-prevent-focus-zoom="true" data-role="none"/>
+                            </div>
                         </li>
                     </ul> 
-                    <div>
+                    <div class=confirm>
                         <a href="#confirmCheckin" id="showInstructions" data-role="button" data-rel="popup">Next</a>
 
                         <div id="confirmCheckin" data-role="popup" data-theme="c" data-overlay-theme="a">
@@ -135,7 +139,7 @@
                                 <h5>Confirmation</h5>
                             </div>
                             <div id="confirmContent" data-role="content">
-                                <p>By tapping the button below, I am confirming my check-in and granting you permission to email me with future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy located at PrimaryCareNiagara.com</p>
+                                <p>Confirm your check-in.  Primary Care Niagara promises to protect your privacy. See our privacy policy located at PrimaryCareNiagara.com</p>
                                 <a href="#" id="confirmCheckinButton" data-role="button">OK</a>
                             </div>
                         </div>
@@ -458,36 +462,45 @@
             </div>
         </div>
     </div> 
-
-    
-        
+   
     <script>
         ///<reference path="script/jquery-2.0.3-vsdoc.js" />
-        $(document).bind("mobileinit", function () {
+        $(document).bind("mobileinit", function ()
+        {
             //jQuery Mobile framework configurations:
             $.mobile.allowCrossDomainPages = true;
             $.support.cors = true;
-            if (showAlerts) {
+            if (showAlerts)
+            {
                 alert("CORS enabled: " + $.support.cors);
             }
         });
 
-        $("#termsOfUse").on("pagehide", function (e, data) {
+        $("#termsOfUse").on("pagehide", function (e, data)
+        {
             $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
         });
 
-        $("#offline").on("pageinit", function (e, data) {
-            if ($("#defaultOffline").length > 0) {
+        $("#offline").on("pageinit", function (e, data)
+        {
+            if ($("#defaultOffline").length > 0)
+            {
                 $.mobile.changePage("#splash", { role: "page", changeHash: false });
             }
         });
 
-        $(document).load(function () {
+        $(document).load(function ()
+        {
+            if (showAlerts)
+            {
+                alert("document loaded");
+            }
             $.mobile.loading('hide');
             $.mobile.pageLoading(true);
         });
 
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
             //pre-processing:
             $.mobile.page.prototype.options.domCache = false;
             $.mobile.allowCrossDomainPages = true;
@@ -503,6 +516,7 @@
             //reset location:
             //localStorage["location"] = "";
             //localStorage["locationFriendlyName"] = "";
+            localStorage["emailPermission"] = "NO";
             //**END page init:
 
             //validation:
@@ -537,12 +551,29 @@
             });
 
             //navigation/click events:
-            $("#confirmCheckinButton").click(function () {
+            $("#emailPermission").click(function ()
+            {
+                if (localStorage["emailPermission"] == "NO")
+                {
+                    localStorage["emailPermission"] = "YES";
+                    return;
+                }
+                if (localStorage["emailPermission"] == "YES")
+                {
+                    localStorage["emailPermission"] = "NO";
+                    return;
+                }
+            });
+
+            $("#confirmCheckinButton").click(function ()
+            {
                 $("#confirmCheckin").popup('close');
             });
 
-            $("#niagaraButton").click(function () {
-                if (showAlerts) {
+            $("#niagaraButton").click(function ()
+            {
+                if (showAlerts)
+                {
                     alert("niagaraButton clicked");
                 }
                 localStorage["location"] = "pcnniagara";
@@ -552,8 +583,10 @@
                 //clearLocalStorage();
             });
 
-            $("#wellandButton").click(function () {
-                if (showAlerts) {
+            $("#wellandButton").click(function ()
+            {
+                if (showAlerts)
+                {
                     alert("wellandButton clicked");
                 }
                 localStorage["location"] = "pcnwelland";
@@ -563,8 +596,10 @@
                 //clearLocalStorage();
             });
 
-            $("#clearCheckin").click(function () {
-                if (showAlerts) {
+            $("#clearCheckin").click(function ()
+            {
+                if (showAlerts)
+                {
                     alert("clear checkin");
                 }
                 clearLocalStorage();
@@ -574,30 +609,35 @@
 
             $('#termsOfUse').dialog({ open: function () { $(this).parent().css("padding", "0px") } });
 
-            $('.scrollContent a').click(function (e) {
+            $('.scrollContent a').click(function (e)
+            {
                 $('html,body,div,p').scrollTo(this.hash, this.hash);
                 e.preventDefault();
             });
 
-            $("#showInstructions").click(function () {
+            $("#showInstructions").click(function ()
+            {
                 var form = $("#patientDetailsForm");
                 form.validate();
 
-                if (form.valid()) {
+                if (form.valid())
+                {
                     //$("#confirmCheckin").popup('open');
                     //alert("By tapping the button below, I am confirming my check-in and granting you permission to email me with future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy located at PrimaryCareNiagara.com");
                     $("#details").hide();
                     $("#instructions").show();
                     //$("#footerImage").hide();
                     $.mobile.silentScroll(0);
-                    localStorage["emailPermission"] = 'YES';
+                    //localStorage["emailPermission"] = 'YES';
                 }
-                else {
+                else
+                {
                     alert('Please fully complete your check in details.');
                 }
             });
 
-            $("#showTerms").click(function () {
+            $("#showTerms").click(function ()
+            {
                 $("#instructions").hide();
                 $("#terms").show();
 
@@ -605,7 +645,8 @@
                 localStorage["readInstructions"] = 'YES';
             });
 
-            $("#showFinal").click(function () {
+            $("#showFinal").click(function ()
+            {
                 $("#terms").hide();
                 $("#final").show();
 
@@ -613,12 +654,14 @@
                 localStorage["terms"] = 'YES';
             });
 
-            $("#submit").click(function () {
+            $("#submit").click(function ()
+            {
                 $("#final").hide();
                 //$("#footerImage").hide();
 
                 var selectedClinic = localStorage["location"]; //new String($("#selectedClinic").val());
-                if (showAlerts) {
+                if (showAlerts)
+                {
                     alert("POSTing check-in for clinic code: " + selectedClinic);
                 }
 
@@ -649,8 +692,10 @@
                     'webform': '6779d205-8175-4e71-aadd-49809c3479c6'
                 },
                     dataType: 'json',
-                    success: function (response) {
-                        if (showAlerts) {
+                    success: function (response)
+                    {
+                        if (showAlerts)
+                        {
                             alert("submit success");
                         }
                         storeUserDetails();
@@ -671,11 +716,13 @@
 
                         var at = response["data"]["22"]["values"][0];
                         localStorage["attendTime"] = at;
-                        if (clinicIsClosed(at)) {
+                        if (clinicIsClosed(at))
+                        {
                             $("#confirm").hide();
 
                             var header = new String(response["data"]["23"]["values"][0])
-                            if (header !== undefined) {
+                            if (header !== undefined)
+                            {
                                 header = header.replace("currently: ", "");
                                 header = header.replace("-", "");
                                 $("#offlineHeader").html("<h5>" + header + "</h5>");
@@ -683,13 +730,15 @@
 
                             $.mobile.changePage("#offline", { role: "page" });
                         }
-                        else {
+                        else
+                        {
                             $("#confirm").show();
                             fillConfirmationMessage();
                         }
                     }
                 });
-                request.fail(function (jqXHR, textStatus) {
+                request.fail(function (jqXHR, textStatus)
+                {
                     alert("We were unable to receive your check-in. \n Please try again later or contact us.");
                     clearLocalStorage();
                     //$.mobile.changePage("#patientDetails", { role: "page" });
@@ -697,28 +746,35 @@
             });
 
             //functions:
-            function isClosedOnClinicSelect() {
-                $.get(rootURL + "/status/" + localStorage["location"], function (response) {
+            function isClosedOnClinicSelect()
+            {
+                $.get(rootURL + "/status/" + localStorage["location"], function (response)
+                {
                     var respPara = $(response).find("p:first").text();
                     var responseCheck = respPara.toLowerCase();
                     //alert(respPara);
                     //var respMessage = respPara.replace("Off-line", "offline");
                     var dashes = respPara.split('-');
-                    if (showAlerts) {
+                    if (showAlerts)
+                    {
                         alert("# of dashes: " + dashes.length);
                     }
                     var startIndex = responseCheck.lastIndexOf("-");
 
                     var closedMessage;
-                    if (dashes.length < 4) {
+                    if (dashes.length < 4)
+                    {
                         $("#reason").remove();
                     }
-                    else if (dashes.length == 4) {
+                    else if (dashes.length == 4)
+                    {
                         closedMessage = respPara.toString().substring(startIndex + 1, respPara.length);
                     }
 
-                    if (responseCheck.contains("off-line")) {
-                        if (showAlerts) {
+                    if (responseCheck.contains("off-line"))
+                    {
+                        if (showAlerts)
+                        {
                             //alert("Clinic is offline");
                         }
                         var div1 = $(response).find(".webstatus:first");
@@ -731,22 +787,29 @@
 
                         $.mobile.changePage("#offline", { role: "page", changeHash: false });
                     }
-                    else {
+                    else
+                    {
                         $.mobile.changePage("#patientDetails", { role: "page", changeHash: true });
                     }
-                }).fail(function () {
+                }).fail(function ()
+                {
                     alert("Clinic closed/open check failed. \n Please try again later or contact us.");
-                }).success(function () {
-                    if (showAlerts) {
+                }).success(function ()
+                {
+                    if (showAlerts)
+                    {
                         //alert("ClinicClosed check GET succeeded.");
                     }
                 });
             }
 
-            function checkPreviousCheckin() {
-                if (getPreviousCheckin()) {
+            function checkPreviousCheckin()
+            {
+                if (getPreviousCheckin())
+                {
                     //fillConfirmationMessage();
-                    if (showAlerts) {
+                    if (showAlerts)
+                    {
                         alert("previous checkin");
                     }
                     $("#splash").hide();
@@ -760,8 +823,10 @@
                     $("#confirm").show();
                     $.mobile.changePage("#patientDetails", { role: "page", changeHash: false });
                 }
-                else {
-                    if (showAlerts) {
+                else
+                {
+                    if (showAlerts)
+                    {
                         alert("no previous checkin, or checkin cleared");
                     }
                     //on details form:
@@ -773,20 +838,25 @@
                 }
             };
 
-            function runDeviceDetection() {
+            function runDeviceDetection()
+            {
                 /*html feature checks:*/
-                if (showHTML5Features) {
+                if (showHTML5Features)
+                {
                     $("#HTML5Detection").html("<b>HTML5 feature support:</b>");
                     $("#HTML5Detection").append("<ul>");
-                    if (Modernizr.localstorage) {
+                    if (Modernizr.localstorage)
+                    {
                         //alert("Your browser supports Local Storage.");
                         $("#HTML5Detection").append("<li>Local Storage</li>");
                     }
-                    if (Modernizr.applicationcache) {
+                    if (Modernizr.applicationcache)
+                    {
                         //alert("Your browser supports Application Cache.");
                         $("#HTML5Detection").append("<li>Application Cache</li>");
                     }
-                    if (Modernizr.websqldatabase) {
+                    if (Modernizr.websqldatabase)
+                    {
                         //alert("Your browser supports Web SQL Database.");
                         $("#HTML5Detection").append("<li>Web SQL Database</li>");
                     }
@@ -794,21 +864,25 @@
                 }
 
                 /*display version:*/
-                if (showVersion) {
+                if (showVersion)
+                {
                     var ua = navigator.userAgent;
-                    if (ua.indexOf("Android") >= 0) {
+                    if (ua.indexOf("Android") >= 0)
+                    {
                         var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
                         var vslice = ua.slice(ua.lastIndexOf("Android") + 7);
                         var vsub = vslice.substr(0, 3);
                         $("#HTML5Detection").append("running Android " + androidversion); //+ " v: " + vsub + "");
-                        if (androidversion < 3.5) {
+                        if (androidversion < 3.5)
+                        {
                             $("#websiteLink").show();
                             $("#websiteLink").html("<a href='http://fastwebcheckin.com/pcn' rel='external' target='foo'>fastwebcheckin website</a>");
                             alert("Android OS " + androidversion + " is not supported by this app. \nPlease check in on our website.  If you choose to continue using this app, basic navigation and features may not function properly.");
                             //$.mobile.changePage("#splash", { role: "page", changeHash: false });
                         }
                     }
-                    if (ua.indexOf("Chrome") >= 0) {
+                    if (ua.indexOf("Chrome") >= 0)
+                    {
                         var vslice = ua.slice(ua.lastIndexOf("Chrome") + 7);
                         var vsub = vslice.substr(0, 4);
                         var chromeversion = parseFloat(ua.slice(ua.indexOf("Chrome") + 7));
@@ -816,13 +890,15 @@
                     }
                 }
 
-                if (showAppVersion) {
+                if (showAppVersion)
+                {
                     $("#appVersion").html(appVersionInfo);
                     $("#appVersion").show();
                 }
             }
 
-            function getAndroidVersion(ua) {
+            function getAndroidVersion(ua)
+            {
                 var ua = ua || navigator.userAgent;
                 var match = ua.match(/Android\s([0-9\.]*)/);
                 return match ? match[1] : false;
