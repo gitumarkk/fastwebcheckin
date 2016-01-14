@@ -25,9 +25,9 @@
     <!--all platforms-->
     <preference name="orientation" value="portait" />
     <preference name="fullscreen" value="true" />
+    <preference name="phonegap-version" value="cli-5.2.0" />
 
     <!--iOS-->
-    <preference name="phonegap-version" value="3.3.0" />
     <preference name="webviewbounce" value="false" />
     <preference name="prerendered-icon" value="false" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
