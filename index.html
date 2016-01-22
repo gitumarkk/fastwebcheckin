@@ -8,11 +8,11 @@
         <meta http-equiv='X-UA-Compatible' content='chrome=1'>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="apple-touch-icon" href="images/ios/icon.png" />
-        <link rel="apple-touch-icon" sizes="72x72" href="images/ios/icon-72.png" /> 
-        <link rel="apple-touch-icon" sizes="114x114" href="images/ios/icon@2x.png" /> 
+        <link rel="apple-touch-icon" sizes="72x72" href="images/ios/icon-72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="images/ios/icon@2x.png" />
         <link rel="apple-touch-icon" sizes="144x144" href="images/ios/icon-72@2x.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="images/ios/icon-76.png" /> 
-        <link rel="apple-touch-icon" sizes="120x120" href="images/ios/icon-120.png" /> 
+        <link rel="apple-touch-icon" sizes="76x76" href="images/ios/icon-76.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="images/ios/icon-120.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="images/ios/icon-152.png" />
 
         <script src="script/jquery-2.0.3.min.js"></script>
@@ -20,14 +20,16 @@
         <!--<script src="script/bootstrap.min.js"></script>-->
         <script src="script/jquery.maskedinput.min.js"></script>
         <script src="script/jquery.scrollto.js"></script>
-        
+
         <script src="script/modernizr-2.7.1-custom.js"></script>
-        <script src="script/jquery.mobile-1.3.2.js"></script>
-        <link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" />     
+        <!-- <script src="script/jquery.mobile-1.3.2.js"></script>
+        <link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" /> -->
+        <script src="script/jquery.mobile-1.4.5.min.js"></script>
+        <link href="css/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
 
         <!--custom-->
         <link rel="stylesheet" type="text/css" href="css/master.css">
-        <link rel="stylesheet" type="text/css" href="css/override.css"> 
+        <link rel="stylesheet" type="text/css" href="css/override.css">
         <!--<link rel="stylesheet" type="text/css" href="css/responsiveFonts.css">-->
 
         <script src="script/jquery.applogic.js"></script>
@@ -37,35 +39,39 @@
         <script src="script/ad-rotator.js"></script>
         <!--<script src="script/ios/loadbookmark_iOS.js"></script>
         <script src="script/android_bb/bookmark_AB.js"></script>-->
-        
+
     </head>
     <body>
 
-    <div id="splash" data-role="page" data-title="fastwebcheckin" data-theme="b">
+    <!-- change data-theme to a -->
+    <div id="splash" data-role="page" data-title="fastwebcheckin" data-theme="a">
         <div data-role="content">
             <div class="centerLogoColumn">
-               <img src="images/logo.png" class="logo" alt="fastwebcheckin logo"> 
-            </div> 
+               <img src="images/logo.png" class="logo" alt="fastwebcheckin logo">
+            </div>
             <div id="appVersion" class="splashInfo" hidden="hidden"></div>
             <div id="HTML5Detection" class="splashInfo"></div>
-            <div id="websiteLink" class="splashInfo" hidden="hidden"></div>                                                                                                                                                                                                                                        
+            <div id="websiteLink" class="splashInfo" hidden="hidden"></div>
         </div>
+
         <div id="adFooter" data-role="footer" data-position="fixed" data-theme="f">
             <div id="adContainer">
                     <a href="#"><img id="adImage" src="images/test.jpg" class="ad" alt="Our sponsor"></a>
             </div>
         </div>
-        <div id="footerSplash" data-role="footer" data-position="fixed">
+        <!-- add data-theme="b"  -->
+        <div id="footerSplash" data-role="footer" data-position="fixed" data-theme="b">
             <div data-role="navbar">
                 <ul>
-                    <li><a id="chooseClinic" href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Choose a clinic</a></li> 
+                    <li><a id="chooseClinic" href="#clinicSelectDialog" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Choose a clinic</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div id="offline" data-role="page" data-title="fastwebcheckin" data-theme="d">
-        <div id="offlineHeader" data-role="header">
+    <div id="offline" data-role="page" data-title="fastwebcheckin" data-theme="a">
+        <!-- data-theme="b" -->
+        <div id="offlineHeader" data-role="header" data-theme="b">
             <a href="#splash" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
             <h4 id="offlineHeading">Check-in system is offline</h4>
         </div>
@@ -78,25 +84,29 @@
             </div>
         </div>
         <div id="footerOffline" data-role="footer" data-position="fixed">
-        </div>                                                                                                                                                                                                                                                           
+        </div>
     </div>
 
+    <!-- data-theme="c" data-overlay-theme="d" -->
     <div id="clinicSelectDialog" data-role="dialog" data-title="fastwebcheckin" data-theme="c" data-overlay-theme="d">
-        <div id="headerClinicSelect" data-role="header">
+      <!-- data-theme="a"-->
+        <div id="headerClinicSelect" data-role="header" data-theme="b">
             <h5>Choose a clinic</h5>
         </div>
-        <div id="contentClinicSelect" data-role="content">
-            <a href="#" id="niagaraButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
+        <!-- data-theme="a"-->
+        <div id="contentClinicSelect" data-role="content" data-theme="a">
+            <a href="#" id="niagaraButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade"
             data-corners="false" data-shadow="false">PCN Niagara Falls</a>
-            <a href="#" id="wellandButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade" 
+            <a href="#" id="wellandButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade"
             data-corners="false" data-shadow="false">PCN Welland</a>
         </div>
-        <div id="footerClinicSelect" data-role="footer" data-position="fixed" data-theme="c">
+        <!-- data-theme="a"-->
+        <div id="footerClinicSelect" data-role="footer" data-position="fixed" data-theme="a">
             <div class="footerLogo"><img src="images/logo.png" width="200px" alt="fastwebcheckin logo"></div>
-        </div>   
+        </div>
     </div>
 
-    <div id="patientDetails" data-role="page" data-title="fastwebcheckin" data-theme="d"> 
+    <div id="patientDetails" data-role="page" data-title="fastwebcheckin" data-theme="a">
         <div id="pd" data-role="content" data-theme="c">
             <form id="patientDetailsForm" name="patientDetailsForm1" method="post">
                 <div id="details" class="mainForm">
@@ -108,22 +118,22 @@
                         </li>
                         <li>
                             <label for="lastName" class="ui-hidden-accessible">Last Name</label>
-                            <input id="lastName" name="lastName1" placeholder="Last Name *" type="text" 
-                                data-prevent-focus-zoom="true" data-role="none"/>  
+                            <input id="lastName" name="lastName1" placeholder="Last Name *" type="text"
+                                data-prevent-focus-zoom="true" data-role="none"/>
                         </li>
                         <li>
                             <label for="firstName" class="ui-hidden-accessible">First Name</label>
-                            <input id="firstName" name="firstName1" placeholder="First Name *" type="text" 
-                                data-prevent-focus-zoom="true" data-role="none"/>  
+                            <input id="firstName" name="firstName1" placeholder="First Name *" type="text"
+                                data-prevent-focus-zoom="true" data-role="none"/>
                         </li>
-                        <li> 
+                        <li>
                             <label for="postalCode" class="ui-hidden-accessible">Postal Code</label>
-                                <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text" 
-                                data-prevent-focus-zoom="true" data-role="none" />                    
+                                <input id="postalCode" name="postalCode1" placeholder="Postal Code *" type="text"
+                                data-prevent-focus-zoom="true" data-role="none" />
                         </li>
                         <li>
                             <label for="emailAddress" class="ui-hidden-accessible">Email</label>
-                            <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email" 
+                            <input id="emailAddress" name="emailAddress1" placeholder="Email *" type="email"
                                 data-prevent-focus-zoom="true" data-role ="none" class="bottomTextBox"/>
                             <div class="ui-field-contain emailPermit" >
                                 <fieldset data-role="controlgroup" data-type="horizontal">
@@ -133,15 +143,15 @@
          	                        <input type="radio" name="emailPermission" id="emailPermissionNo" value="NO" checked/>
          	                        <label for="emailPermissionNo">No</label>
                                 </fieldset>
-                            </div>   
+                            </div>
                             <!--<input id="emailPermission" name="emailPermission1" type="radio" data-prevent-focus-zoom="true" data-role="none"/>-->
                         </li>
-                    </ul> 
+                    </ul>
                     <div class=confirm>
                         <a href="#confirmCheckin" id="showInstructions" data-role="button" data-rel="popup">Next</a>
 
-                        <div id="confirmCheckin" data-role="popup" data-theme="c" data-overlay-theme="a">
-                            <div id="confirmHeader" data-role="header">
+                        <div id="confirmCheckin" data-role="popup" data-theme="a" data-overlay-theme="a">
+                            <div id="confirmHeader" data-role="header" data-theme="b">
                                 <h5>Confirmation</h5>
                             </div>
                             <div id="confirmContent" data-role="content">
@@ -150,7 +160,7 @@
                             </div>
                         </div>
 
-                    </div>   
+                    </div>
                 </div>
                 <div id="instructions" hidden="hidden" class="scrollContent">
                     <div class="scrollHeader">
@@ -160,31 +170,31 @@
                         </a>
                     </div>
                     <div class="info">
-                        <p class="important">              
-                        Severe life or limb threatening illnesses or injuries should go directly to the nearest hospital emergency 
-                        department. For example: conditions such as, but not limited to, chest pain, acute shortness of breath, 
-                        profuse bleeding, etc.               
+                        <p class="important">
+                        Severe life or limb threatening illnesses or injuries should go directly to the nearest hospital emergency
+                        department. For example: conditions such as, but not limited to, chest pain, acute shortness of breath,
+                        profuse bleeding, etc.
                         </p>
                         <p>
                         Patients cannot pre-register for annual physicals or cosmetic procedures on-line.
                         </p>
                         <p>
-                        If you need medication renewal, you are required to bring your empty medication bottles or a print out from 
+                        If you need medication renewal, you are required to bring your empty medication bottles or a print out from
                         the pharmacy. Our clinic does not prescribe narcotics or habit-forming medications.
                         </p>
                         <p>
                         Canadian patients must present a valid Ontario/provincial health card at reception window or a service fee or
-                        a deposit will be required. Not all services that people pre-register for are covered by the Ministry of 
+                        a deposit will be required. Not all services that people pre-register for are covered by the Ministry of
                         Health. Out-of-country patients will be required to pay a service fee for care.
                         </p>
                         <p>
                         You are required to present your FAST WEB CHECK-IN pre-registration confirmation CHECK-IN NUMBER to our receptionist.
                         </p>
-                    </div> 
+                    </div>
                     <p>
                         By tapping the button below, I signify that I've read, understand and agree to the above Instructions:
-                    </p>  
-                    <div id="scrollItem1">               
+                    </p>
+                    <div id="scrollItem1">
                         <a href="#" id="showTerms" data-role="button">Yes</a>
                     </div>
                 </div>
@@ -197,28 +207,28 @@
                     </div>
                     <div id="termsAndConditions">
                         <p>
-                        Your FAST WEB CHECK-IN pre-registration does not constitute the beginning of a clinic/physician and patient 
-                        engagement and is not a guarantee of care. The patient engagement will be formalized at our reception window 
+                        Your FAST WEB CHECK-IN pre-registration does not constitute the beginning of a clinic/physician and patient
+                        engagement and is not a guarantee of care. The patient engagement will be formalized at our reception window
                         when registration is finalized.
                         </p>
                         <p>
-                        A FAST WEB CHECK-IN pre-registration places a potential patient into the waiting line. Once a patient presents 
-                        their FAST WEB CHECK-IN pre-registration confirmation, the registration process will be completed at the 
+                        A FAST WEB CHECK-IN pre-registration places a potential patient into the waiting line. Once a patient presents
+                        their FAST WEB CHECK-IN pre-registration confirmation, the registration process will be completed at the
                         reception window. The system will provide you with a time to attend the clinic. This is an estimation based on
-                        current projected wait times. We can not predict, in advance, the number of patients who will register for 
+                        current projected wait times. We can not predict, in advance, the number of patients who will register for
                         care or the nature of the illness or injury that will require treatment. Therefore, you may still have a short
                         wait in our waiting room once you arrive.
                         </p>
                         <p>
-                        Your FAST WEB CHECK-IN pre-registration is valid only for the day you submit it. If you do not attend the 
+                        Your FAST WEB CHECK-IN pre-registration is valid only for the day you submit it. If you do not attend the
                         clinic on that day, your registration will be cancelled.
                         </p>
                         <p>
-                        Some medical services or medical care is not provided or cannot be provided at our clinics. Patients may be 
+                        Some medical services or medical care is not provided or cannot be provided at our clinics. Patients may be
                         referred to the hospital or specialists to receive care.
                         </p>
                         <p>
-                        Your FAST WEB CHECK-IN pre-registration is subject to the entire website Terms of Use listed under the link 
+                        Your FAST WEB CHECK-IN pre-registration is subject to the entire website Terms of Use listed under the link
                         located at the bottom of this page.
                         </p>
                     </div>
@@ -237,7 +247,7 @@
                     <div class="confirmHeader">Web Check-in Confirmation</div>
 
                     <p>Confirmation number: <span id="checkinNumber"></span></p>
-                    <p>You are in the waiting line at: <span id="locationConfirmation"></span> Clinic</p> 
+                    <p>You are in the waiting line at: <span id="locationConfirmation"></span> Clinic</p>
                     <p id="attendInstructions"></p>
                     <div id="confirmationMessage" class="ui-grid-a">
                         <div class="ui-block-a">
@@ -251,7 +261,7 @@
                         </div>
                         <div class="ui-block-b">
                             <span id="firstNameConfirmation"></span>
-                        </div> 
+                        </div>
                         <div class="ui-block-a">
                             Last name:
                         </div>
@@ -277,7 +287,7 @@
                             <span id="postalCodeConfirmation"></span>
                         </div>
                     </div>
-                    <p><span class="internalParagraphHeader">Instructions:</span> Bring this device with you to the clinic. This screen will display when you start this app.</p>                
+                    <p><span class="internalParagraphHeader">Instructions:</span> Bring this device with you to the clinic. This screen will display when you start this app.</p>
                 </div>
             </form>
             <script>
@@ -285,16 +295,16 @@
             </script>
         </div>
         <div id="footerDetails" data-role="footer" data-position="fixed" data-overlay-theme="d" class="footerLogo">
-            <!--<img src="images/logo.png" id="footerImage" width="300" alt="fastwebcheckin logo">-->           
+            <!--<img src="images/logo.png" id="footerImage" width="300" alt="fastwebcheckin logo">-->
             <div data-role="navbar">
                 <ul>
                     <li><a href="#" id="clearCheckin" data-role="button" data-icon="arrow-l" data-iconpos="top">Restart</a></li>
                     <li><a href="#termsOfUse" data-role="button" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Terms</a></li>
-                    <!--<li><a href="#privacyPolicy" data-role="button" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Privacy</a></li>--> 
+                    <!--<li><a href="#privacyPolicy" data-role="button" data-icon="arrow-u" data-iconpos="top" data-transition="slideup">Privacy</a></li>-->
                 </ul>
             </div>
         </div>
-    </div>  
+    </div>
 
     <div id="privacyPolicy" data-role="dialog" class="terms" data-tap-toggle="true" data-theme="c" data-overlay-theme="d">
         <div id="headerTerms" data-role="header">
@@ -341,7 +351,7 @@
         <div id="footerPrivacyPolicy" data-role="footer" data-position="fixed">
             <div data-role="navbar" data-mini="true">
                 <ul>
-                    <li><a href="#patientDetails" data-icon="arrow-d" data-iconpos="top" data-transition="slideup">Close</a></li> 
+                    <li><a href="#patientDetails" data-icon="arrow-d" data-iconpos="top" data-transition="slideup">Close</a></li>
                 </ul>
             </div>
         </div>
@@ -351,12 +361,12 @@
         <div id="headerTerms" data-role="header">
         <h5>Terms of Use</h5>
         </div>
-        <div id="contentTerms" data-role="content" class="scrollContent terms"> 
+        <div id="contentTerms" data-role="content" class="scrollContent terms">
             <div id="item1" class="scrollHeader">
                 <a href="#item2"><div><h4>Acceptance</h4></div>
                 <div class="scrollIcon"></div></a></div>
             <p>It is important that you read all the following terms and conditions carefully. This Terms of Use Agreement ("Agreement") is a legal agreement between you and Fervseco Inc., the owner and operator ("Owner") of this Website (the "Website"). "). It states the terms and conditions under which you may access and use the Website and all written and other information and materials displayed, linked to, or otherwise made available through the Website, including, without limitation, articles, text, photographs, images, illustrations, audio clips, video clips, computer software and code (the "Content"). By accessing and using the Website, you are indicating your acceptance to be bound by the terms and conditions of this Agreement. If you do not accept these terms and conditions, you must not access or use the Website. The Owner may revise this Agreement at any time by updating this posting. Use of the Website after such changes are posted will signify your acceptance of these revised terms. You should visit this page periodically to review this Agreement.</p>
-         
+
             <div id="item2" class="scrollHeader">
             <a href="#item3"><div><h4>Not medical advice</h4></div>
                 <div class="scrollIcon"></div></a></div>
@@ -371,7 +381,7 @@
             <a href="#item5"><div><h4>No physician-patient relationship</h4></div>
                 <div class="scrollIcon"></div></a></div>
             <p>The presentation of Content on the Website does not establish a physician-patient relationship between you (or someone else_ and the Owner (or any of its physicians) and is not intended as a solicitation of individuals to become patients or clients of the Owner (or any of its physicians).</p>
-            
+
             <div id="item5" class="scrollHeader">
                 <a href="#item6">
                     <div><h4>No endorsements</h4></div>
@@ -394,7 +404,7 @@
             <a href="#item9"><div><h4>Limitation of liability</h4></div>
                 <div class="scrollIcon"></div></a></div>
             <p>In no event shall the Owner, officers, directors, employees, agents, licensors, and their respective successors and assigns be liable for damages of any kind, including, without limitation, any direct, special, indirect, punitive, incidental or consequential damages including, without limitation, any loss or damages in the nature of, or relating to, lost business, medical injury, personal injury, wrongful death, improper diagnosis, inaccurate information, improper treatment or any other loss incurred in connection with your use, misuse or reliance upon the Website or the Content, or your inability to use the Website, regardless of the cause and whether arising in contract (including fundamental breach), tort (including negligence), or otherwise. The foregoing limitation shall apply even if the Owner knew of or ought to have known of the possibility of such damages.  The Owner also expressly disclaims any and all liability for the acts, omissions and conduct of any third-party user advertiser or sponsor of the Website ("Third-Party"). Under no circumstances shall the Owner, its physicians, officers, directors, employees, agents, licensors and their respective successors and assigns, be liable for any injury, loss, damage (including direct, special, indirect, punitive, incidental or consequential damages), or expense arising in any manner whatsoever from (i) the acts, omissions or conduct of any Third-Party, and (ii) any access, use, reliance upon or inability to use any materials, content, goods or services located at, or made available at, any Website linked to or from the Website, regardless of the cause and whether arising in contract (including fundamental breach), tort (including negligence), or otherwise. The foregoing limitation shall apply even if the Owner knew of or ought to have known of the possibility of such da</p>
-            
+
             <div id="item9" class="scrollHeader">
             <a href="#item10"><div><h4>Indemnity</h4></div>
                 <div class="scrollIcon"></div></a></div>
@@ -451,8 +461,8 @@
             <p>The invalidity or unenforceability of any provision of this Agreement or any covenant contained herein shall not affect the validity or enforceability of any other provision or covenant contained herein and any such invalid provision or covenant shall be deemed severable from the rest of this Agreement.</p>
 
             <div id="item20" class="scrollHeader">
-            <a href="#item21"><div><h4>Termination</h4></div> 
-                <div class="scrollIcon"></div></a></div>            
+            <a href="#item21"><div><h4>Termination</h4></div>
+                <div class="scrollIcon"></div></a></div>
             <p>The Owner may, in its sole discretion, cancel or terminate your right to use the Website, or any part of the Website, at any time without notice. In the event of termination, you are no longer authorized to access the Website, or the part of the Website affected by such cancellation or termination. The restrictions imposed on you with respect to Content downloaded from the Website and the disclaimers and limitations of liabilities set forth in this Agreement, shall survive termination of this Agreement. The Owner shall not be liable to any party for such termination.</p>
 
             <div id="item21" class="scrollHeader">
@@ -463,12 +473,12 @@
         <div id="footerTerms" data-role="footer" data-position="fixed">
             <div data-role="navbar" data-mini="true">
                 <ul>
-                    <li><a href="#patientDetails" data-icon="arrow-d" data-iconpos="top" data-transition="slideup">I Agree</a></li> 
+                    <li><a href="#patientDetails" data-icon="arrow-d" data-iconpos="top" data-transition="slideup">I Agree</a></li>
                 </ul>
             </div>
         </div>
-    </div> 
-   
+    </div>
+
     <script>
         ///<reference path="script/jquery-2.0.3-vsdoc.js" />
         $(document).bind("mobileinit", function ()
@@ -670,7 +680,7 @@
                     alert("POSTing check-in for clinic code: " + selectedClinic);
                 }
 
-                //for local testing if CORS is disabled, start Chrome with: 
+                //for local testing if CORS is disabled, start Chrome with:
                 //chromium-browser --disable-web-security
                 var request = $.ajax({
                     type: "POST",
@@ -790,7 +800,8 @@
                         $("#scrollItem202").html(div1);
                         $("#clinicHours").html(div2);
 
-                        $.mobile.changePage("#offline", { role: "page", changeHash: false });
+                        $.mobile.changePage("#patientDetails", { role: "page", changeHash: true });
+                        //$.mobile.changePage("#offline", { role: "page", changeHash: false });
                     }
                     else
                     {
@@ -909,6 +920,6 @@
                 return match ? match[1] : false;
             };
         });
-    </script>      
+    </script>
     </body>
 </html>

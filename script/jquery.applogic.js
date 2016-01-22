@@ -19,7 +19,7 @@ function checkinNumberExists() {
     if(cno != 'undefined' && cno.length > 1 && attendTime != "Not today"){
         //alert("--- checkinNumber EXISTS --- \n local storage: " + localStorage["checkinNumber"] + " \n string checkinNumber var: " + cno + " \n string attendTime var: " + attendTime);
         return true;
-    } 
+    }
     else{
         //alert("checkinNumber NOT Exists");
         return false;
@@ -30,19 +30,19 @@ function clinicIsClosed(attendTime){
     //alert("clinicIsClosed parameter: " + attendTime);
     if(attendTime == 'Not today'){
         return true;
-    } 
+    }
     else{
         return false;
     }
-    return false;    
+    return false;
 }
 
 function getPreviousCheckin(){
     var sdate = localStorage["submittedDate"];
     if(showAlerts){
-       //alert("submittedDate: " + sdate); 
+       //alert("submittedDate: " + sdate);
     }
-    
+
     var loc = localStorage["location"];
     var terms = localStorage["terms"];
 
@@ -83,7 +83,7 @@ Date.daysBetween = function (date1, date2) {
     return differenceMS / oneDay;
 };
 
-function storeUserDetails() { 
+function storeUserDetails() {
     localStorage["priorityCode"] = $('#priorityCode').val();
     localStorage["firstName"] = $('#firstName').val();
     localStorage["lastName"] = $('#lastName').val();
@@ -103,7 +103,7 @@ function restoreUserDetails(){
     $('#postalCode').val(localStorage["postalCode"]);
 }
 
-function fillConfirmationMessage() {    
+function fillConfirmationMessage() {
     $("#checkinNumber").html(localStorage["checkinNumber"]);
     $("#attendTimeConfirmation").html(localStorage["attendTime"]);
     $("#attendInstructions").html(localStorage["confirmMessage"]);
@@ -146,4 +146,3 @@ function clearLocalStorage() {
     localStorage["readInstructions"] = "NO";
     localStorage["terms"] = "NO";
 }
-
