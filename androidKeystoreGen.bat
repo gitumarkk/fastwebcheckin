@@ -1,1 +1,0 @@
-keytool -genkey -v -keystore capacitive.keystore -alias capacitive -keyalg RSA -validity 1000
