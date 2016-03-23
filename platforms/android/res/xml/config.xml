@@ -1,6 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.fastwebcheckin.mobile" version="1.0.4" versionCode="12" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <name>WebCheckin</name>
     <description>
         FastWebCheckin mobile app
@@ -35,4 +39,7 @@
     <icon gap:platform="blackberry" src="www/icon.png" />
     <icon src="www/icon.png" />
     <preference name="permissions" value="none" />
+    <access origin="*" />
+    <allow-intent href="*" />
+    <allow-navigation href="*" />
 </widget>

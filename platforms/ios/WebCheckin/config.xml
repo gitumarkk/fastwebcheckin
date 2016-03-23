@@ -48,4 +48,7 @@
     <icon gap:platform="blackberry" src="www/icon.png" />
     <icon src="www/icon.png" />
     <preference name="permissions" value="none" />
+    <access origin="*" />
+    <allow-intent href="*" />
+    <allow-navigation href="*" />
 </widget>
