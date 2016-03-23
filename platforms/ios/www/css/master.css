@@ -1,0 +1,322 @@
+/*base*/
+body html{
+    font-family: 'Telex', sans-serif;
+}
+
+p{
+   font-size: 10pt; 
+}
+
+#termsAndConditions p {
+    font-size: 10pt;
+}
+
+#contentTerms p{
+    font-size: 6pt;
+}
+
+.internalParagraphHeader {
+    font-size: 11pt;
+    font-weight: 800;
+}
+
+.important{
+    font-weight: bold;
+}
+
+.heading {
+    font-size: medium;
+}
+
+#instructionsFooter {
+    height: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+
+/*START************pages (JQM DIVs)*/
+/*splash page*/
+.splashInfo {
+    font-size: smaller;
+    text-align: center;
+    margin-top: 10px;
+    width: auto;
+    height: auto;
+    display: block;
+    flex-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+#HTML5Detection{
+    margin-top: 2px;
+}
+
+/*checkin form page*/
+.mainForm ul{
+    padding: 0em 0em 0em 0em;
+    margin-left: 0em;
+    margin-right: 1.5em;
+    list-style: none;
+}
+
+.mainForm li {
+    font-size: smaller;
+    color: #f00; 
+}
+
+.mainForm input{
+    height: 30px;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ababab;
+    margin-top: 2px;   
+    padding: 10px;
+    /*font-size: 10pt;*/
+    outline: none;
+}
+
+.submitButton{
+    height: 30px;
+    width: 100%;
+    font-size: medium;
+    font-weight: bold;
+    border-width: thin;
+    border-style: solid;
+    border-color: #211e1e;
+    background-color: #d6c8c8;
+}
+
+.topTextBox{
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+}
+
+.bottomTextBox{
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+/*offline page*/
+#schedule{
+    width: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2px;
+}
+
+#reason {
+    display: block;
+}
+
+#offlineHeading {
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+/*confirm page*/
+#confirmationMessage {
+    border-style: solid;
+    border-width: thin;
+    padding: 2px;
+    word-wrap: break-word;
+}
+
+#confirm {
+    /*padding: 2px;*/ 
+    height: auto;
+}
+
+.confirmHeader {
+    font-size: 12pt;
+    font-weight: 700;
+}
+
+#checkinNumber {
+    font-weight: 700;
+}
+
+/*offline page*/
+#contentOffline div {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.schedule {
+    border-collapse: collapse;
+    background-color: #f0eaea;
+}
+
+.schedule th, tbody, td {
+    border:  1px solid black;  
+}
+
+.schedule th{
+    background-color: #d6c8c8;
+}
+
+.schedule td{
+    padding:  3px;
+}
+
+/*confirmation page*/
+div.rightalign {
+    display: block;
+    text-align: right; 
+    float: left;
+    padding: 2px;
+}
+
+#message {
+    width: 300px;
+    padding: 2px;
+}
+
+#message input {
+    width: 86px;
+    padding: 2px;
+}
+
+#clearStorageContent {
+    width: 480px;
+    margin: auto;
+}
+
+#location {
+    display: inline-block;
+}
+
+#attendTime {
+   display: inline-block; 
+}
+
+#clinicAddress {
+    margin-left: 0px!important;
+}
+
+/*END************pages (JQM DIVs)*/
+
+/*dialogs and popups*/
+.popup {
+  position: relative;
+  background: #FFF;
+  padding: 25px;
+  width:auto;
+  max-width: 800px;
+  margin: 0 auto; 
+}
+
+/*.terms p{
+    padding: 2px;
+    font-size: x-small;
+}
+
+.terms h4{
+    font-size: small;
+}*/
+
+/*ad rotator*/
+img.ad{
+    width: auto;
+    height: auto;
+    display: block;
+    flex-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+#adFooter{
+    height: 196px;
+}
+
+/*images and icons*/
+img.logo{
+    /*width: 300px;*/
+    display: block;
+    flex-align: center;
+    padding-top: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both; 
+}
+
+.scrollContent{
+    display: inline-block;
+    float: multicol;
+}
+
+.scrollContent a{
+    text-decoration: none;
+    color: #211e1e;
+    text-decoration-color: #211e1e;  
+}
+
+.scrollIcon {
+    background: url(images/icons-18-black.png) -214px 0px;
+    background-repeat: no-repeat;
+    width:20px;
+    height:20px;
+    min-width:20px;
+    min-height:20px;
+    padding-left: 5px;
+    margin-top: -24px;
+    float: right;
+}
+
+.scrollIconSmall {
+    background: url(images/icons-18-black.png) -214px -7px;
+    background-repeat: no-repeat;
+    width:20px;
+    height:10px;
+    min-width:20px;
+    min-height:10px;
+    padding-left: 0px;
+    margin-top: 0px;
+    float: right;
+}
+
+.scrollHeader{
+    border-width: thin;
+    border-style: solid;
+    border-color: #808080;
+    padding-left: 7px;
+}
+
+.scrollHeader h4{
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.up{
+    background: url(images/icons-18-black.png) -180px 0px;
+}
+
+.footerLogo{
+    text-align: center;
+}
+
+.emailPermit {
+    padding-left: 6px;
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+.emailPermit legend {
+    margin-top: 12px;
+    color: #211e1e;
+    font-size: 11pt;
+}
+
+.emailPermit input {
+    visibility: hidden;
+}
+
+.confirm {
+    padding-top: 6px;
+}

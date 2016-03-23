@@ -1,0 +1,55 @@
+/*base*/
+.centerLogoColumn {
+    margin-top: -15px;
+}
+
+/*tablet width, roughly*/
+@media all and (min-width: 41em) {
+    .centerLogoColumn {
+        display: block;
+        flex-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        clear: both;
+    }
+}
+
+/*600px breakpoint*/
+@media screen and (max-width:37.5em) {
+    .ui-page {
+        background: white;
+    }
+
+    .centerLogoColumn {
+        width: auto;
+        height: auto;
+    }
+}
+
+/*400px breakpoint*/
+@media screen and (min-width:25em) {
+    .ui-page {
+        background: white;
+    }
+
+    .centerLogoColumn {
+        width: auto;
+        height: auto;
+    }
+}
+
+/*300px breakpoint*/
+@media screen and (min-width:18.75em) {
+    .ui-page {
+        background: white;
+    }
+
+    .centerLogoColumn {
+        width: auto;
+        height: auto;
+    }
+
+    #adFooter {
+        display: none;
+    }
+}
