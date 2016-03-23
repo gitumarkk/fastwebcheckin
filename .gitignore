@@ -1,11 +1,1 @@
-
-/TextFile.txt
-/fastwebcheckin.zip
-/bin/fastwebcheckin.bar
-/package.bat
-/deploy.bat
-/build.bat
-/androidKeystoreGen.bat
-/phonegapBuildService.bat
-/phonegapDeploy.bat
-/script/jquery-2.0.3-vsdoc.js
+.DS_Store
