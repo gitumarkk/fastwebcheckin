@@ -58,5 +58,10 @@
     <!--defaults-->
     <icon src="www/icon.png"/>
     <preference name="permissions" value="none"/>
+    <!--  <access origin="http://fastwebcheckin.com/" /> Adding access so as to be able to hit the server -->
+
+    <access origin="*" />
+    <allow-intent href="*" />
+    <allow-navigation href="*" />
 
 </widget>
