@@ -945,10 +945,12 @@
                 $.get(rootURL + "/checkin/pcn?f=" + localStorage["location"], function (response) {
                     var $instructions = $(response).find(".webform-component--important-instructions");
 
-                    $instructions.find("h2").remove()
-                    $("#instructionsContent").html($instructions.html());
-                    localStorage["instructionsHTML"] = $instructions.html();
-
+                    // Perform update only when the DOM element exists.
+                    if ($instructions.length !== 0) {
+                        $instructions.find("h2").remove()
+                        $("#instructionsContent").html($instructions.html());
+                        localStorage["instructionsHTML"] = $instructions.html();
+                    }
                 }).fail(function() {});
             };
 
@@ -961,10 +963,13 @@
 
                 $.get(rootURL + "/checkin/pcn?f=" + localStorage["location"], function (response) {
                     var $tac = $(response).find("#tac");
-                    $tac.find("h2").remove()
-                    $("#termsAndConditions").html($tac.html());
-                    localStorage["termsHTML"] = $tac.html();
 
+                    // Perform update only when the DOM element exists.
+                    if ($tac.length !== 0) {
+                        $tac.find("h2").remove()
+                        $("#termsAndConditions").html($tac.html());
+                        localStorage["termsHTML"] = $tac.html();
+                    }
                 }).fail(function() {});
             };
         });
