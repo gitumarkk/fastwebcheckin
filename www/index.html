@@ -944,9 +944,10 @@
 
                 $.get(rootURL + "/checkin/pcn?f=" + localStorage["location"], function (response) {
                     var $instructions = $(response).find(".webform-component--important-instructions");
+
                     $instructions.find("h2").remove()
                     $("#instructionsContent").html($instructions.html());
-                    localStorage["instructionsHTML"] = $tac.html();
+                    localStorage["instructionsHTML"] = $instructions.html();
 
                 }).fail(function() {});
             };
