@@ -174,7 +174,7 @@
                             <div class="scrollIcon"></div>
                         </a>
                     </div>
-                    <div class="info">
+                    <div id="instructionsContent" class="info">
                         <p class="important">
                         Severe life or limb threatening illnesses or injuries should go directly to the nearest hospital emergency
                         department. For example: conditions such as, but not limited to, chest pain, acute shortness of breath,
@@ -600,6 +600,8 @@
                 localStorage["locationFriendlyName"] = "PCN Niagara";
                 //$("#selectedClinic").val("pcnniagara");
                 isClosedOnClinicSelect();
+
+                getInstructions();
                 getTermsAndConditions();
                 //clearLocalStorage();
             });
@@ -614,6 +616,8 @@
                 localStorage["locationFriendlyName"] = "PCN Welland";
                 //$("#selectedClinic").val("pcnwelland");
                 isClosedOnClinicSelect();
+
+                getInstructions();
                 getTermsAndConditions();
                 //clearLocalStorage();
             });
@@ -647,6 +651,8 @@
                     //$("#confirmCheckin").popup('open');
                     //alert("By tapping the button below, I am confirming my check-in and granting you permission to email me with future Clinic news and information.  Primary Care Niagara promises to protect your privacy. See our privacy policy located at PrimaryCareNiagara.com");
                     $("#details").hide();
+                    getInstructions();
+
                     $("#instructions").show();
                     //$("#footerImage").hide();
                     $.mobile.silentScroll(0);
@@ -928,6 +934,23 @@
                 return match ? match[1] : false;
             };
 
+
+            function getInstructions() {
+                // Get cached result initially and add it to the dom for improved user experience
+                // then fetch from the server to make sure that its in sync.
+                if (localStorage["instructionsHTML"]) {
+                    $("#instructionsContent").html(localStorage["instructionsHTML"]);
+                };
+
+                $.get(rootURL + "/checkin/pcn?f=" + localStorage["location"], function (response) {
+                    var $instructions = $(response).find(".webform-component--important-instructions");
+                    $instructions.find("h2").remove()
+                    $("#instructionsContent").html($instructions.html());
+                    localStorage["instructionsHTML"] = $tac.html();
+
+                }).fail(function() {});
+            };
+
             function getTermsAndConditions() {
                 // Get cached result initially and add it to the dom for improved user experience
                 // then fetch from the server to make sure that its in sync.
@@ -942,7 +965,7 @@
                     localStorage["termsHTML"] = $tac.html();
 
                 }).fail(function() {});
-            }
+            };
         });
     </script>
     </body>
