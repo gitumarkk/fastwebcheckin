@@ -600,6 +600,7 @@
                 localStorage["locationFriendlyName"] = "PCN Niagara";
                 //$("#selectedClinic").val("pcnniagara");
                 isClosedOnClinicSelect();
+                getTermsAndConditions();
                 //clearLocalStorage();
             });
 
@@ -613,6 +614,7 @@
                 localStorage["locationFriendlyName"] = "PCN Welland";
                 //$("#selectedClinic").val("pcnwelland");
                 isClosedOnClinicSelect();
+                getTermsAndConditions();
                 //clearLocalStorage();
             });
 
@@ -659,6 +661,8 @@
             $("#showTerms").click(function ()
             {
                 $("#instructions").hide();
+                getTermsAndConditions();
+
                 $("#terms").show();
 
                 $.mobile.silentScroll(0);
@@ -923,6 +927,22 @@
                 var match = ua.match(/Android\s([0-9\.]*)/);
                 return match ? match[1] : false;
             };
+
+            function getTermsAndConditions() {
+                // Get cached result initially and add it to the dom for improved user experience
+                // then fetch from the server to make sure that its in sync.
+                if (localStorage["termsHTML"]) {
+                    $("#termsAndConditions").html(localStorage["termsHTML"]);
+                };
+
+                $.get(rootURL + "/checkin/pcn?f=" + localStorage["location"], function (response) {
+                    var $tac = $(response).find("#tac");
+                    $tac.find("h2").remove()
+                    $("#termsAndConditions").html($tac.html());
+                    localStorage["termsHTML"] = $tac.html();
+
+                }).fail(function() {});
+            }
         });
     </script>
     </body>
