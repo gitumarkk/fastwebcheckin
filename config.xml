@@ -1,67 +1,42 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<widget xmlns = "http://www.w3.org/ns/widgets"
-        xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.fastwebcheckin.mobile"
-        versionCode="12"
-        version   = "1.0.5">
-
-    <!-- versionCode is optional and Android only -->
-    <!--master repo-->
-
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.fastwebcheckin.mobile" version="1.0.5" versionCode="12" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>WebCheckin</name>
-
     <description>
         FastWebCheckin mobile app
     </description>
-
-    <author href="http://www.capacitive.ca" email="mark.cafazzo@capacitive.ca">
+    <author email="mark.cafazzo@capacitive.ca" href="http://www.capacitive.ca">
         Mark Cafazzo
     </author>
-
-    <gap:platform name="ios"/>
-    <gap:platform name="android"/>
-    <gap:platform name="blackberry"/>
-
-    <!--all platforms-->
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+    <gap:platform name="blackberry" />
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="true" />
     <preference name="phonegap-version" value="cli-5.2.0" />
-
-    <!--iOS-->
     <preference name="webviewbounce" value="false" />
     <preference name="prerendered-icon" value="false" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
     <preference name="detect-data-types" value="false" />
     <preference name="exit-on-suspend" value="true" />
-
-    <icon src="www/images/ios/icon.png" gap:platform="ios" width="57" height="57" />
-    <icon src="www/images/ios/Icon-72.png" gap:platform="ios" width="72" height="72" />
-    <icon src="www/images/ios/icon@2x.png" gap:platform="ios" width="114" height="114" />
-    <icon src="www/images/ios/Icon-76.png" gap:platform="ios" width="76" height="76" />
-    <icon src="www/images/ios/Icon-60@2x.png" gap:platform="ios" width="120" height="120" />
-    <icon src="www/images/ios/Icon-76@2x.png" gap:platform="ios" width="152" height="152" />
-
-    <!-- retina iPad support: PhoneGap 2.5.0+ only -->
-    <icon src="www/images/ios/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
-
-    <!--android-->
-    <icon src="www/images/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
-    <icon src="www/images/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
-    <icon src="www/images/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
-    <icon src="www/images/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
-    <icon src="www/images/android/xxhdpi.png" gap:platform="android" gap:density="xxhdpi" />
-
-    <!--blackberry-->
+    <icon gap:platform="ios" height="57" src="www/images/ios/icon.png" width="57" />
+    <icon gap:platform="ios" height="72" src="www/images/ios/Icon-72.png" width="72" />
+    <icon gap:platform="ios" height="114" src="www/images/ios/icon@2x.png" width="114" />
+    <icon gap:platform="ios" height="76" src="www/images/ios/Icon-76.png" width="76" />
+    <icon gap:platform="ios" height="120" src="www/images/ios/Icon-60@2x.png" width="120" />
+    <icon gap:platform="ios" height="152" src="www/images/ios/Icon-76@2x.png" width="152" />
+    <icon gap:platform="ios" height="144" src="www/images/ios/icon-72@2x.png" width="144" />
+    <icon gap:density="ldpi" gap:platform="android" src="www/images/android/ldpi.png" />
+    <icon gap:density="mdpi" gap:platform="android" src="www/images/android/mdpi.png" />
+    <icon gap:density="hdpi" gap:platform="android" src="www/images/android/hdpi.png" />
+    <icon gap:density="xhdpi" gap:platform="android" src="www/images/android/xhdpi.png" />
+    <icon gap:density="xxhdpi" gap:platform="android" src="www/images/android/xxhdpi.png" />
     <preference name="disable-cursor" value="true" />
-    <icon src="www/icon.png" gap:platform="blackberry" />
-
-    <!--defaults-->
-    <icon src="www/icon.png"/>
-    <preference name="permissions" value="none"/>
-    <!--  <access origin="http://fastwebcheckin.com/" /> Adding access so as to be able to hit the server -->
-
+    <icon gap:platform="blackberry" src="www/icon.png" />
+    <icon src="www/icon.png" />
+    <preference name="permissions" value="none" />
     <access origin="*" />
     <allow-intent href="*" />
     <allow-navigation href="*" />
-
+    <engine name="ios" spec="~4.5.5" />
+    <engine name="android" spec="7.1.4" />
 </widget>

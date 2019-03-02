@@ -1,0 +1,15 @@
+{
+  "name": "com.fastwebcheckin.mobile",
+  "version": "1.0.5",
+  "displayName": "WebCheckin",
+  "cordova": {
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "dependencies": {
+    "cordova-android": "7.1.4",
+    "cordova-ios": "~4.5.5"
+  }
+}
