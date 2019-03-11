@@ -12,7 +12,7 @@
     <gap:platform name="blackberry" />
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="true" />
-    <preference name="phonegap-version" value="cli-5.2.0" />
+    <preference name="phonegap-version" value="cli-6.5.0" />
     <preference name="webviewbounce" value="false" />
     <preference name="prerendered-icon" value="false" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
