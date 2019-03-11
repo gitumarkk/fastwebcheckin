@@ -100,8 +100,8 @@
         </div>
         <!-- data-theme="a"-->
         <div id="contentClinicSelect" data-role="content" data-theme="a">
-            <a href="#" id="niagaraButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade"
-            data-corners="false" data-shadow="false">PCN Niagara Falls</a>
+            <a href="#" id="forterieButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade"
+            data-corners="false" data-shadow="false">PCN Fort Erie</a>
             <a href="#" id="wellandButton" data-role="button" data-icon="arrow-r" data-iconpos="right" data-transition="fade"
             data-corners="false" data-shadow="false">PCN Welland</a>
         </div>
@@ -590,15 +590,15 @@
                 $("#confirmCheckin").popup('close');
             });
 
-            $("#niagaraButton").click(function ()
+            $("#forterieButton").click(function ()
             {
                 if (showAlerts)
                 {
-                    alert("niagaraButton clicked");
+                    alert("forterieButton clicked");
                 }
-                localStorage["location"] = "pcnniagara";
-                localStorage["locationFriendlyName"] = "PCN Niagara";
-                //$("#selectedClinic").val("pcnniagara");
+                localStorage["location"] = "pcnforterie";
+                localStorage["locationFriendlyName"] = "PCN Fort Erie";
+                //$("#selectedClinic").val("pcnforterie");
                 isClosedOnClinicSelect();
 
                 getInstructions();
