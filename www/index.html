@@ -59,11 +59,14 @@
             <div id="websiteLink" class="splashInfo" hidden="hidden"></div>
         </div>
 
+        <!--
         <div id="adFooter" data-role="footer" data-position="fixed" data-theme="f">
             <div id="adContainer">
                     <a href="#"><img id="adImage" src="images/test.jpg" class="ad" alt="Our sponsor"></a>
             </div>
         </div>
+        -->
+
         <!-- add data-theme="b"  -->
         <div id="footerSplash" data-role="footer" data-position="fixed" data-theme="b">
             <div data-role="navbar">
@@ -791,10 +794,11 @@
                     }
                     var startIndex = responseCheck.lastIndexOf("-");
 
-                    var closedMessage;
+                    var closedMessage = respPara.toString();
+
                     if (dashes.length < 4)
                     {
-                        $("#reason").remove();
+                        $("#reason").html('');
                     }
                     else if (dashes.length == 4)
                     {
