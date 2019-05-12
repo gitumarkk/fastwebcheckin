@@ -118,12 +118,11 @@ function fillConfirmationMessage() {
     $("#emailConfirmation").html(localStorage["emailAddress"]);
     $("#postalCodeConfirmation").html(localStorage["postalCode"]);
 
-    if (localStorage["location"] == "pcnniagara") {
-        localStorage["clinicAddress"] = "6150 Valley Way Suite 104 Niagara Falls ON L2E 1Y3";
-        localStorage["clinicMapLinkHref"] = "http://maps.google.ca/maps?hl=en&q=6150+Valley+Way,+Niagara+Falls,+Niagara+Regional+Municipality,+Ontario&safe=active&ie=UTF8&cd=1&geocode=FcGekQIdCBRJ-w&split=0&sll=49.891235,-97.15369&sspn=16.71875,56.536561&ll=43.097793,-79.096824&spn=0.023878,0.028839&z=15"
-        localStorage["locationFriendlyName"] = "PCN Niagara";
-    }
-    else {
+    if (localStorage["location"] == "pcnforterie") {
+        localStorage["clinicAddress"] = "660 Garrison Road Unit 11, Fort Erie ON L2A 6E2";
+        localStorage["clinicMapLinkHref"] = "https://www.google.com/maps/place/660+Garrison+Rd+%2311,+Fort+Erie,+ON+L2A+1N6/@42.9059758,-78.941964,17z/data=!3m1!4b1!4m5!3m4!1s0x89d3147cc7f511c5:0x290c4efad57961e7!8m2!3d42.9059719!4d-78.9397753"
+        localStorage["locationFriendlyName"] = "PCN Fort Erie";
+    } else if (localStorage["location"] == "pcnwelland") {
         localStorage["clinicAddress"] = "800 Niagara Street North Unit G1 Welland ON L3C 5Z4";
         localStorage["clinicMapLinkHref"] = "http://maps.google.ca/maps?f=q&source=s_q&hl=en&geocode=&q=800+Niagara+Street,+North,+Suite+G1.+welland,+Ontario&sll=43.088688,-79.052612&sspn=0.011941,0.01442&g=800+Niagara+Street,+North,+Suite+G1&ie=UTF8&ll=43.016509,-79.249792&spn=0.04782,0.057678&z=14";
         localStorage["locationFriendlyName"] = "PCN Welland";
