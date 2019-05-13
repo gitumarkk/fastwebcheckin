@@ -138,10 +138,25 @@ function clearLocalStorage() {
     localStorage.removeItem("checkinNumber");
     localStorage.removeItem("attendTime");
     localStorage.removeItem("submittedDate");
+
+    try {
+        localStorage.removeItem("location");
+        localStorage.removeItem("locationFriendlyName");
+        localStorage.removeItem("clinicAddress");
+        localStorage.removeItem("clinicMapLinkHref");
+        localStorage.removeItem("confirmMessage");
+        localStorage.removeItem("instructionsHTML");
+        localStorage.removeItem("locationFriendlyName");
+        localStorage.removeItem("submitDateFormatted");
+        localStorage.removeItem("submitTimeFormatted");
+    } catch (error) {}
+
     //localStorage["checkinNumber"] = "";
     //localStorage["attendTime"] = "";
     //localStorage["submittedDate"] = "";
     localStorage["emailPermission"] = "NO";
     localStorage["readInstructions"] = "NO";
     localStorage["terms"] = "NO";
+
+    $.mobile.changePage("#", { role: "page" });
 }
